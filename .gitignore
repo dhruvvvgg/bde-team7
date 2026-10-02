@@ -1,3 +1,9 @@
 *.tif
 *.tif.gz
 raw/
+# CHIRPS raw rasters are downloaded one at a time, sampled, then deleted.
+# They must never be committed (see README).
+dataset/chirps/raw/
+__pycache__/
+*.pyc
+.pytest_cache/
