@@ -80,6 +80,20 @@ def main() -> None:
           f"Flagged per state: " + ", ".join(f"{k}: {v}" for k, v in flagged.state.value_counts().items()) + "\n",
           flagged.head(40).round(3).to_markdown(),
           "\n(first 40 shown; full list in `reports/chirps_sampling_flagged_wells.csv`)"]
+    L += ["\n## Interpretation and recommendation\n",
+          "- **No coastal or edge effect.** No well has a nodata cell in its 3x3 neighbourhood, so no "
+          "well's rainfall is affected by sea pixels or the raster edge.",
+          "- **The large differences are all in steep terrain**: Pollachi (Palghat gap), Wayanad, "
+          "Darjeeling foothills (Bagdogra), Kangra/Kullu, the Karjat ghat, and the Yercaud/Kodaikanal "
+          "hills. There, rainfall changes by tens of percent within ~10 km. The 3x3 mean moves the value "
+          "towards the wetter or drier ridge next door. Neither method is clearly 'right'; the nearest "
+          "cell is the better estimate of rain falling AT the well.",
+          "- **Recommendation: do not switch.** Overall agreement is r = 0.999 and 2.7% mean absolute "
+          "difference, so swapping would barely change any feature while breaking comparability with "
+          "the accepted outputs. Keep the nearest cell as the primary rainfall source. If wanted, the "
+          "3x3 values could be added as extra columns (`precip_3x3`-based windows) for a sensitivity "
+          "analysis restricted to the flagged wells; that would be a new-column change, not a "
+          "redefinition."]
     flagged.to_csv(config.REPORTS_DIR / "chirps_sampling_flagged_wells.csv")
     (config.REPORTS_DIR / "chirps_sampling_check.md").write_text("\n".join(L) + "\n")
     print("\n".join(L))

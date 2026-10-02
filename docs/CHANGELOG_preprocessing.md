@@ -83,3 +83,35 @@ approval" first.
   - Level-shift test showing the rolling mean forgets an old level.
   - The perturb-the-future test covers the new columns automatically.
   - 40 tests pass.
+
+### Part C: rainfall sampling check (new file only; existing outputs untouched)
+
+- **What:**
+  - New file `dataset/chirps/chirps_monthly_by_well_3x3.parquet` (8.1 MB): 778,038 rows with
+    `precip_nearest_mm`, `precip_3x3_mm` and `n_valid_3x3`.
+  - CHIRPS was re-extracted from 1999-07 to 2022-12 over HTTPS, one file at a time, with each raster
+    deleted after use.
+  - The analysis is in `reports/chirps_sampling_check.md`, and the flagged wells are listed in
+    `reports/chirps_sampling_flagged_wells.csv`.
+  - New code: `chirps.sample_nearest_and_3x3()`, `chirps.build_table_3x3()`,
+    `scripts/04c_chirps_3x3.py` and `scripts/04d_chirps_sampling_check.py`. A synthetic-raster test
+    covers the edge, nodata and negative cases.
+- **Why:** to check whether the single nearest 0.05° cell is representative of each well's area.
+- **Before/after:**
+  - `chirps_monthly_by_well.parquet` and the feature table: **unchanged**.
+  - The re-extracted nearest values match the committed table on all 778,038 well-months (max diff
+    0.0000 mm).
+- **Result:**
+
+  | Measure | Value |
+  |---|---|
+  | Monthly correlation, nearest vs 3×3 | r = 0.9991 |
+  | Mean absolute difference | 3.43 mm/month (2.7%) |
+  | Annual correlation | r = 0.9989 |
+  | Wells with nodata in their 3×3 block | 0 |
+  | Wells flagged for large differences | 13, all in steep terrain |
+
+  Recommendation: **do not switch** (see the report).
+- **Bug found during development:** the first version of the 3×3 sampler counted the edge row twice
+  at the raster boundary. It was caught by a synthetic test and fixed before the download. No
+  committed output used the buggy version.
