@@ -68,8 +68,12 @@ def main() -> None:
           "of the same well in the same season.\n",
           sens.to_markdown(index=False),
           "\nReadings excluded per season:\n", by_season.to_markdown(),
-          "\nThe 444 wells with no May series contribute all of their May rows to "
-          "'Insufficient history' at every K; their other seasons are kept."]
+          "\nThese counts cover rounds WITH a reading only. The 444 wells with no May "
+          "series have no May readings, so they add nothing above; their 23 May rounds "
+          f"each ({444 * 23:,} rows) have no baseline at any K and will be labelled "
+          "'Insufficient history' in stage 6. Their other three seasons are kept.",
+          "\nNote: at every K the exclusions are essentially each well-season's first K "
+          "readings (pre_monsoon is lower only because those 444 wells contribute none)."]
     (config.REPORTS_DIR / "data_quality.md").write_text("\n".join(D) + "\n")
     print("\n".join(L + [""] + D))
 
