@@ -411,3 +411,11 @@ approval" first.
     categorical colours cannot be told apart.
   - Added to `run_all.sh`. Pinned `matplotlib==3.10.9`.
 - **Before/after:** no data changes. Figures total 3.3 MB.
+
+### Part J: architecture diagram (new files only)
+
+- `docs/architecture_preprocessing.png` (300 dpi, drawn with matplotlib by
+  `scripts/13_architecture.py`), its Mermaid source `docs/architecture_preprocessing.mmd`, and
+  `docs/architecture.md` explaining each box.
+- The modeling and dashboard stages appear as dashed placeholder boxes for teammates to extend.
+- Added to `run_all.sh`. No data changes.

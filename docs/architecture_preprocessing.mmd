@@ -1,0 +1,37 @@
+%% Preprocessing architecture (source for docs/architecture_preprocessing.png).
+%% Teammates: add modeling/dashboard nodes below the HANDOFF section; keep node ids stable.
+flowchart TB
+  subgraph SRC[Data sources]
+    GWSRC["Figshare groundwater dataset<br/>doi:10.6084/m9.figshare.29293877.v3<br/>CGWB, 2000-2024, CC BY 4.0"]
+    CHSRC["CHIRPS v3.0 monthly global rasters<br/>Climate Hazards Center, 0.05°<br/>HTTPS, 282 + 24 files"]
+  end
+  subgraph ACQ[Acquisition and ingestion]
+    ING["Ingest refined table + surrogate well_id<br/>gw_io.load_wide · 2,759 x 113 (wide)<br/>→ dataset/well_crosswalk.csv (2,759 x 8)"]
+    CHX["Stream, sample, delete (one raster at a time)<br/>chirps.build_table · nearest cell<br/>→ chirps_monthly_by_well.parquet (778,038 x 4)"]
+  end
+  RESH["Reshape wide → long<br/>reshape.to_long · 253,828 x 16"]
+  CLEAN["Cleaning and flagging (nothing removed)<br/>clean.clean · 253,828 x 20<br/>placeholders, duplicates, names, QC flags"]
+  RAINW["Rainfall windows (months M-1 … M-k only)<br/>rainfall.rainfall_windows · leakage assertion"]
+  FEAT["Time-aware features with leakage guards<br/>features + features_extra · past-only<br/>baselines, history, trend, rain deviations"]
+  STRESS["Stress classification<br/>expanding (primary) · rolling-10 · t-adjusted<br/>stress.classify + suspect flags"]
+  subgraph STORE[Storage]
+    MAIN["Main feature table<br/>processed/gw_features_by_state/<br/>Parquet by state_slug · 253,828 x 84"]
+    SPL["Splits file<br/>processed/splits.parquet · 275,900 x 12<br/>config/splits.json"]
+    EXT["Extension holdout 2023-24<br/>processed/extension_2023_2024/ · 22,072 x 84"]
+  end
+  subgraph HANDOFF[Handoff · later stages owned by teammates]
+    MOD["Modeling stage (teammate)"]:::future
+    DASH["Dashboard stage (teammate)"]:::future
+  end
+  GWSRC --> ING --> RESH --> CLEAN --> RAINW
+  CHSRC --> CHX --> RAINW
+  RAINW --> FEAT --> STRESS
+  STRESS --> MAIN
+  STRESS --> SPL
+  STRESS --> EXT
+  MAIN -.-> MOD
+  SPL -.-> MOD
+  EXT -.-> MOD
+  MAIN -.-> DASH
+  MOD -.-> DASH
+  classDef future stroke-dasharray: 6 4,fill:#ffffff
