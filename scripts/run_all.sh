@@ -27,4 +27,5 @@ run scripts/09a_extension_match.py     # Part E matching + coverage
 run scripts/09b_extension_features.py  # Part E features (+ leakage proof)
 run scripts/10_splits.py               # Part F splits
 if [ -f scripts/11_handoff_dictionary.py ]; then run scripts/11_handoff_dictionary.py; fi
+run scripts/12_figures.py              # review figures, tables, captions
 echo "==> pytest"; python -m pytest -q

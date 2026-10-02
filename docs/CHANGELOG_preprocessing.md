@@ -397,3 +397,17 @@ approval" first.
     ineligible; the other 8 of the 87 zeros were already excluded by another rule (sparse round).
     `extension_zero_placeholder` now covers all 87.
 - **Tests:** 62 pass.
+
+### Part I: review figures and tables (new files only)
+
+- **What:**
+  - `scripts/12_figures.py` writes 17 PNG figures (figure 12 has parts a and b) at 300 dpi to
+    `reports/figures/`, 13 tables (26 CSV and Markdown files) to `reports/tables/`, and
+    `reports/figure_captions.md`. Every caption number is computed in code.
+  - The script reads only the final outputs.
+  - Colours come from the reference categorical palette, checked with the dataviz palette validator
+    (all checks pass; the low-contrast slots are always directly labelled).
+  - The 19 states are shown as 6 coloured regions with every state labelled, because more than 8
+    categorical colours cannot be told apart.
+  - Added to `run_all.sh`. Pinned `matplotlib==3.10.9`.
+- **Before/after:** no data changes. Figures total 3.3 MB.
