@@ -73,6 +73,7 @@ Cleaning on extension rows: rows_in=22072, readings_in=6821, placeholders_to_nan
 - Written to `processed/extension_2023_2024/extension_features.parquet`: **22,072 rows** (2759 wells x 8 rounds), 84 columns (same columns as the main table plus `is_extension`), 5.6 MB.
 - Computed with the same functions on the combined 2000-2024 series and the CHIRPS record 1999-07..2024-12 (`chirps_monthly_by_well_2023_2024.parquet`, nearest cell, 66,216 rows, 0 NaN).
 - **Leakage proof:** recomputing the 2000-2022 rows with the 2023-24 data present reproduces the committed main table exactly (253,828 rows, all columns except the whole-record descriptive ['flag_extreme', 'well_completeness_full_period', 'well_has_no_series_for_season']).
+- **87 extension zero readings (`zero_extension`) are excluded from all history statistics** (expanding, rolling and t-adjusted baselines, lags, trends, maxima and minima to date, counts, completeness) for later rounds, while their stored value (0.0) is unchanged. Enforced by building features with those readings hidden, then recomputing only their own row's anomaly and label columns. `tests/test_extension.py` proves that changing them changes no other row, and this script asserts it on the real data for `gw_prev_round_m`. They are `eval_eligible = False` (`extension_zero_placeholder`) in `processed/splits.parquet`.
 - Whole-record columns for the extension (`well_completeness_full_period`, `well_has_no_series_for_season`, `flag_extreme`) use 2000-2024.
 
 Stress categories (readings only):
@@ -85,4 +86,4 @@ Stress categories (readings only):
 | Moderate Stress      |               253 |           248 |             299 |
 | High Stress          |               360 |           293 |             465 |
 
-- Suspect readings: 170 (zero_extension: 87, extreme_anomaly: 77, deeper_than_well: 50).
+- Suspect readings: 170 (zero_extension: 87, extreme_anomaly: 79, deeper_than_well: 50).

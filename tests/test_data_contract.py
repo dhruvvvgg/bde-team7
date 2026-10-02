@@ -172,3 +172,17 @@ def test_handoff_column_dictionary_in_sync_with_contract():
     gen = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(gen)
     assert gen.render() in gen.DOC.read_text()
+
+
+def test_zero_handling_main_vs_extension(main, ext):
+    """Main-table zeros (11, plausible, monsoon rounds) stay evaluable except via
+    the usual rules; extension zeros (zero_extension) are never eval-eligible and
+    keep their stored value."""
+    s = pd.read_parquet(SPLITS_PATH)
+    assert int(main.flag_zero.sum()) == 11
+    ez = ext[ext.suspect_reason.fillna("").str.contains("zero_extension")]
+    assert len(ez) == int(ext.flag_zero.sum()) and (ez.gwl_m_bgl == 0).all()
+    j = ez[["well_id", "period_label"]].merge(s, on=["well_id", "period_label"])
+    assert len(j) == len(ez)
+    assert (~j.eval_eligible).all() and (j.exclusion_reason == "extension_zero_placeholder").all()
+    assert not (s[s.source == "main"].exclusion_reason == "extension_zero_placeholder").any()

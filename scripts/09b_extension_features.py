@@ -20,7 +20,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from gwstress import clean, config, features as ft, rainfall, stress, validity  # noqa: E402
+from gwstress import clean, config, extension, features as ft, rainfall, stress, validity  # noqa: E402
 
 # Descriptive columns that use the whole record by design (class B). Adding
 # 2023-24 data legitimately changes them, so they are excluded from the proof
@@ -41,11 +41,11 @@ def main() -> None:
     rain = pd.concat([pd.read_parquet(config.CHIRPS_TABLE), pd.read_parquet(config.CHIRPS_EXT_TABLE)],
                      ignore_index=True)
     assert not rain.duplicated(["well_id", "year", "month"]).any()
-    out = rainfall.rainfall_windows(combined, rain)
-    out = ft.build_features(out, k=ft.K_MAIN, rain=rain)
-    out["stress_category"] = stress.classify(out["gwl_m_bgl"], out["anomaly_z"])
-    out["stress_roll10"] = stress.classify(out["gwl_m_bgl"], out["anomaly_roll10"])
-    out["stress_tadj"] = stress.classify(out["gwl_m_bgl"], out["anomaly_tadj"])
+    # The 87 extension zeros (likely placeholders) are excluded from every
+    # history statistic but keep their stored value (see
+    # extension.build_features_excluding).
+    ext_zero = combined["flag_zero"] & (combined["year"] >= config.EXT_FIRST_YEAR)
+    out = extension.build_features_excluding(combined, rain, ext_zero)
     out = validity.suspect_flags(out)
     # Extension zeros: flagged with their own reason (likely placeholders, see report).
     ez = out["flag_zero"] & (out["year"] >= config.EXT_FIRST_YEAR)
@@ -74,6 +74,14 @@ def main() -> None:
     assert not bad, f"2000-2022 rows changed when 2023-24 data was added: {bad}"
     print(f"leakage proof OK: {len(a):,} rows x {len(a.columns) - len(WHOLE_RECORD)} columns identical")
 
+    # Real-data check of the exclusion: a round right after an excluded zero
+    # must not see it as the previous reading.
+    o = out.sort_values(["well_id", "date"])
+    prev_excl = o.groupby("well_id")["_excluded"].shift(1).fillna(False).astype(bool)
+    assert o.loc[prev_excl, "gw_prev_round_m"].isna().all(), "excluded zero leaked into gw_prev_round_m"
+    assert int(out["_excluded"].sum()) == int(ext_zero.sum())
+    n_excl = int(out["_excluded"].sum())
+
     ext_out = out[out.year >= config.EXT_FIRST_YEAR].copy()
     ext_out["is_extension"] = True
     ext_out = ext_out[list(a.columns) + ["is_extension"]].sort_values(["state", "well_id", "date"])
@@ -93,6 +101,13 @@ def main() -> None:
          f"- **Leakage proof:** recomputing the 2000-2022 rows with the 2023-24 data present reproduces "
          f"the committed main table exactly ({len(a):,} rows, all columns except the whole-record "
          f"descriptive {sorted(WHOLE_RECORD)}).",
+         f"- **{n_excl} extension zero readings (`zero_extension`) are excluded from all history "
+         "statistics** (expanding, rolling and t-adjusted baselines, lags, trends, maxima and minima to "
+         "date, counts, completeness) for later rounds, while their stored value (0.0) is unchanged. "
+         "Enforced by building features with those readings hidden, then recomputing only their own "
+         "row's anomaly and label columns. `tests/test_extension.py` proves that changing them changes "
+         "no other row, and this script asserts it on the real data for `gw_prev_round_m`. They are "
+         "`eval_eligible = False` (`extension_zero_placeholder`) in `processed/splits.parquet`.",
          "- Whole-record columns for the extension (`well_completeness_full_period`, "
          "`well_has_no_series_for_season`, `flag_extreme`) use 2000-2024.\n",
          "Stress categories (readings only):\n",

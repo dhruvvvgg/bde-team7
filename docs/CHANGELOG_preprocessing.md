@@ -350,3 +350,50 @@ approval" first.
 | Primary rainfall | nearest cell | nearest cell (unchanged) |
 | Separate outputs added | — | extension table, splits file, 3×3 and 2023–24 CHIRPS tables |
 | Tests | 27 | 59 |
+
+### Extension rules: 15% sparse threshold kept, zero placeholders excluded
+
+- **Decisions:**
+  - The 15% sparse-round threshold for the extension is kept.
+  - Extension zero readings keep their values but are now excluded from evaluation and from all
+    later history statistics.
+- **What changed:**
+  - `src/gwstress/extension.py` has a new `build_features_excluding()`, used by
+    `scripts/09b_extension_features.py`. It builds features with the 87 `zero_extension` readings
+    hidden from history, restores their stored 0.0, and recomputes only their own row's anomaly and
+    label columns.
+  - The script asserts on the real data that no round after an excluded zero sees it as
+    `gw_prev_round_m`.
+  - `src/gwstress/splits.py` has a new exclusion reason, `extension_zero_placeholder`, which applies
+    to extension rows whose `suspect_reason` contains `zero_extension`.
+  - New tests: `tests/test_extension.py` (changing excluded values changes no other row), a split
+    unit test, and a contract test that main zeros (11) are never excluded this way while extension
+    zeros (87) always are.
+  - Docs: the methods doc explains why the 11 main zeros and the 87 extension zeros are handled
+    differently. The handoff gained an "Extension holdout: rules of use" section (secondary check
+    only, never pool, report per-round counts).
+- **Before/after:**
+  - **Main table: unchanged** (the leakage proof again shows all 253,828 rows identical).
+  - Extension table: 22,072 rows, unchanged. **`gwl_m_bgl`: 0 values changed.**
+  - Extension history columns changed only where they had used an excluded zero:
+
+    | Columns | Values changed |
+    |---|---:|
+    | `n_prior_same_season`, expanding and rolling baseline mean/std, `gw_same_season_lag1y_m` | 77 each |
+    | `gw_prev_round_m`, `gw_max_to_date_m` | 84 each |
+    | `gw_prev_change_m` | 93 |
+    | `gw_min_to_date_m` | 143 |
+    | `gw_last_obs_m`, `rounds_since_last_obs` | 299 each |
+    | `n_readings_to_date`, `completeness_to_date` | 458 each |
+    | all `anomaly_*` columns | 7 each |
+    | `trend_5y_m_per_yr` | 8 |
+    | `gw_fluct_prev_wy_m` | 36 |
+    | `gw_delta_from_prev_round_m` | 35 |
+    | `suspect_reason` | 2 |
+    | `well_completeness_full_period` (descriptive) | 656 |
+
+    Stress labels: 0 changed.
+  - Splits: eligible rows went from 166,569 to 166,490. Exactly 79 extension rows became
+    ineligible; the other 8 of the 87 zeros were already excluded by another rule (sparse round).
+    `extension_zero_placeholder` now covers all 87.
+- **Tests:** 62 pass.

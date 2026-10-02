@@ -228,8 +228,27 @@ sparse twin, resolved by that exact-equality test.
 The extension readings did not pass the repeated-value filter or the at-least-two-readings-per-year
 rule. Their coverage is also much lower: 30.9% of cells against 80.0% in 2018–2022, falling from
 69.8% in January 2023 to 8.0% in November 2024, with no readings at all for Delhi. They also contain
-87 zero readings (68 of them in May 2023) against 11 in all of 2000–2022. These look like placeholder
-values and are flagged.
+87 zero readings (68 of them in May 2023) against 11 in all of 2000–2022.
+
+The two groups of zeros are handled differently because the evidence differs. Of the 11 main-table
+zeros, eight fall in August monsoon rounds, when a shallow dug well can genuinely fill to the surface.
+The other three are isolated and are flagged as suspect for sensitivity runs. All 11 remain ordinary
+readings: a reading of 0.0 m is physically possible, and deleting it would bias the record towards
+deeper levels. The 87 extension zeros are a different pattern. They are 1.28% of extension readings,
+about 250 times the main-table rate. Most are concentrated in May 2023, the driest round of the year,
+in wells whose recent median depth is about 4 m, which points to placeholder or "dry" codes rather
+than water at the surface.
+
+Their stored values are left unchanged, but they are marked `zero_extension` and are never eligible
+for evaluation (`extension_zero_placeholder` in the splits file). They are also excluded from every
+history statistic used by later extension rounds. This is enforced by building the extension features
+with those readings treated as missing, then restoring each one's stored value and recomputing only
+its own row's anomaly and label. A test changes the excluded values and confirms that no other row
+changes.
+
+The extension is a secondary robustness check only. Its wells were not filtered for 2023–24
+completeness. Results on it must never be pooled with the 2018–2022 test set, and extension metrics
+should always be reported with per-round reading counts beside them.
 
 Extension features were computed with the same code on the combined 2000–2024 series, using CHIRPS
 rainfall extended to December 2024 (nearest cell only). We also recomputed the main table from this

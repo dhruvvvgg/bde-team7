@@ -62,3 +62,60 @@ def match_stage4(main_wide: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
 def extension_columns(df: pd.DataFrame) -> list[str]:
     _, obs, _ = gw_io.split_columns(df.drop(columns="well_id"))
     return [c for c in obs if config.EXT_FIRST_YEAR <= 2000 + int(c[-2:]) <= config.EXT_LAST_YEAR]
+
+
+def build_features_excluding(combined: pd.DataFrame, rain: pd.DataFrame,
+                             exclude: pd.Series) -> pd.DataFrame:
+    """Build all features, treating the readings in `exclude` as missing HISTORY
+    while keeping their stored values.
+
+    Used for the 87 extension zero readings judged to be placeholders
+    (`zero_extension`). How the exclusion is enforced:
+      1. Every feature is computed on a copy where those readings are NaN. So
+         no baseline (expanding, rolling, t-adjusted), lag, trend, maximum or
+         minimum to date, count, fluctuation or completeness for ANY row can
+         use them.
+      2. `gwl_m_bgl` is then restored to the stored value (0.0), and only the
+         excluded row's OWN current-reading columns (anomalies, their capped
+         versions, the three stress labels and gw_delta_from_prev_round_m) are
+         recomputed from it, against the baseline built without the excluded
+         readings.
+    tests/test_extension.py proves that changing an excluded value changes no
+    feature of any other row.
+    """
+    from . import features as ft, rainfall, stress
+
+    exclude = exclude.reindex(combined.index).fillna(False).astype(bool)
+    masked = combined.copy()
+    masked.loc[exclude, "gwl_m_bgl"] = np.nan
+    masked["_excluded"] = exclude
+    out = rainfall.rainfall_windows(masked, rain)
+    out = ft.build_features(out, k=ft.K_MAIN, rain=rain)
+    out["stress_category"] = stress.classify(out["gwl_m_bgl"], out["anomaly_z"])
+    out["stress_roll10"] = stress.classify(out["gwl_m_bgl"], out["anomaly_roll10"])
+    out["stress_tadj"] = stress.classify(out["gwl_m_bgl"], out["anomaly_tadj"])
+
+    ex = out["_excluded"].to_numpy()
+    if ex.any():
+        orig = combined.set_index(["well_id", "date"])["gwl_m_bgl"]
+        rows = out.loc[ex]
+        x = orig.reindex(pd.MultiIndex.from_frame(rows[["well_id", "date"]])).to_numpy(float)
+        out.loc[ex, "gwl_m_bgl"] = x
+        sub = out.loc[ex].copy()
+        std_e = sub["baseline_std_m"].clip(lower=ft.STD_FLOOR_M)
+        sub["anomaly_z"] = (sub["gwl_m_bgl"] - sub["baseline_mean_m"]) / std_e
+        sub["anomaly_z_capped"] = sub["anomaly_z"].clip(-ft.Z_CAP, ft.Z_CAP)
+        std_r = sub["baseline_roll10_std_m"].clip(lower=ft.STD_FLOOR_M)
+        sub["anomaly_roll10"] = (sub["gwl_m_bgl"] - sub["baseline_roll10_mean_m"]) / std_r
+        sub["anomaly_roll10_capped"] = sub["anomaly_roll10"].clip(-ft.Z_CAP, ft.Z_CAP)
+        sub = ft.tadj_anomaly(sub)
+        sub["gw_delta_from_prev_round_m"] = sub["gwl_m_bgl"] - sub["gw_prev_round_m"]
+        for col in ["stress_category", "stress_roll10", "stress_tadj"]:
+            src = {"stress_category": "anomaly_z", "stress_roll10": "anomaly_roll10",
+                   "stress_tadj": "anomaly_tadj"}[col]
+            sub[col] = stress.classify(sub["gwl_m_bgl"], sub[src])
+        for c in ["anomaly_z", "anomaly_z_capped", "anomaly_roll10", "anomaly_roll10_capped",
+                  "anomaly_tadj", "anomaly_tadj_capped", "gw_delta_from_prev_round_m",
+                  "stress_category", "stress_roll10", "stress_tadj"]:
+            out.loc[ex, c] = sub[c].to_numpy()
+    return out

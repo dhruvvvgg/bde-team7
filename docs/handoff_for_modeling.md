@@ -210,6 +210,21 @@ same season last year, by grouping on `well_id` and shifting after sorting by `d
 | Monitoring day unknown | All rows | Rainfall windows stop at M−1. Never add same-month rainfall. |
 | **Extension 2023–24 not quality-filtered like the main data** | Coverage 30.9% (80.0% in 2018–22). Nov-24 has 8.0%; Delhi has no readings. 87 likely-placeholder zeros. | The extension readings did not pass the authors' repeated-value filter or the at-least-2-readings-per-year rule. Use the extension only as a stress test, exclude `zero_extension` rows, and report its results separately from the 2018–2022 test. |
 
+## Extension holdout (2023–2024): rules of use
+
+- **Secondary robustness check only.** The 2,759 wells were selected for completeness through 2022.
+  They were **not** filtered for 2023–24 completeness, and the 2023–24 readings did not pass the
+  authors' repeated-value filter.
+- **Never pool** extension results with the 2018–2022 test set. Report them in a separate table.
+- **Always report per-round reading counts** next to any extension metric (coverage falls from 69.8%
+  in Jan-23 to 8.0% in Nov-24). `reports/extension_2023_2024.md` has the counts.
+- Rounds with under 15% coverage (May-24, Aug-24, Nov-24) are not eval-eligible.
+- **Zero readings:** the 87 `zero_extension` readings (68 in May-23) are likely placeholders. They
+  are `eval_eligible = False` (`extension_zero_placeholder`) and are **excluded from every baseline,
+  lag and history statistic** of later extension rounds, while their stored value (0.0) is unchanged.
+  The 11 main-table zeros are treated as genuine readings: 8 are in monsoon rounds where a full well
+  is plausible, and the other 3 are flagged as suspect only.
+
 ## How to use the splits
 
 `processed/splits.parquet` is keyed by (`well_id`, `period_label`), and its cutoffs live in
