@@ -21,6 +21,9 @@ def main() -> None:
     # columns are untouched; stress_category remains the primary label.
     df["stress_roll10"] = stress.classify(df["gwl_m_bgl"], df["anomaly_roll10"])
     assert (stress.classify(df["gwl_m_bgl"], df["anomaly_roll10_capped"]) == df["stress_roll10"]).all()
+    # Part B2: same classify() on the small-sample-adjusted anomaly.
+    df["stress_tadj"] = stress.classify(df["gwl_m_bgl"], df["anomaly_tadj"])
+    assert (stress.classify(df["gwl_m_bgl"], df["anomaly_tadj_capped"]) == df["stress_tadj"]).all()
     df = validity.suspect_flags(df)   # Part D: descriptive QC flag, nothing removed
     df.to_parquet(config.GW_STRESS, index=False)
 

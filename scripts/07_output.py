@@ -221,6 +221,57 @@ def main() -> None:
       "lag is not the main cause. A steady LINEAR decline does not inflate the expanding z either: "
       "the mean lags, but the std grows at the same rate, so z settles near a constant (about 1.7).")
 
+    w("\n## 10. Small-sample-adjusted anomaly (`stress_tadj`) vs `stress_category`\n")
+    w("`anomaly_tadj` maps (x - mean) / (s * sqrt(1 + 1/n)) through the Student-t CDF with n - 1 "
+      "degrees of freedom, then the inverse normal CDF. Under i.i.d. Gaussian readings it has nominal "
+      "normal tails at every n (Monte Carlo test in `tests/test_features.py`). Same K = 5, 0.10 m "
+      "floor, thresholds and labels. `stress_category` stays the primary label.\n")
+    cls2 = df[~df.stress_category.isin([stress.NO_READING, stress.INSUFFICIENT])]
+    def rates(col, d=cls2):
+        return pd.Series({c: round(100 * (d[col] == c).mean(), 2)
+                          for c in ["Normal", "Watch", "Moderate Stress", "High Stress"]})
+    w(pd.DataFrame({"stress_category %": rates("stress_category"), "stress_tadj %": rates("stress_tadj"),
+                    "nominal if Gaussian %": [round(100 * sps.norm.cdf(1), 2),
+                                              round(100 * (sps.norm.cdf(1.5) - sps.norm.cdf(1)), 2),
+                                              round(100 * (sps.norm.cdf(2) - sps.norm.cdf(1.5)), 2),
+                                              round(100 * sps.norm.sf(2), 2)]}).to_markdown())
+    hs0, hs1, hsn = (100 * (cls2.stress_category == "High Stress").mean(),
+                     100 * (cls2.stress_tadj == "High Stress").mean(), 100 * sps.norm.sf(2))
+    w(f"\nExcess High Stress over the nominal {hsn:.2f}%: {hs0 - hsn:.2f} points (expanding) -> "
+      f"{hs1 - hsn:.2f} points (t-adjusted), i.e. **{100 * (1 - (hs1 - hsn) / (hs0 - hsn)):.0f}% of the "
+      "excess disappears** once small-sample uncertainty is accounted for.")
+    ch = (cls2.stress_category.astype(str) != cls2.stress_tadj.astype(str))
+    w(f"\nReadings that change category: **{int(ch.sum()):,}** of {len(cls2):,} classified "
+      f"({100 * ch.mean():.1f}%). The adjustment only shrinks |z| (t tails are heavier, and "
+      "sqrt(1 + 1/n) > 1), so every change moves one or more steps towards Normal.\n")
+    w(pd.crosstab(cls2.stress_category.astype(str), cls2.stress_tadj.astype(str))
+      .reindex(index=stress.CATEGORIES[2:], columns=stress.CATEGORIES[2:]).fillna(0).astype(int).to_markdown())
+    yr = cls2.groupby("year").agg(
+        high_expanding=("stress_category", lambda s: round(100 * (s == "High Stress").mean(), 2)),
+        high_tadj=("stress_tadj", lambda s: round(100 * (s == "High Stress").mean(), 2)))
+    w("\nHigh Stress rate per year (%):\n")
+    w(yr.T.to_markdown())
+    stt = cls2.groupby("state").agg(
+        high_expanding=("stress_category", lambda s: round(100 * (s == "High Stress").mean(), 2)),
+        high_tadj=("stress_tadj", lambda s: round(100 * (s == "High Stress").mean(), 2)),
+        moderate_tadj=("stress_tadj", lambda s: round(100 * (s == "Moderate Stress").mean(), 2)),
+        watch_tadj=("stress_tadj", lambda s: round(100 * (s == "Watch").mean(), 2)),
+        readings=("well_id", "size"))
+    w("\nBy state (%):\n")
+    w(stt.to_markdown())
+    nb = pd.cut(cls2.n_prior_same_season, [4, 7, 10, 14, 18, 22])
+    w("\nHigh Stress by number of earlier readings (%):\n")
+    w(cls2.groupby(nb, observed=True).agg(
+        expanding=("stress_category", lambda s: round(100 * (s == "High Stress").mean(), 2)),
+        tadj=("stress_tadj", lambda s: round(100 * (s == "High Stress").mean(), 2)))
+      .rename(index=str).to_markdown())
+    w(f"\n**What remains.** After adjustment, High Stress is {hs1:.2f}% vs {hsn:.2f}% nominal. The "
+      "remaining excess is concentrated in particular years (see the per-year row), consistent with "
+      "drought-driven declines (e.g. the deficient 2009 and 2014-2015 monsoons). It also reflects that "
+      "real readings are neither independent nor Gaussian (serial correlation, trends, heavy tails), "
+      "which the t-adjustment does not model. This report does not attribute the remainder to any "
+      "single cause.")
+
     (config.REPORTS_DIR / "data_quality.md").write_text("\n".join(D) + "\n")
     print("\n".join(D))
     print(f"\nwrote {config.FINAL_DIR} ({size:.1f} MB)")

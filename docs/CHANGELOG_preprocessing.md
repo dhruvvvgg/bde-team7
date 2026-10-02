@@ -143,3 +143,35 @@ approval" first.
     than the well, 3 suspicious zeros; 17 readings have two reasons.
   - **Rainfall:** no implausible state totals. The flagged wells are explained by Tamil Nadu's rain
     shadow (low Jun–Sep rainfall) and the Udupi Ghats crest (over 7,000 mm a year).
+
+### Part B2: small-sample-adjusted anomaly (added columns only)
+
+- **What:**
+  - New columns: `anomaly_tadj`, `anomaly_tadj_capped` (±5) and `stress_tadj` (same `classify()`,
+    thresholds and labels).
+  - Formula: t = (x − mean) / (s_eff · √(1 + 1/n)), then z_adj = Φ⁻¹(F_t(t; n − 1)).
+  - It uses the same expanding baseline, K = 5 and 0.10 m floor as `anomaly_z`.
+  - New report section 10 in `reports/data_quality.md`.
+  - The existing `anomaly_z` also uses ddof = 1. The difference is that the new score accounts for
+    the uncertainty in the estimated mean and uses t-distribution tails, as the docstring explains.
+- **Why:** to remove the small-sample inflation of tail rates identified in Part B.
+- **Before/after:**
+  - Rows: 253,828, unchanged.
+  - Columns: 77 → 80.
+  - Existing columns: 0 values changed. `stress_category` is still the primary label.
+- **Result:**
+
+  | | `stress_category` | `stress_tadj` | Nominal |
+  |---|---:|---:|---:|
+  | High Stress | 6.38% | 4.18% | 2.28% |
+
+  - 54% of the excess High Stress disappears.
+  - 10,611 classified readings (6.4%) change category, all towards Normal.
+  - The remaining excess clusters in 2015–2018 and 2009.
+- **Tests:**
+  - Large-n agreement with `anomaly_z` (within 0.03).
+  - Monte Carlo on i.i.d. normal data at n = 5 and 8 (40,000 draws each): the raw score's tail rate
+    is more than 1.8× nominal, while the adjusted rate is within 0.4 points of 2.28%.
+  - NaN below K, finite values otherwise, and correct caps.
+  - The perturb-the-future test explicitly asserts the new columns are covered.
+  - 45 tests pass.

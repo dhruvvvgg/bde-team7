@@ -9,7 +9,7 @@ Source: Figshare 10.6084/m9.figshare.29293877.v3, `Output/CGWB_India_filtered_GW
 - Rows: **253,828** (one per well x monitoring round; 92 rounds, Jan/May/Aug/Nov 2000-2022)
 - Rows with a reading: **219,258**
 - Wells: **2,759**; states: **19**; districts: **365**
-- Columns: 77. Output: `processed/gw_features_by_state/state_slug=<state>/` (55.8 MB in total, largest file 10.3 MB; partitioned by state, see `scripts/07_output.py` for why)
+- Columns: 80. Output: `processed/gw_features_by_state/state_slug=<state>/` (59.2 MB in total, largest file 11.0 MB; partitioned by state, see `scripts/07_output.py` for why)
 
 ### Coverage by state
 
@@ -246,3 +246,68 @@ If the readings in a well-season were independent Gaussian draws, a z-score usin
 | (18, 22]           |              3.17 |                            3.27 |      19787 |
 
 The rest of the gap lines up with known drought years (High Stress peaks in 2009 and 2015-2018 in the per-year table above). The rolling baseline does not reduce the rate. It raises it slightly (more rows sit at small n, and recent-decade std is smaller), so baseline lag is not the main cause. A steady LINEAR decline does not inflate the expanding z either: the mean lags, but the std grows at the same rate, so z settles near a constant (about 1.7).
+
+## 10. Small-sample-adjusted anomaly (`stress_tadj`) vs `stress_category`
+
+`anomaly_tadj` maps (x - mean) / (s * sqrt(1 + 1/n)) through the Student-t CDF with n - 1 degrees of freedom, then the inverse normal CDF. Under i.i.d. Gaussian readings it has nominal normal tails at every n (Monte Carlo test in `tests/test_features.py`). Same K = 5, 0.10 m floor, thresholds and labels. `stress_category` stays the primary label.
+
+|                 |   stress_category % |   stress_tadj % |   nominal if Gaussian % |
+|:----------------|--------------------:|----------------:|------------------------:|
+| Normal          |               81.49 |           83.47 |                   84.13 |
+| Watch           |                7.61 |            7.85 |                    9.18 |
+| Moderate Stress |                4.52 |            4.5  |                    4.41 |
+| High Stress     |                6.38 |            4.18 |                    2.28 |
+
+Excess High Stress over the nominal 2.28%: 4.10 points (expanding) -> 1.90 points (t-adjusted), i.e. **54% of the excess disappears** once small-sample uncertainty is accounted for.
+
+Readings that change category: **10,611** of 166,306 classified (6.4%). The adjustment only shrinks |z| (t tails are heavier, and sqrt(1 + 1/n) > 1), so every change moves one or more steps towards Normal.
+
+| stress_category   |   Normal |   Watch |   Moderate Stress |   High Stress |
+|:------------------|---------:|--------:|------------------:|--------------:|
+| Normal            |   135523 |       0 |                 0 |             0 |
+| Watch             |     3299 |    9362 |                 0 |             0 |
+| Moderate Stress   |        0 |    3653 |              3860 |             0 |
+| High Stress       |        0 |      35 |              3624 |          6950 |
+
+High Stress rate per year (%):
+
+|                |   2005 |   2006 |   2007 |   2008 |   2009 |   2010 |   2011 |   2012 |   2013 |   2014 |   2015 |   2016 |   2017 |   2018 |   2019 |   2020 |   2021 |   2022 |
+|:---------------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
+| high_expanding |   7.83 |   6.51 |   7.69 |   6.98 |   9    |   7.38 |   4.96 |   5.01 |   4.84 |   4.66 |   7.95 |   9    |   8.53 |   7.78 |   6.12 |   3.19 |   3.95 |   2.64 |
+| high_tadj      |   3.2  |   2.98 |   4.28 |   3.89 |   5.45 |   4.73 |   3.41 |   3.25 |   3.13 |   3.31 |   5.94 |   6.61 |   6.38 |   5.8  |   4.73 |   2.33 |   3.08 |   2    |
+
+By state (%):
+
+| state            |   high_expanding |   high_tadj |   moderate_tadj |   watch_tadj |   readings |
+|:-----------------|-----------------:|------------:|----------------:|-------------:|-----------:|
+| Andhra Pradesh   |             4.62 |        3.09 |            3.51 |         6.31 |      10705 |
+| Assam            |            10.22 |        7.12 |            5.69 |         7.76 |        773 |
+| Bihar            |             9.09 |        5.73 |            6.93 |        10.54 |       3245 |
+| Chhattisgarh     |             7.24 |        5.17 |            4.52 |         8.27 |       8340 |
+| Delhi            |             3.84 |        1.22 |            5.06 |         7.85 |        573 |
+| Gujarat          |             3.19 |        2.21 |            2.32 |         4.94 |      16665 |
+| Haryana          |             9.19 |        5.53 |            8.37 |        10.11 |       2078 |
+| Himachal Pradesh |             5.76 |        3.39 |            3.91 |         7.26 |       2657 |
+| Jharkhand        |             7.11 |        4.96 |            4.56 |         9.42 |       2038 |
+| Karnataka        |             5.23 |        3.73 |            3.45 |         6.36 |      13817 |
+| Kerala           |             4.77 |        3.32 |            3.36 |         7.78 |       8434 |
+| Madhya Pradesh   |             6.68 |        4.4  |            4.41 |         7.76 |      32296 |
+| Maharashtra      |             7.01 |        4.61 |            4.63 |         7.89 |      16948 |
+| Odisha           |             5.25 |        3.64 |            3.25 |         6.53 |       9317 |
+| Punjab           |            10.45 |        6.56 |            9.65 |        13.61 |       2880 |
+| Tamil Nadu       |             5.55 |        3.82 |            4.25 |         6.92 |      10468 |
+| Telangana        |             4.64 |        2.83 |            3.3  |         6.17 |       5189 |
+| Uttar Pradesh    |            10.1  |        5.77 |            7.94 |        12.62 |      16599 |
+| West Bengal      |            10.23 |        7.19 |            5.88 |         9.2  |       3284 |
+
+High Stress by number of earlier readings (%):
+
+| n_prior_same_season   |   expanding |   tadj |
+|:----------------------|------------:|-------:|
+| (4, 7]                |        7.5  |   3.65 |
+| (7, 10]               |        7.31 |   4.6  |
+| (10, 14]              |        5.7  |   3.98 |
+| (14, 18]              |        7.05 |   5.29 |
+| (18, 22]              |        3.17 |   2.48 |
+
+**What remains.** After adjustment, High Stress is 4.18% vs 2.28% nominal. The remaining excess is concentrated in particular years (see the per-year row), consistent with drought-driven declines (e.g. the deficient 2009 and 2014-2015 monsoons). It also reflects that real readings are neither independent nor Gaussian (serial correlation, trends, heavy tails), which the t-adjustment does not model. This report does not attribute the remainder to any single cause.

@@ -135,6 +135,54 @@ def rolling_baseline(df: pd.DataFrame, window: int = ROLL_WINDOW,
     return df
 
 
+def tadj_anomaly(df: pd.DataFrame) -> pd.DataFrame:
+    """Part B2: small-sample-adjusted anomaly (NEW columns; anomaly_z is unchanged).
+
+    For a reading x with n >= K earlier same-season readings (the same expanding
+    window, the same K = 5 gate and the same 0.10 m floor on s as anomaly_z):
+        t     = (x - mean_earlier) / (s_eff * sqrt(1 + 1/n))
+        z_adj = Phi^-1( F_t(t; df = n - 1) )
+    where s is the sample std with ddof = 1 and s_eff = max(s, STD_FLOOR_M).
+
+    How this differs from anomaly_z: anomaly_z ALSO uses s with ddof = 1
+    (_prior_expanding_stats divides by n - 1), but it treats
+    (x - mean) / s as standard normal. That ignores two small-sample effects:
+      1. the earlier mean is itself estimated, so a NEW reading's prediction
+         error has variance sigma^2 (1 + 1/n): hence the sqrt(1 + 1/n);
+      2. s is estimated from n readings, so the standardised value follows a
+         Student t with n - 1 degrees of freedom, whose tails are much heavier
+         than normal for n = 5..10.
+    Under i.i.d. Gaussian readings, t is exactly t_{n-1}. Mapping it through
+    F_t then Phi^-1 gives a score with the nominal normal tail rates at every
+    n, so thresholds such as z >= 2 mean the same thing at n = 5 and n = 22.
+
+    Leakage: uses the same past-only baseline columns as anomaly_z plus the
+    current reading; n_prior_same_season counts earlier readings only.
+    Numerics: the upper tail goes through sf/isf (and the lower tail through
+    cdf/ppf), so extreme t do not round to +/-inf. Values are finite.
+    """
+    from scipy import stats
+
+    df = df.copy()
+    n = df["n_prior_same_season"].to_numpy(float)
+    s_eff = df["baseline_std_m"].clip(lower=STD_FLOOR_M).to_numpy(float)
+    with np.errstate(divide="ignore", invalid="ignore"):   # n = 0 rows are NaN anyway (no baseline)
+        t = (df["gwl_m_bgl"].to_numpy(float) - df["baseline_mean_m"].to_numpy(float)) / (s_eff * np.sqrt(1 + 1 / n))
+    dof = n - 1
+    z = np.full(len(df), np.nan)
+    ok = ~np.isnan(t)
+    up = ok & (t >= 0)
+    lo = ok & (t < 0)
+    z[up] = stats.norm.isf(stats.t.sf(t[up], dof[up]))
+    z[lo] = stats.norm.ppf(stats.t.cdf(t[lo], dof[lo]))
+    # Underflow at astronomically large |t| would give inf; such values are
+    # beyond any threshold anyway, so clip to a finite bound before capping.
+    z = np.clip(z, -38.0, 38.0)
+    df["anomaly_tadj"] = z
+    df["anomaly_tadj_capped"] = np.clip(z, -Z_CAP, Z_CAP)
+    return df
+
+
 def _theil_sen(x: np.ndarray, y: np.ndarray) -> float:
     i, j = np.triu_indices(len(x), 1)
     return float(np.median((y[j] - y[i]) / (x[j] - x[i])))
@@ -202,6 +250,7 @@ def build_features(df: pd.DataFrame, k: int = K_MAIN, rain: pd.DataFrame | None 
     """Stage-5 features, plus the Part-A extras when the monthly CHIRPS table `rain` is given."""
     df = seasonal_baseline(df, k)
     df = rolling_baseline(df)
+    df = tadj_anomaly(df)
     df["trend_5y_m_per_yr"] = seasonal_trend(df)
     df = rainfall_anomalies(df)
     df = completeness(df)

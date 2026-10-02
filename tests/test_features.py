@@ -105,7 +105,8 @@ def test_no_feature_depends_on_future_readings_or_rain(cutoff):
     past = a.index.get_level_values("date") < cutoff
     cols = [c for c in a.columns if c not in LEAKY_BY_DESIGN]
     assert {"gw_prev_round_m", "rain_12m_mm", "rain_monsoon_ytd_mm", "rain_last_monsoon_dev_mm",
-            "rain_3m_z", "gw_fluct_prev_wy_m", "gw_max_to_date_m"} <= set(cols)
+            "rain_3m_z", "gw_fluct_prev_wy_m", "gw_max_to_date_m",
+            "anomaly_roll10", "anomaly_tadj", "anomaly_tadj_capped"} <= set(cols)
     pd.testing.assert_frame_equal(a.loc[past, cols], b.loc[past, cols])
 
 
@@ -174,3 +175,48 @@ def test_rolling_baseline_forgets_an_old_level_shift():
     # The shift also inflates the expanding std (~2 m vs ~0.2 m), which is why
     # the expanding z does not necessarily look extreme here.
     assert e.loc[2022, "baseline_std_m"] > 5 * r.loc[2022, "baseline_roll10_std_m"]
+
+
+def test_tadj_close_to_existing_anomaly_for_large_n():
+    """With n = 200 earlier readings the t and normal tails coincide, and
+    sqrt(1 + 1/n) ~ 1, so the adjusted score is close to anomaly_z."""
+    rng = np.random.default_rng(3)
+    vals = list(rng.normal(10, 1, 200)) + [10.0 + d for d in (-2.5, -1, 0.5, 1.5, 2.5)]
+    rows = [{"well_id": f"W{i}", "season": "monsoon", "year": 2000 + j, "gwl_m_bgl": v}
+            for i, last in enumerate(vals[200:]) for j, v in enumerate(vals[:200] + [last])]
+    out = ft.tadj_anomaly(ft.seasonal_baseline(pd.DataFrame(rows), k=5))
+    last = out[out.year == 2200]
+    np.testing.assert_allclose(last.anomaly_tadj, last.anomaly_z, atol=0.03)
+
+
+def test_tadj_monte_carlo_tail_rates_nominal_at_small_n():
+    """i.i.d. normal data: anomaly_z over-produces z >= 2 at small n, while
+    anomaly_tadj stays at the nominal 2.28%."""
+    from scipy import stats
+    rng = np.random.default_rng(42)
+    nominal = stats.norm.sf(2)
+    for n in (5, 8):
+        reps = 40000
+        x = rng.normal(0, 1, (reps, n + 1))           # sigma = 1 m >> 0.10 m floor
+        prior, cur = x[:, :n], x[:, n]
+        d = pd.DataFrame({"gwl_m_bgl": cur, "baseline_mean_m": prior.mean(1),
+                          "baseline_std_m": prior.std(1, ddof=1), "n_prior_same_season": n})
+        d["anomaly_z"] = (d.gwl_m_bgl - d.baseline_mean_m) / d.baseline_std_m
+        out = ft.tadj_anomaly(d)
+        raw_rate = (out.anomaly_z >= 2).mean()
+        adj_rate = (out.anomaly_tadj >= 2).mean()
+        assert raw_rate > 1.8 * nominal, (n, raw_rate)
+        assert abs(adj_rate - nominal) < 0.004, (n, adj_rate)
+
+
+def test_tadj_nan_when_insufficient_history_and_finite_otherwise():
+    base = [1.0, 1.1, 0.9, 1.0, 1.05]
+    rows = []
+    for wid, last in (("UP", 1000.0), ("DOWN", -1000.0)):   # separate wells: extremes don't feed each other
+        for j, v in enumerate(base + [last]):
+            rows.append({"well_id": wid, "season": "monsoon", "year": 2000 + j, "gwl_m_bgl": v})
+    out = ft.tadj_anomaly(ft.seasonal_baseline(pd.DataFrame(rows), k=5))
+    assert out[out.year <= 2004].anomaly_tadj.isna().all()
+    last = out[out.year == 2005].set_index("well_id")
+    assert np.isfinite(last.anomaly_tadj).all()
+    assert last.loc["UP", "anomaly_tadj_capped"] == 5.0 and last.loc["DOWN", "anomaly_tadj_capped"] == -5.0
