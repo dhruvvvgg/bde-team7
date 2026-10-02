@@ -106,7 +106,8 @@ def test_no_feature_depends_on_future_readings_or_rain(cutoff):
     cols = [c for c in a.columns if c not in LEAKY_BY_DESIGN]
     assert {"gw_prev_round_m", "rain_12m_mm", "rain_monsoon_ytd_mm", "rain_last_monsoon_dev_mm",
             "rain_3m_z", "gw_fluct_prev_wy_m", "gw_max_to_date_m",
-            "anomaly_roll10", "anomaly_tadj", "anomaly_tadj_capped"} <= set(cols)
+            "anomaly_roll10", "anomaly_tadj", "anomaly_tadj_capped",
+            "rain_last_ne_mm", "rain_last_ne_dev_mm", "rain_last_ne_z_capped"} <= set(cols)
     pd.testing.assert_frame_equal(a.loc[past, cols], b.loc[past, cols])
 
 

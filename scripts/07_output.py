@@ -272,6 +272,22 @@ def main() -> None:
       "which the t-adjustment does not model. This report does not attribute the remainder to any "
       "single cause.")
 
+    w("\n## 11. Monsoon timing: Jun-Sep vs Oct-Dec rainfall share by state\n")
+    rn = pd.read_parquet(config.CHIRPS_TABLE).merge(df[["well_id", "state"]].drop_duplicates(), on="well_id")
+    rn = rn[rn.year.between(2000, 2022)]
+    tot = rn.groupby("state").precip_mm.sum()
+    share = pd.DataFrame({"Jun-Sep %": 100 * rn[rn.month.between(6, 9)].groupby("state").precip_mm.sum() / tot,
+                          "Oct-Dec %": 100 * rn[rn.month.between(10, 12)].groupby("state").precip_mm.sum() / tot,
+                          "Jan-May %": 100 * rn[rn.month.between(1, 5)].groupby("state").precip_mm.sum() / tot})
+    share = share.round(1).sort_values("Oct-Dec %", ascending=False)
+    w(share.to_markdown())
+    big = share[share["Oct-Dec %"] >= 15].index.tolist()
+    w(f"\nOct-Dec carries >= 15% of annual rain in: {', '.join(big)}. **Tamil Nadu is the clear "
+      f"exception**: Oct-Dec ({share.loc['Tamil Nadu', 'Oct-Dec %']:.1f}%) is comparable to or larger than "
+      f"Jun-Sep ({share.loc['Tamil Nadu', 'Jun-Sep %']:.1f}%), and Kerala (14%) is close to the cut-off. For these states use the `rain_last_ne_*` "
+      "features (Part A2) alongside the Jun-Sep ones. A model trained mainly on Jun-Sep-dominated "
+      "states may transfer poorly to a held-out Tamil Nadu.")
+
     (config.REPORTS_DIR / "data_quality.md").write_text("\n".join(D) + "\n")
     print("\n".join(D))
     print(f"\nwrote {config.FINAL_DIR} ({size:.1f} MB)")

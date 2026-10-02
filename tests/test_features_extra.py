@@ -91,3 +91,30 @@ def test_calendar():
     assert d.water_year.tolist() == [1999, 1999, 2000, 2000]
     assert d.water_year_index.tolist() == [0, 0, 1, 1]
     assert d.season_order.tolist() == [2, 3, 0, 1]
+
+
+def test_northeast_monsoon_uses_previous_years_oct_dec():
+    d = _grid([1.0] * 4, start_year=2001)                   # Jan, May, Aug, Nov 2001
+    d[["rain_3m_mm", "rain_6m_mm"]] = 0.0
+    out = fx.rainfall_extra(d, _rain()).reset_index(drop=True)
+    exp = sum(month_index(2000, m) for m in (10, 11, 12))
+    assert (out.last_ne_year == 2000).all()
+    assert (out.rain_last_ne_mm == exp).all()               # Nov-2001 must NOT use Oct-2001
+    assert out.rain_last_ne_dev_mm.isna().all()             # < 5 earlier NE seasons
+
+
+def test_northeast_monsoon_normal_uses_earlier_years_only():
+    years = range(2000, 2009)
+    p = pd.period_range("1999-01", "2008-12", freq="M")
+    r = pd.DataFrame({"well_id": "W", "year": p.year, "month": p.month})
+    # Oct-Dec totals: 1999..2006 -> alternating 100/200 per month; 2007 -> 1000 per month
+    r["precip_mm"] = np.where(r.month >= 10, np.where(r.year == 2007, 1000.0,
+                                                      np.where(r.year % 2 == 0, 100.0, 200.0)), 0.0)
+    d = pd.concat([_grid([1.0] * 4, start_year=y) for y in years], ignore_index=True)
+    d[["rain_3m_mm", "rain_6m_mm"]] = 0.0
+    out = fx.rainfall_extra(d, r)
+    row = out[(out.year == 2008) & (out.month == 1)].iloc[0]      # uses NE 2007
+    prior = [300.0 if yy % 2 == 0 else 600.0 for yy in range(1999, 2007)]
+    assert row.rain_last_ne_mm == 3000.0
+    assert np.isclose(row.rain_last_ne_dev_mm, 3000.0 - np.mean(prior))
+    assert row.rain_last_ne_z_capped == 5.0

@@ -175,3 +175,31 @@ approval" first.
   - NaN below K, finite values otherwise, and correct caps.
   - The perturb-the-future test explicitly asserts the new columns are covered.
   - 45 tests pass.
+
+### Part A2: north-east monsoon (Oct–Dec) rainfall features (added columns only)
+
+- **What:**
+  - New columns: `last_ne_year`, `rain_last_ne_mm`, `rain_last_ne_dev_mm` and
+    `rain_last_ne_z_capped` (±5).
+  - Every round in year Y uses Oct, Nov and Dec of year Y−1. That is the last fully completed
+    Oct–Dec season, because Dec of year Y falls after every round in Y.
+  - The normal and z-score use earlier Oct–Dec seasons only, at least 5 of them.
+  - The same `_month_sum()` leakage assertion applies.
+  - New report section 11 in `reports/data_quality.md`, comparing the Jun–Sep and Oct–Dec rainfall
+    share by state.
+- **Why:** Jun–Sep features miss the main rainy season in Tamil Nadu and an important part of it in
+  Andhra Pradesh.
+- **Before/after:**
+  - Rows: 253,828, unchanged.
+  - Columns: 80 → 84.
+  - Existing columns: 0 values changed.
+- **Result:**
+  - Tamil Nadu: Oct–Dec is 41.4% of annual rain, against 40.1% for Jun–Sep.
+  - Andhra Pradesh: 27.1% Oct–Dec.
+  - Kerala: 14.3% Oct–Dec.
+  - All other states: under 12%.
+- **Tests:**
+  - Exact months for every season, including Nov Y not using Oct Y.
+  - The normal uses only earlier years.
+  - The perturb-the-future test explicitly asserts the new columns are covered.
+  - 47 tests pass.

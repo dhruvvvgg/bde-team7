@@ -217,8 +217,54 @@ def rainfall_extra(df: pd.DataFrame, rain: pd.DataFrame) -> pd.DataFrame:
         # use in models, matching anomaly_z_capped.
         df[f"rain_{w}m_z_capped"] = z.clip(-5, 5)
 
+    df = northeast_monsoon(df, cums)
+
     start_year = np.where(m >= MONSOON_START_MONTH, y, y - 1)
     df["rain_monsoon_ytd_mm"] = _month_sum(df, cums, month_index(start_year, MONSOON_START_MONTH), obs_m - 1)
+    return df
+
+
+NE_START_MONTH = 10  # October: start of the north-east (retreating) monsoon
+NE_END_MONTH = 12    # December
+
+
+def northeast_monsoon(df: pd.DataFrame, cums: dict) -> pd.DataFrame:
+    """Part A2: north-east monsoon (Oct-Dec) rainfall, past-only.
+
+    rain_last_ne_mm          total over October, November and December of year
+                             Y-1, for every round in year Y. WHY Y-1 in every
+                             season: Oct-Dec of year Y is only complete after
+                             December of Y, which is after every round of Y
+                             (Jan, May, Aug, Nov). For Nov Y, October of Y is
+                             already in the past, but November and December are
+                             not, so Y-1 is the last COMPLETE season. Months
+                             used: Oct(Y-1), Nov(Y-1), Dec(Y-1); the last of
+                             these, Dec(Y-1), is always before the round.
+    rain_last_ne_dev_mm      that total minus the well's mean Oct-Dec total over
+                             EARLIER years only (ne years < Y-1, at least 5).
+    rain_last_ne_z_capped    (total - earlier mean) / earlier std, clipped to
+                             +/-5; NaN if fewer than 5 earlier years or the
+                             earlier std is < 1 mm.
+    WHY: Tamil Nadu and coastal Andhra Pradesh get much of their rain in
+    Oct-Dec, which the Jun-Sep features miss.
+    Leakage guard: the same _month_sum() assertion (last month summed < the
+    observation month) runs on every row.
+    """
+    df = df.copy()
+    ne_year = df["year"].to_numpy() - 1
+    df["last_ne_year"] = ne_year
+    df["rain_last_ne_mm"] = _month_sum(df, cums, month_index(ne_year, NE_START_MONTH),
+                                       month_index(ne_year, NE_END_MONTH))
+    # Earlier-years normal: one value per (well, ne_year), expanding over prior ne years.
+    nt = (df[["well_id", "last_ne_year", "rain_last_ne_mm"]]
+          .drop_duplicates(["well_id", "last_ne_year"])
+          .rename(columns={"last_ne_year": "year"}).reset_index(drop=True))
+    mean, z = _prior_z(nt, "rain_last_ne_mm", ["well_id"], RAIN_Z_MIN_YEARS, RAIN_Z_MIN_STD_MM)
+    nt["mean"], nt["z"] = mean.to_numpy(), z.to_numpy()
+    key = pd.MultiIndex.from_arrays([df["well_id"], df["last_ne_year"]])
+    idx = pd.MultiIndex.from_arrays([nt["well_id"], nt["year"]])
+    df["rain_last_ne_dev_mm"] = df["rain_last_ne_mm"] - pd.Series(nt["mean"].to_numpy(), idx).reindex(key).to_numpy()
+    df["rain_last_ne_z_capped"] = np.clip(pd.Series(nt["z"].to_numpy(), idx).reindex(key).to_numpy(), -5, 5)
     return df
 
 

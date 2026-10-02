@@ -9,7 +9,7 @@ Source: Figshare 10.6084/m9.figshare.29293877.v3, `Output/CGWB_India_filtered_GW
 - Rows: **253,828** (one per well x monitoring round; 92 rounds, Jan/May/Aug/Nov 2000-2022)
 - Rows with a reading: **219,258**
 - Wells: **2,759**; states: **19**; districts: **365**
-- Columns: 80. Output: `processed/gw_features_by_state/state_slug=<state>/` (59.2 MB in total, largest file 11.0 MB; partitioned by state, see `scripts/07_output.py` for why)
+- Columns: 84. Output: `processed/gw_features_by_state/state_slug=<state>/` (61.1 MB in total, largest file 11.4 MB; partitioned by state, see `scripts/07_output.py` for why)
 
 ### Coverage by state
 
@@ -311,3 +311,29 @@ High Stress by number of earlier readings (%):
 | (18, 22]              |        3.17 |   2.48 |
 
 **What remains.** After adjustment, High Stress is 4.18% vs 2.28% nominal. The remaining excess is concentrated in particular years (see the per-year row), consistent with drought-driven declines (e.g. the deficient 2009 and 2014-2015 monsoons). It also reflects that real readings are neither independent nor Gaussian (serial correlation, trends, heavy tails), which the t-adjustment does not model. This report does not attribute the remainder to any single cause.
+
+## 11. Monsoon timing: Jun-Sep vs Oct-Dec rainfall share by state
+
+| state            |   Jun-Sep % |   Oct-Dec % |   Jan-May % |
+|:-----------------|------------:|------------:|------------:|
+| Tamil Nadu       |        40.1 |        41.4 |        18.5 |
+| Andhra Pradesh   |        61.7 |        27.1 |        11.3 |
+| Kerala           |        72.1 |        14.3 |        13.6 |
+| Karnataka        |        77.8 |        12.3 |         9.8 |
+| Odisha           |        77.7 |        11.4 |        10.9 |
+| Telangana        |        81.3 |        11.1 |         7.6 |
+| Jharkhand        |        81.7 |         8.3 |        10   |
+| West Bengal      |        76.9 |         8.1 |        15   |
+| Assam            |        63.6 |         7.6 |        28.8 |
+| Bihar            |        82.1 |         6.9 |        11   |
+| Uttar Pradesh    |        86.5 |         5.9 |         7.7 |
+| Chhattisgarh     |        87.6 |         5.7 |         6.7 |
+| Maharashtra      |        91.2 |         5.6 |         3.2 |
+| Punjab           |        77.2 |         4.9 |        17.8 |
+| Madhya Pradesh   |        90.3 |         4.8 |         4.9 |
+| Himachal Pradesh |        79.6 |         4.6 |        15.8 |
+| Haryana          |        80.8 |         4.1 |        15.1 |
+| Delhi            |        82.3 |         3.9 |        13.7 |
+| Gujarat          |        95.9 |         3.3 |         0.8 |
+
+Oct-Dec carries >= 15% of annual rain in: Tamil Nadu, Andhra Pradesh. **Tamil Nadu is the clear exception**: Oct-Dec (41.4%) is comparable to or larger than Jun-Sep (40.1%), and Kerala (14%) is close to the cut-off. For these states use the `rain_last_ne_*` features (Part A2) alongside the Jun-Sep ones. A model trained mainly on Jun-Sep-dominated states may transfer poorly to a held-out Tamil Nadu.
