@@ -41,3 +41,9 @@ SEASON_BY_MONTH = {
     "Nov": "post_monsoon_kharif", # November round, after the SW monsoon
 }
 MONTH_NUM = {"Jan": 1, "May": 5, "Aug": 8, "Nov": 11}
+
+INTERIM_DIR = PROCESSED_DIR / "interim"          # gitignored, regenerable
+GW_LONG = INTERIM_DIR / "gw_long.parquet"        # stage 2 output
+GW_CLEAN = INTERIM_DIR / "gw_clean.parquet"      # stage 3 output
+GW_RAIN = INTERIM_DIR / "gw_rain.parquet"        # stage 4 output
+CROSSWALK = REPO_ROOT / "dataset" / "well_crosswalk.csv"  # committed
