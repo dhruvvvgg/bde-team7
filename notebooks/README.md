@@ -39,8 +39,9 @@ Results:
 - **Runtime resets.** Colab runtimes are temporary. Everything the notebook writes (outputs,
   reports) is lost when the runtime resets, unless you copy it to Drive. Nothing is pushed back to
   GitHub.
-- **Memory.** The largest step holds the 253,828 × 84 table plus intermediate frames in memory. That
-  is about 1–2 GB peak in the sandbox, within a standard Colab runtime (about 12 GB). The PySpark
+- **Memory.** The largest step holds the 253,828 × 84 table plus intermediate frames in memory. Measured
+  peak memory in the sandbox: 1.07 GB (features), 1.47 GB (extension features) and 1.75 GB (figures).
+  All are well within a standard Colab runtime (about 12 GB). The PySpark
   section starts a local JVM, which adds about 1 GB.
 - **Java and PySpark.** Colab usually has Java, but if `spark` fails to start, install it with
   `!apt-get install -y openjdk-17-jre-headless`. The pinned pyspark 3.5.3 needs Java 8, 11 or 17.

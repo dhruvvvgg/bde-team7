@@ -536,13 +536,13 @@ def main() -> None:
     w = 0.2
     for i, s in enumerate(SEASONS):
         b = ax.bar(x + (i - 1.5) * w, sp[s], width=w - 0.02, color=CAT[i], label=SEASON_LABEL[s])
-    ax.set_xticks(x, [f"{k}\n({v:,} rows)" for k, v in sp.sum(1).items()])
+    ax.set_xticks(x, [f"{k}\n({v:,} rows)" for k, v in sp.sum(axis=1).items()])
     ax.set_yscale("log")
     ax.set_ylabel("Eval-eligible readings (log scale)")
     ax.set_title("Evaluation-eligible readings per split and season")
     ax.legend(fontsize=8, ncol=2)
     f15 = save(fig, "fig15_split_summary.png")
-    table(sp.assign(total=sp.sum(1)), "table15_split_summary")
+    table(sp.assign(total=sp.sum(axis=1)), "table15_split_summary")
     reasons = spl.exclusion_reason.value_counts()
     cap("15", "Eligible readings per chronological split and season",
         f"Train 2000-2015 has {sp.loc['train'].sum():,} eligible readings, validation 2016-2017 "
