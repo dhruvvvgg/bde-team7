@@ -290,3 +290,32 @@ approval" first.
   | ext | 2023–2024 | 5,989 |
 
 - **Before/after:** feature tables unchanged. This is a separate file, as specified.
+
+### Part G: contract tests and reproducibility
+
+- **What:**
+  - `src/gwstress/contract.py`: class, dtype, range, NaN policy and description for all 84 main
+    columns, plus `is_extension`.
+  - `tests/test_data_contract.py`, with 10 tests:
+    - key uniqueness, and the 2,759 × 92 grid;
+    - no NaN in key or rainfall-window columns, with the three documented Jan/May/Aug-2000
+      exceptions;
+    - dtypes, ranges and NaN policy for every column, in both the main and extension tables;
+    - category values;
+    - partitioned Parquet read-back and round trip;
+    - one-to-one joins of the splits, crosswalk, the three CHIRPS tables and the extension against
+      the main table;
+    - every committed file under 50 MB.
+  - Pinned `requirements.txt`.
+  - `scripts/run_all.sh`: regenerates everything from committed inputs, never downloads, and ends
+    with pytest.
+  - `scripts/verify_reproduction.py`: compares Parquet contents (float rtol/atol 1e-9, ignoring row
+    order and partition file names) and text files exactly.
+- **Reproduction check:**
+  - Fresh `git clone` of `6a1327c` into a scratch directory, with all generated outputs deleted.
+  - `bash scripts/run_all.sh` took 3 min 7 s, and 58 tests passed.
+  - `verify_reproduction.py` against the committed outputs: **0 differences across 18 files**
+    (3 feature/split Parquet outputs, 3 CHIRPS inputs, the crosswalk and 11 reports/CSVs).
+  - Caveat: the clone used this session's installed environment, which matches the pinned versions,
+    not a fresh virtualenv.
+- **Before/after:** no data changes.

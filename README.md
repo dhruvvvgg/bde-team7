@@ -17,6 +17,13 @@ Its output feeds the modeling, evaluation and dashboard stages.
 
 ## Reproducing the pipeline from scratch
 
+**One command (no downloads):** `bash scripts/run_all.sh`. It regenerates every output from the committed
+inputs and ends with pytest. It takes about 3 minutes. To check a rerun against the committed outputs,
+use `python scripts/verify_reproduction.py <rerun_repo> <reference_repo>`.
+
+The step-by-step commands below include the one-off CHIRPS downloads (stages 4a and 4c, and the 2023–24
+extension), which `run_all.sh` deliberately skips.
+
 You need Python 3.11 or later. Stage 4a also needs HTTPS access to `data.chc.ucsb.edu`, unless the
 committed CHIRPS table is already present. FTP is not used.
 
