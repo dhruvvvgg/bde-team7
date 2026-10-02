@@ -419,3 +419,13 @@ approval" first.
   `docs/architecture.md` explaining each box.
 - The modeling and dashboard stages appear as dashed placeholder boxes for teammates to extend.
 - Added to `run_all.sh`. No data changes.
+
+### Parts K and L: review section and references (new docs only)
+
+- `docs/review_preprocessing_section.md`: prose organised under the review headings (Dataset,
+  Preprocessing: Big Data Analysis and its steps, Results of preprocessing, Limitations). It cites
+  the figures by number and the references by IEEE number.
+- `docs/references.md`: 15 references in IEEE style. **Every entry is marked [verify]**, because the
+  sandbox blocks Figshare, Nature, PubMed Central, doi.org and Crossref (HTTP 403). Each entry says
+  whether its details came from web-search listings, the project brief, or memory.
+- No data changes.
