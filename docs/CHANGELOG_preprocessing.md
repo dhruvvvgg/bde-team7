@@ -446,3 +446,8 @@ approval" first.
   - PySpark run: 0 errors, and Spark matches pandas on all three aggregates.
   - The sandbox's Java proxy settings line was removed from the executed copy's outputs.
 - **Data changes:** none.
+
+### Part N: review checklist
+
+- `docs/review_checklist.md` maps review items 1–12 to the files that deliver them. Items 2, 6, 7
+  and 8 are owned by the modeling teammate; items 9 and 11 are manual.
