@@ -71,7 +71,8 @@ def test_no_feature_depends_on_future_readings_or_rain():
     a = ft.build_features(base).set_index(["well_id", "date"])
     b = ft.build_features(pert).set_index(["well_id", "date"])
     past = a.index.get_level_values("date") < pd.Timestamp(2006, 1, 1)
-    leaky_ok = {"well_completeness_full_period"}   # documented descriptive-only column
+    # documented descriptive-only columns (use the whole record by design)
+    leaky_ok = {"well_completeness_full_period", "well_has_no_series_for_season"}
     cols = [c for c in a.columns if c not in leaky_ok]
     pd.testing.assert_frame_equal(a.loc[past, cols], b.loc[past, cols])
 

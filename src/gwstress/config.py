@@ -48,3 +48,5 @@ GW_CLEAN = INTERIM_DIR / "gw_clean.parquet"      # stage 3 output
 GW_RAIN = INTERIM_DIR / "gw_rain.parquet"        # stage 4 output
 CROSSWALK = REPO_ROOT / "dataset" / "well_crosswalk.csv"  # committed
 GW_FEATURES = INTERIM_DIR / "gw_features.parquet"  # stage 5 output (stage 7 writes the partitioned final)
+GW_STRESS = INTERIM_DIR / "gw_stress.parquet"      # stage 6 output
+FINAL_DIR = PROCESSED_DIR / "gw_features_by_state" # stage 7: partitioned final table (committed)

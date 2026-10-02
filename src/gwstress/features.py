@@ -24,6 +24,13 @@ K_SENSITIVITY = (3, 5, 8)  # reported in data_quality.md
 # rather than dropping the row: the reading is real, only its scale is unknown.
 STD_FLOOR_M = 0.10
 
+# Models should use anomaly_z_capped. The raw z has a heavy tail (|z| > 5 in
+# ~1% of rows, range about -56..+39) driven by level shifts and single bad
+# readings; a few such rows would dominate a squared-error loss. Capping at
+# +/-5 keeps the sign and "very extreme" information. Stress categories are
+# unaffected because every threshold is below 5.
+Z_CAP = 5.0
+
 TREND_YEARS = 5            # look-back for Theil-Sen trend (same season)
 TREND_MIN_POINTS = 4       # need >= 4 of the 5 prior readings
 
@@ -70,6 +77,12 @@ def seasonal_baseline(df: pd.DataFrame, k: int = K_MAIN) -> pd.DataFrame:
     std_eff = df["baseline_std_m"].clip(lower=STD_FLOOR_M)
     # Positive anomaly = deeper than usual for this season = more stressed.
     df["anomaly_z"] = (df["gwl_m_bgl"] - df["baseline_mean_m"]) / std_eff
+    df["anomaly_z_capped"] = df["anomaly_z"].clip(-Z_CAP, Z_CAP)
+    # Grouping helper for the 444 wells with no May series. LEAKAGE WARNING:
+    # it looks at the whole 2000-2022 record, so it is descriptive only
+    # (for grouping / reporting), never a model input.
+    has_any = df.groupby(GROUP, observed=True)["gwl_m_bgl"].transform(lambda s: s.notna().any())
+    df["well_has_no_series_for_season"] = ~has_any.astype(bool)
     return df
 
 
