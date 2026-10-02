@@ -262,3 +262,31 @@ approval" first.
 - **Before/after:**
   - Main table: unchanged (0 rows, 0 values).
   - Main rainfall table: unchanged.
+
+### Part F: shared splits file (new file)
+
+- **What:**
+  - `processed/splits.parquet`: 275,900 rows (253,828 main + 22,072 extension), keyed by
+    (`well_id`, `period_label`).
+  - Columns: `eval_eligible`, `exclusion_reason`, `split_chrono`, `state_fold`, `no_may_state`,
+    `source`, `date`, `year`, `season` and `state`.
+  - Cutoffs live in `config/splits.json`. The code is `src/gwstress/splits.py` and
+    `scripts/10_splits.py`, and the summary is `reports/splits_summary.md`.
+- **Rules:**
+  - `eval_eligible` = reading exists, at least 5 earlier same-season readings, and the round is not
+    sparse.
+  - A round is sparse when coverage is under 70% (main) or under 15% (extension). The separate
+    extension threshold exists because the 70% rule would exclude all 8 extension rounds; Jan-23 is
+    at 69.8%.
+  - Excluded main rounds: May-20, May-21, Aug-12, Jan-16, Aug-20, May-16, Nov-18.
+  - Excluded extension rounds: May-24, Aug-24, Nov-24.
+- **Eval-eligible rows by split:**
+
+  | Split | Years | Eligible rows |
+  |---|---|---:|
+  | train | 2000–2015 | 104,437 |
+  | val | 2016–2017 | 15,513 |
+  | test | 2018–2022 | 40,630 |
+  | ext | 2023–2024 | 5,989 |
+
+- **Before/after:** feature tables unchanged. This is a separate file, as specified.

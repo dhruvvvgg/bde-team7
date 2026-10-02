@@ -1,0 +1,13 @@
+{
+  "_doc": "Single source of truth for processed/splits.parquet. Edit, then run: python scripts/10_splits.py",
+  "K_min_history": 5,
+  "chrono": {
+    "train": [2000, 2015],
+    "val": [2016, 2017],
+    "test": [2018, 2022],
+    "ext": [2023, 2024]
+  },
+  "sparse_round_min_coverage_pct": 70.0,
+  "ext_sparse_round_min_coverage_pct": 15.0,
+  "_sparse_doc": "A round is 'sparse' (not eval-eligible) when fewer than this % of the 2,759 wells have a reading in it. Main rounds (2000-2022) use sparse_round_min_coverage_pct; extension rounds (2023-2024) use ext_sparse_round_min_coverage_pct, because extension coverage is low by construction (30.9% overall) and a 70% rule would exclude every extension round."
+}
