@@ -60,3 +60,10 @@ SUSPICIOUS_ZEROS = [
 ]
 # Plausible India extent (mainland + islands margin). Wells outside are errors.
 INDIA_BBOX = {"lat_min": 6.0, "lat_max": 37.5, "lon_min": 68.0, "lon_max": 97.5}
+
+# Part E: 2023-2024 extension holdout (kept separate from the main table)
+GW_STAGE4_FILE = GW_OUTPUT_DIR / "4_India_GWLs_2000_2024_after_3sigma.csv"
+EXT_FIRST_YEAR, EXT_LAST_YEAR = 2023, 2024
+EXT_DIR = PROCESSED_DIR / "extension_2023_2024"
+EXT_LONG = INTERIM_DIR / "ext_long.parquet"
+CHIRPS_EXT_TABLE = CHIRPS_DIR / "chirps_monthly_by_well_2023_2024.parquet"

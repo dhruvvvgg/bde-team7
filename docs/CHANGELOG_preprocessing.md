@@ -212,3 +212,30 @@ approval" first.
   - "Region-specific notes": Tamil Nadu monsoon timing and the Chanderi pair of nearby wells.
   - "Rainfall sensitivity resource": the 3×3 CHIRPS table and how to join it.
 - **Before/after:** no data changes.
+
+### Part E, step 1: extension matching proof and coverage (new report only)
+
+- **What:**
+  - New code: `src/gwstress/extension.py` and `scripts/09a_extension_match.py`.
+  - New report: `reports/extension_2023_2024.md`, sections 1–3. It was written before any extension
+    features were built.
+- **Matching:**
+  - All 2,759 wells were matched by surrogate `well_id`, with 0 unmatched and 0 raw-coordinate
+    mismatches.
+  - One well (`W0388be4a8d`, Raidih) has two stage-4 rows. It was resolved by taking the row whose
+    2000–2022 readings equal the main table exactly. The other row is a sparse twin whose two
+    2023–24 values are identical to the kept row's.
+  - All 253,828 main cells for 2000–2022 are identical to the matched stage-4 rows.
+- **Coverage:**
+
+  | Period | Share of cells with a reading |
+  |---|---:|
+  | 2018–2022 | 80.0% |
+  | 2023–2024 | 30.9% |
+
+  - Coverage falls from 69.8% (Jan-23) to 8.0% (Nov-24).
+  - 255 wells have no 2023–24 reading at all.
+  - Delhi has 0%. Tamil Nadu and Jharkhand stay above 80%.
+- **Zero readings:** 87 in 2023–24 (68 of them in May-23), against 11 in 2000–2022. They look like
+  placeholders. They are kept and flagged.
+- **Before/after:** main table unchanged.
