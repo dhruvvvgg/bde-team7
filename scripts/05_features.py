@@ -14,7 +14,7 @@ from gwstress import config, features as ft  # noqa: E402
 
 def main() -> None:
     df = pd.read_parquet(config.GW_RAIN)
-    out = ft.build_features(df, k=ft.K_MAIN)
+    out = ft.build_features(df, k=ft.K_MAIN, rain=pd.read_parquet(config.CHIRPS_TABLE))
     out.to_parquet(config.GW_FEATURES, index=False)
 
     r = out[out.gwl_m_bgl.notna()]

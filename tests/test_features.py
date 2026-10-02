@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from gwstress import features as ft  # noqa: E402
@@ -59,22 +60,66 @@ def test_theil_sen_trend_excludes_current_year():
     assert tr[4] == 1.0 and tr[6] == 1.0     # 1000 in 2006 does not affect 2006's own trend
 
 
-def test_no_feature_depends_on_future_readings_or_rain():
-    """Perturb everything from 2006 on; every row before 2006 must be identical."""
-    base = _panel()
-    pert = base.copy()
-    fut = pert.year >= 2006
+# Columns that use the whole record by design. They are documented as
+# descriptive only (class B) and excluded from the no-future check.
+LEAKY_BY_DESIGN = {"well_completeness_full_period", "well_has_no_series_for_season"}
+
+
+def _monthly_rain(wells=("W1", "W2"), start="1999-01", end="2011-12", seed=1):
+    rng = np.random.default_rng(seed)
+    p = pd.period_range(start, end, freq="M")
+    return pd.concat([pd.DataFrame({"well_id": w, "year": p.year, "month": p.month,
+                                    "precip_mm": rng.gamma(1.5, 60, len(p))}) for w in wells],
+                     ignore_index=True)
+
+
+def _full_build(panel, rain):
+    """Same path as the real pipeline: rain windows from monthly CHIRPS, then
+    the stage-5 features and the Part-A extras."""
+    from gwstress import rainfall as rf
+    p = rf.rainfall_windows(panel.drop(columns=[c for c in panel if c.startswith("rain_")]), rain)
+    return ft.build_features(p, rain=rain).set_index(["well_id", "date"])
+
+
+def _perturb_future(panel, rain, cutoff):
+    """Replace every reading at or after `cutoff` and every rainfall month at or
+    after cutoff's month with wildly different values."""
     rng = np.random.default_rng(99)
-    pert.loc[fut, "gwl_m_bgl"] = rng.uniform(50, 60, fut.sum())
-    for k in (1, 3, 6):
-        pert.loc[fut, f"rain_{k}m_mm"] = rng.uniform(1000, 2000, fut.sum())
-    a = ft.build_features(base).set_index(["well_id", "date"])
-    b = ft.build_features(pert).set_index(["well_id", "date"])
-    past = a.index.get_level_values("date") < pd.Timestamp(2006, 1, 1)
-    # documented descriptive-only columns (use the whole record by design)
-    leaky_ok = {"well_completeness_full_period", "well_has_no_series_for_season"}
-    cols = [c for c in a.columns if c not in leaky_ok]
+    p, r = panel.copy(), rain.copy()
+    fut = p.date >= cutoff
+    p.loc[fut, "gwl_m_bgl"] = rng.uniform(50, 60, fut.sum())
+    rfut = (r.year * 12 + r.month) >= (cutoff.year * 12 + cutoff.month)
+    r.loc[rfut, "precip_mm"] = rng.uniform(1000, 2000, rfut.sum())
+    return p, r
+
+
+@pytest.mark.parametrize("cutoff", ["2006-01-01", "2006-05-01", "2006-08-01", "2006-11-01"])
+def test_no_feature_depends_on_future_readings_or_rain(cutoff):
+    """For several cutoffs, including mid-year ones, perturb all future readings
+    and rainfall months. Every feature of every earlier row must be identical.
+    This covers ALL columns produced by the pipeline, including Part-A extras."""
+    cutoff = pd.Timestamp(cutoff)
+    panel, rain = _panel(), _monthly_rain()
+    a = _full_build(panel, rain)
+    b = _full_build(*_perturb_future(panel, rain, cutoff))
+    past = a.index.get_level_values("date") < cutoff
+    cols = [c for c in a.columns if c not in LEAKY_BY_DESIGN]
+    assert {"gw_prev_round_m", "rain_12m_mm", "rain_monsoon_ytd_mm", "rain_last_monsoon_dev_mm",
+            "rain_3m_z", "gw_fluct_prev_wy_m", "gw_max_to_date_m"} <= set(cols)
     pd.testing.assert_frame_equal(a.loc[past, cols], b.loc[past, cols])
+
+
+def test_perturbation_check_detects_a_leaky_feature():
+    """Meta-test: a deliberately leaky column (next round's reading) must fail
+    the same comparison, proving the test above has teeth."""
+    cutoff = pd.Timestamp("2006-05-01")
+    panel, rain = _panel(), _monthly_rain()
+    a, b = _full_build(panel, rain), _full_build(*_perturb_future(panel, rain, cutoff))
+    for d in (a, b):
+        d["leaky_next"] = d.groupby(level="well_id")["gwl_m_bgl"].shift(-1)
+    past = a.index.get_level_values("date") < cutoff
+    with pytest.raises(AssertionError):
+        pd.testing.assert_frame_equal(a.loc[past, ["leaky_next"]], b.loc[past, ["leaky_next"]])
 
 
 def test_rain_normal_uses_prior_years_only():

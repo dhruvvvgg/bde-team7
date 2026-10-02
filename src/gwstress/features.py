@@ -149,11 +149,16 @@ def completeness(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def build_features(df: pd.DataFrame, k: int = K_MAIN) -> pd.DataFrame:
+def build_features(df: pd.DataFrame, k: int = K_MAIN, rain: pd.DataFrame | None = None) -> pd.DataFrame:
+    """Stage-5 features, plus the Part-A extras when the monthly CHIRPS table `rain` is given."""
     df = seasonal_baseline(df, k)
     df["trend_5y_m_per_yr"] = seasonal_trend(df)
     df = rainfall_anomalies(df)
     df = completeness(df)
+    df = df.sort_values(["well_id", "date"]).reset_index(drop=True)
+    if rain is not None:
+        from . import features_extra
+        df = features_extra.add_all(df, rain)
     return df.sort_values(["well_id", "date"]).reset_index(drop=True)
 
 
