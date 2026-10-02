@@ -51,3 +51,35 @@ approval" first.
   - A meta-test proves the check fails on a deliberately leaky column.
   - Exact-value tests cover each new feature (`tests/test_features_extra.py`).
   - 37 tests pass.
+
+### Part B: stationary (rolling 10-reading) stress variant (added columns only)
+
+- **What:** 7 new columns. The code is `features.rolling_baseline()`, and `scripts/06_stress.py`
+  adds the label.
+  - Baseline: `n_roll10`, `baseline_roll10_mean_m`, `baseline_roll10_std_m`,
+    `flag_roll10_std_floored`.
+  - Anomaly: `anomaly_roll10`, `anomaly_roll10_capped` (±5).
+  - Label: `stress_roll10`, from the same `classify()` with the same thresholds and labels.
+  - The baseline uses the last 10 non-missing earlier readings of the same well and season, needs at
+    least 5, and applies the same 0.10 m std floor.
+  - A comparison section was added to `reports/data_quality.md` (section 9).
+- **Why:** to test whether the expanding baseline's lag explains the excess High Stress rate.
+- **Before/after:**
+  - Rows: 253,828, unchanged.
+  - Columns: 68 → 75.
+  - Existing columns: **0 values changed**. `stress_category` is still the primary label.
+    Checked with `scripts/compare_to_baseline.py`.
+- **Finding:** the rolling variant does **not** lower the High Stress rate.
+
+  | | Expanding | Rolling |
+  |---|---:|---:|
+  | High Stress, share of 166,306 readings classified under both | 6.38% | 6.90% |
+
+  The two labels differ on 10,900 readings (6.6%), mostly between adjacent categories. The main
+  cause of the excess is small-sample std estimation: with 5–10 earlier readings, even
+  independent Gaussian data would give about 4.7–6.3% at z ≥ 2. Drought years add the rest.
+- **Tests:**
+  - Exact-window test (last 10 earlier readings, NaN skipped, current reading excluded).
+  - Level-shift test showing the rolling mean forgets an old level.
+  - The perturb-the-future test covers the new columns automatically.
+  - 40 tests pass.

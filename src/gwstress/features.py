@@ -86,6 +86,55 @@ def seasonal_baseline(df: pd.DataFrame, k: int = K_MAIN) -> pd.DataFrame:
     return df
 
 
+ROLL_WINDOW = 10   # Part B: rolling baseline uses the last 10 earlier same-season readings
+ROLL_MIN = 5       # ... and needs at least 5 of them (same K as the expanding baseline)
+
+
+def rolling_baseline(df: pd.DataFrame, window: int = ROLL_WINDOW,
+                     min_n: int = ROLL_MIN) -> pd.DataFrame:
+    """Part B: stationary variant of the seasonal baseline.
+
+    For round t of a well-season, the baseline is the mean and std (ddof=1) of
+    the last `window` NON-MISSING readings of that well-season strictly before
+    t. That is the most recent 10 readings, which can span more than 10 years
+    if rounds were missed. It needs at least `min_n` of them, otherwise NaN.
+    The std floor (STD_FLOOR_M) and the cap (Z_CAP) are the same as for the
+    expanding baseline.
+
+    WHY: the expanding mean averages over all years since 2000. In a well that
+    is steadily declining it lags further and further behind, so the late
+    years look anomalous just because of the trend (High Stress is 6.4% of
+    classified rows, against 2.3% for a standard normal). A 10-reading window
+    compares each reading with the recent decade instead.
+    Uses only readings of the same well and season from rounds before t.
+    """
+    df = df.sort_values(GROUP + ["year"]).copy()
+    n = np.zeros(len(df), dtype=int)
+    mean = np.full(len(df), np.nan)
+    std = np.full(len(df), np.nan)
+    pos = {ix: i for i, ix in enumerate(df.index)}
+    for _, g in df.groupby(GROUP, observed=True, sort=False):
+        v = g["gwl_m_bgl"].to_numpy(float)
+        hist: list[float] = []
+        for ix, x in zip(g.index, v):
+            prior = hist[-window:]            # LEAKAGE GUARD: built before x is appended
+            k = pos[ix]
+            n[k] = len(prior)
+            if len(prior) >= min_n:
+                mean[k] = np.mean(prior)
+                std[k] = np.std(prior, ddof=1)
+            if not np.isnan(x):
+                hist.append(x)
+    df["n_roll10"] = n
+    df["baseline_roll10_mean_m"] = mean
+    df["baseline_roll10_std_m"] = std
+    df["flag_roll10_std_floored"] = (~np.isnan(std)) & (std < STD_FLOOR_M)
+    eff = df["baseline_roll10_std_m"].clip(lower=STD_FLOOR_M)
+    df["anomaly_roll10"] = (df["gwl_m_bgl"] - df["baseline_roll10_mean_m"]) / eff
+    df["anomaly_roll10_capped"] = df["anomaly_roll10"].clip(-Z_CAP, Z_CAP)
+    return df
+
+
 def _theil_sen(x: np.ndarray, y: np.ndarray) -> float:
     i, j = np.triu_indices(len(x), 1)
     return float(np.median((y[j] - y[i]) / (x[j] - x[i])))
@@ -152,6 +201,7 @@ def completeness(df: pd.DataFrame) -> pd.DataFrame:
 def build_features(df: pd.DataFrame, k: int = K_MAIN, rain: pd.DataFrame | None = None) -> pd.DataFrame:
     """Stage-5 features, plus the Part-A extras when the monthly CHIRPS table `rain` is given."""
     df = seasonal_baseline(df, k)
+    df = rolling_baseline(df)
     df["trend_5y_m_per_yr"] = seasonal_trend(df)
     df = rainfall_anomalies(df)
     df = completeness(df)

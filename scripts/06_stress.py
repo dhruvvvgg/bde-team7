@@ -17,6 +17,10 @@ def main() -> None:
     df["stress_category"] = stress.classify(df["gwl_m_bgl"], df["anomaly_z"])
     # Identity check promised in the docs: capped z gives the same labels.
     assert (stress.classify(df["gwl_m_bgl"], df["anomaly_z_capped"]) == df["stress_category"]).all()
+    # Part B: the same classify() on the rolling-baseline anomaly. Existing stress
+    # columns are untouched; stress_category remains the primary label.
+    df["stress_roll10"] = stress.classify(df["gwl_m_bgl"], df["anomaly_roll10"])
+    assert (stress.classify(df["gwl_m_bgl"], df["anomaly_roll10_capped"]) == df["stress_roll10"]).all()
     df.to_parquet(config.GW_STRESS, index=False)
 
     counts, changes = stress.sensitivity(df)

@@ -9,7 +9,7 @@ Source: Figshare 10.6084/m9.figshare.29293877.v3, `Output/CGWB_India_filtered_GW
 - Rows: **253,828** (one per well x monitoring round; 92 rounds, Jan/May/Aug/Nov 2000-2022)
 - Rows with a reading: **219,258**
 - Wells: **2,759**; states: **19**; districts: **365**
-- Columns: 68. Output: `processed/gw_features_by_state/state_slug=<state>/` (49.0 MB in total, largest file 9.0 MB; partitioned by state, see `scripts/07_output.py` for why)
+- Columns: 75. Output: `processed/gw_features_by_state/state_slug=<state>/` (55.7 MB in total, largest file 10.3 MB; partitioned by state, see `scripts/07_output.py` for why)
 
 ### Coverage by state
 
@@ -174,3 +174,75 @@ High Stress is 6.4% of classified rows, versus 2.3% expected if z were standard 
 | Telangana        |     86.2 |     6   |               3.2 |           4.6 |
 | Uttar Pradesh    |     71   |    11.4 |               7.5 |          10.1 |
 | West Bengal      |     75.5 |     8.7 |               5.5 |          10.2 |
+
+## 9. Expanding vs rolling (10-reading) baseline
+
+`stress_category` uses the expanding baseline (all earlier same-season readings, K=5). `stress_roll10` uses the last 10 earlier same-season readings (minimum 5), with the same 0.10 m floor, the same thresholds and the same classify(). The primary label is still `stress_category`.
+
+|                      |   expanding (stress_category) |   rolling (stress_roll10) |
+|:---------------------|------------------------------:|--------------------------:|
+| No reading           |                         34570 |                     34570 |
+| Insufficient history |                         52952 |                     52952 |
+| Normal               |                        135523 |                    134736 |
+| Watch                |                         12661 |                     12429 |
+| Moderate Stress      |                          7513 |                      7658 |
+| High Stress          |                         10609 |                     11483 |
+
+On the 166,306 readings classified under BOTH baselines, High Stress is **6.38%** (expanding) vs **6.90%** (rolling); 2.28% expected under a standard normal.
+
+Readings whose category differs between the two: **10,900** of 219,258 (5.0%); among readings classified under both: **10,900** (6.6%).
+
+Transition matrix (rows: expanding, columns: rolling), readings only:
+
+| stress_category      |   Insufficient history |   Normal |   Watch |   Moderate Stress |   High Stress |
+|:---------------------|-----------------------:|---------:|--------:|------------------:|--------------:|
+| Insufficient history |                  52952 |        0 |       0 |                 0 |             0 |
+| Normal               |                      0 |   132250 |    2235 |               631 |           407 |
+| Watch                |                      0 |     2456 |    8607 |              1043 |           555 |
+| Moderate Stress      |                      0 |       30 |    1543 |              4984 |           956 |
+| High Stress          |                      0 |        0 |      44 |              1000 |          9565 |
+
+High Stress rate per state (readings classified under both):
+
+| state            |   expanding_high_pct |   rolling_high_pct |   readings |
+|:-----------------|---------------------:|-------------------:|-----------:|
+| Andhra Pradesh   |                 4.62 |               5.54 |      10705 |
+| Assam            |                10.22 |               9.57 |        773 |
+| Bihar            |                 9.09 |               9    |       3245 |
+| Chhattisgarh     |                 7.24 |               8.24 |       8340 |
+| Delhi            |                 3.84 |               5.06 |        573 |
+| Gujarat          |                 3.19 |               5.14 |      16665 |
+| Haryana          |                 9.19 |               9.19 |       2078 |
+| Himachal Pradesh |                 5.76 |               6.77 |       2657 |
+| Jharkhand        |                 7.11 |               6.58 |       2038 |
+| Karnataka        |                 5.23 |               6.49 |      13817 |
+| Kerala           |                 4.77 |               5.5  |       8434 |
+| Madhya Pradesh   |                 6.68 |               6.79 |      32296 |
+| Maharashtra      |                 7.01 |               7.05 |      16948 |
+| Odisha           |                 5.25 |               5.74 |       9317 |
+| Punjab           |                10.45 |              11.25 |       2880 |
+| Tamil Nadu       |                 5.55 |               6.25 |      10468 |
+| Telangana        |                 4.64 |               5.09 |       5189 |
+| Uttar Pradesh    |                10.1  |               9.66 |      16599 |
+| West Bengal      |                10.23 |               9.65 |       3284 |
+
+High Stress rate per year (%):
+
+|           |   2005 |   2006 |   2007 |   2008 |   2009 |   2010 |   2011 |   2012 |   2013 |   2014 |   2015 |   2016 |   2017 |   2018 |   2019 |   2020 |   2021 |   2022 |
+|:----------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
+| expanding |   7.83 |   6.51 |   7.69 |   6.98 |      9 |   7.38 |   4.96 |   5.01 |   4.84 |   4.66 |   7.95 |   9    |   8.53 |   7.78 |   6.12 |   3.19 |   3.95 |   2.64 |
+| rolling   |   7.83 |   6.51 |   7.69 |   6.98 |      9 |   7.38 |   5.04 |   5.31 |   5.36 |   5.1  |   9.55 |  10.74 |   9.98 |   8.12 |   7.55 |   3.55 |   4.64 |   3.2  |
+
+### Why High Stress exceeds 2.3%: small-sample std, not baseline lag
+
+If the readings in a well-season were independent Gaussian draws, a z-score using the mean and std of only n earlier readings follows a scaled t-distribution, not a standard normal. So P(z >= 2) is well above 2.28% when n is small. Observed vs that expectation, by number of earlier readings (expanding baseline):
+
+| earlier readings   |   observed High % |   expected if i.i.d. Gaussian % |   readings |
+|:-------------------|------------------:|--------------------------------:|-----------:|
+| (4, 7]             |              7.5  |                            6.26 |      31770 |
+| (7, 10]            |              7.31 |                            4.74 |      31769 |
+| (10, 14]           |              5.7  |                            3.99 |      42320 |
+| (14, 18]           |              7.05 |                            3.53 |      40660 |
+| (18, 22]           |              3.17 |                            3.27 |      19787 |
+
+The rest of the gap lines up with known drought years (High Stress peaks in 2009 and 2015-2018 in the per-year table above). The rolling baseline does not reduce the rate. It raises it slightly (more rows sit at small n, and recent-decade std is smaller), so baseline lag is not the main cause. A steady LINEAR decline does not inflate the expanding z either: the mean lags, but the std grows at the same rate, so z settles near a constant (about 1.7).

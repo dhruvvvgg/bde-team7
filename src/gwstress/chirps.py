@@ -117,3 +117,76 @@ def build_table(wells: pd.DataFrame, out: Path = config.CHIRPS_TABLE,
               f"mean={np.nanmean(vals):.1f}mm {time.time() - t0:.0f}s", flush=True)
         time.sleep(1)  # politeness gap between requests
     return done.sort_values(["well_id", "year", "month"]).reset_index(drop=True)
+
+
+# ---------------------------------------------------------------------------
+# Part C: sampling check (nearest cell vs 3x3 neighbourhood mean)
+# ---------------------------------------------------------------------------
+CHIRPS_3X3_TABLE = config.CHIRPS_DIR / "chirps_monthly_by_well_3x3.parquet"
+
+
+def sample_nearest_and_3x3(tif: Path, wells: pd.DataFrame) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Return (nearest, mean_3x3, n_valid_3x3) for every well.
+
+    nearest: same rule as sample(): the cell containing the point.
+    mean_3x3: mean of that cell and its 8 neighbours. Nodata and negative
+        cells are treated as missing and left out of the mean, not counted as
+        0 mm. The mean is NaN if all 9 cells are missing.
+    WHY 3x3 (~16 x 16 km): checks whether a single 0.05 deg cell is
+    representative of the area around the well. Big differences point to
+    coastal cells (mixed land/sea), steep rainfall gradients (Western Ghats,
+    Himalayan foothills), or raster-edge problems.
+    """
+    import rasterio
+
+    with rasterio.open(tif) as ds:
+        rows, cols = rasterio.transform.rowcol(ds.transform, wells["lon"].to_numpy(),
+                                               wells["lat"].to_numpy())
+        rows, cols = np.asarray(rows), np.asarray(cols)
+        # Window padded by one cell on every side so each 3x3 block is inside it.
+        r0, c0 = max(rows.min() - 1, 0), max(cols.min() - 1, 0)
+        r1, c1 = min(rows.max() + 2, ds.height), min(cols.max() + 2, ds.width)
+        arr = ds.read(1, window=rasterio.windows.Window(c0, r0, c1 - c0, r1 - r0)).astype("float64")
+        nodata = ds.nodata
+    if nodata is not None:
+        arr[arr == nodata] = np.nan
+    arr[arr < 0] = np.nan
+    rr, cc = rows - r0, cols - c0
+    nearest = arr[rr, cc]
+    # Out-of-bounds neighbours (only at the raster's own edge) count as missing,
+    # never as a duplicate of the edge cell.
+    padded = np.pad(arr, 1, constant_values=np.nan)
+    blocks = np.stack([padded[rr + 1 + dr, cc + 1 + dc] for dr in (-1, 0, 1) for dc in (-1, 0, 1)])
+    n_valid = (~np.isnan(blocks)).sum(axis=0)
+    with np.errstate(invalid="ignore"):
+        mean3 = np.nanmean(np.where(n_valid > 0, blocks, 0), axis=0)
+    mean3[n_valid == 0] = np.nan
+    return nearest, mean3, n_valid
+
+
+def build_table_3x3(wells: pd.DataFrame, out: Path = CHIRPS_3X3_TABLE,
+                    raw_dir: Path = config.CHIRPS_RAW_DIR, last: pd.Period = LAST_MONTH) -> pd.DataFrame:
+    """Resumable download, sample and delete loop for the sampling check.
+    Same politeness and caching rules as build_table(). Never touches
+    CHIRPS_TABLE."""
+    cols = ["well_id", "year", "month", "precip_nearest_mm", "precip_3x3_mm", "n_valid_3x3"]
+    done = pd.read_parquet(out) if out.exists() else pd.DataFrame(columns=cols)
+    have = set(zip(done.year, done.month))
+    todo = [p for p in pd.period_range(FIRST_MONTH, last, freq="M") if (p.year, p.month) not in have]
+    print(f"CHIRPS 3x3: {len(have)} months cached, {len(todo)} to fetch", flush=True)
+    for i, p in enumerate(todo, 1):
+        t0 = time.time()
+        tif = download(p, raw_dir)
+        try:
+            near, mean3, nv = sample_nearest_and_3x3(tif, wells)
+        finally:
+            tif.unlink(missing_ok=True)   # never keep raw rasters on disk
+        part = pd.DataFrame({"well_id": wells["well_id"].to_numpy(), "year": p.year, "month": p.month,
+                             "precip_nearest_mm": near.astype("float32"),
+                             "precip_3x3_mm": mean3.astype("float32"), "n_valid_3x3": nv.astype("int8")})
+        done = pd.concat([done, part], ignore_index=True) if len(done) else part
+        done.to_parquet(out, index=False)
+        print(f"  [{i}/{len(todo)}] {p} nan_near={np.isnan(near).sum()} "
+              f"partial3x3={(nv < 9).sum()} {time.time() - t0:.0f}s", flush=True)
+        time.sleep(1)
+    return done.sort_values(["well_id", "year", "month"]).reset_index(drop=True)

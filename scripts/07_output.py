@@ -17,6 +17,7 @@ import shutil
 import sys
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -163,6 +164,62 @@ def main() -> None:
     w("\n### Default categories by state (% of classified rows)\n")
     st = pd.crosstab(classified.state, classified.stress_category.astype(str), normalize="index")
     w((100 * st[["Normal", "Watch", "Moderate Stress", "High Stress"]]).round(1).to_markdown())
+
+    w("\n## 9. Expanding vs rolling (10-reading) baseline\n")
+    w("`stress_category` uses the expanding baseline (all earlier same-season readings, K=5). "
+      "`stress_roll10` uses the last 10 earlier same-season readings (minimum 5), with the same "
+      "0.10 m floor, the same thresholds and the same classify(). The primary label is still "
+      "`stress_category`.\n")
+    cmp = pd.DataFrame({"expanding (stress_category)": df.stress_category.value_counts(),
+                        "rolling (stress_roll10)": df.stress_roll10.value_counts()}).reindex(stress.CATEGORIES)
+    w(cmp.to_markdown())
+    both = df[~df.stress_category.isin([stress.NO_READING, stress.INSUFFICIENT])
+              & ~df.stress_roll10.isin([stress.NO_READING, stress.INSUFFICIENT])]
+    hs_e = (both.stress_category == "High Stress").mean()
+    hs_r = (both.stress_roll10 == "High Stress").mean()
+    w(f"\nOn the {len(both):,} readings classified under BOTH baselines, High Stress is "
+      f"**{100 * hs_e:.2f}%** (expanding) vs **{100 * hs_r:.2f}%** (rolling); 2.28% expected under a "
+      "standard normal.")
+    rc = df[df.gwl_m_bgl.notna()]
+    changed = (rc.stress_category.astype(str) != rc.stress_roll10.astype(str))
+    w(f"\nReadings whose category differs between the two: **{int(changed.sum()):,}** of {len(rc):,} "
+      f"({100 * changed.mean():.1f}%); among readings classified under both: "
+      f"**{int((both.stress_category.astype(str) != both.stress_roll10.astype(str)).sum()):,}** "
+      f"({100 * (both.stress_category.astype(str) != both.stress_roll10.astype(str)).mean():.1f}%).\n")
+    w("Transition matrix (rows: expanding, columns: rolling), readings only:\n")
+    w(pd.crosstab(rc.stress_category.astype(str), rc.stress_roll10.astype(str))
+      .reindex(index=stress.CATEGORIES[1:], columns=stress.CATEGORIES[1:]).fillna(0).astype(int).to_markdown())
+    hs_state = both.groupby("state").agg(
+        expanding_high_pct=("stress_category", lambda s: round(100 * (s == "High Stress").mean(), 2)),
+        rolling_high_pct=("stress_roll10", lambda s: round(100 * (s == "High Stress").mean(), 2)),
+        readings=("well_id", "size"))
+    w("\nHigh Stress rate per state (readings classified under both):\n")
+    w(hs_state.to_markdown())
+    by_year = both.groupby("year").agg(
+        expanding=("stress_category", lambda s: round(100 * (s == "High Stress").mean(), 2)),
+        rolling=("stress_roll10", lambda s: round(100 * (s == "High Stress").mean(), 2)))
+    w("\nHigh Stress rate per year (%):\n")
+    w(by_year.T.to_markdown())
+
+    from scipy import stats as sps
+    w("\n### Why High Stress exceeds 2.3%: small-sample std, not baseline lag\n")
+    w("If the readings in a well-season were independent Gaussian draws, a z-score using the mean "
+      "and std of only n earlier readings follows a scaled t-distribution, not a standard normal. "
+      "So P(z >= 2) is well above 2.28% when n is small. Observed vs that expectation, by number of "
+      "earlier readings (expanding baseline):\n")
+    cls = df[~df.stress_category.isin([stress.NO_READING, stress.INSUFFICIENT])]
+    bins = pd.cut(cls.n_prior_same_season, [4, 7, 10, 14, 18, 22])
+    obs = cls.groupby(bins, observed=True).stress_category.apply(lambda s: 100 * (s == "High Stress").mean())
+    exp = [100 * np.mean([sps.t.sf(2 * np.sqrt(n / (n + 1)), n - 1) for n in range(iv.left + 1, iv.right + 1)])
+           for iv in obs.index]
+    w(pd.DataFrame({"earlier readings": [str(i) for i in obs.index], "observed High %": obs.round(2).values,
+                    "expected if i.i.d. Gaussian %": np.round(exp, 2),
+                    "readings": cls.groupby(bins, observed=True).size().values}).to_markdown(index=False))
+    w("\nThe rest of the gap lines up with known drought years (High Stress peaks in 2009 and "
+      "2015-2018 in the per-year table above). The rolling baseline does not reduce the rate. It "
+      "raises it slightly (more rows sit at small n, and recent-decade std is smaller), so baseline "
+      "lag is not the main cause. A steady LINEAR decline does not inflate the expanding z either: "
+      "the mean lags, but the std grows at the same rate, so z settles near a constant (about 1.7).")
 
     (config.REPORTS_DIR / "data_quality.md").write_text("\n".join(D) + "\n")
     print("\n".join(D))

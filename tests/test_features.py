@@ -135,3 +135,42 @@ def test_k_sensitivity_counts_monotone():
     out = ft.build_features(_panel(), k=5)
     s = ft.k_sensitivity(out)
     assert s.excluded.is_monotonic_increasing
+
+
+def test_rolling_baseline_uses_last_10_prior_readings():
+    vals = [float(i) for i in range(1, 16)] + [np.nan, 100.0]
+    d = pd.DataFrame({"well_id": "W", "season": "monsoon", "year": range(2000, 2000 + len(vals)),
+                      "gwl_m_bgl": vals})
+    out = ft.rolling_baseline(d).set_index("year")
+    assert np.isnan(out.loc[2004, "baseline_roll10_mean_m"])          # 4 prior readings < 5
+    assert out.loc[2005, "baseline_roll10_mean_m"] == 3.0              # mean(1..5)
+    # values: 2000..2014 -> 1..15, 2015 -> NaN, 2016 -> 100
+    assert out.loc[2014, "n_roll10"] == 10
+    assert out.loc[2014, "baseline_roll10_mean_m"] == np.mean(range(5, 15))  # last 10 of 1..14
+    assert out.loc[2015, "baseline_roll10_mean_m"] == np.mean(range(6, 16))  # last 10 of 1..15
+    # the NaN in 2015 adds nothing; 2016's window is still 6..15 and excludes the current 100
+    assert out.loc[2016, "baseline_roll10_mean_m"] == np.mean(range(6, 16))
+    exp = (100 - np.mean(range(6, 16))) / np.std(range(6, 16), ddof=1)
+    assert np.isclose(out.loc[2016, "anomaly_roll10"], exp)
+    assert out.loc[2016, "anomaly_roll10_capped"] == 5.0
+
+
+def test_rolling_baseline_forgets_an_old_level_shift():
+    """A well that dropped by 5 m in 2005 and then stayed at the new level.
+    By 2022 the rolling window holds only post-shift readings, so z is about 0.
+    The expanding baseline still averages the pre-shift years in, so z stays
+    high. (For a purely LINEAR decline both z values settle at a similar
+    constant, around sqrt(3), because the expanding std grows with the lag.
+    The rolling baseline helps with shifts and accelerating declines, not
+    steady ones.)"""
+    rng = np.random.default_rng(0)
+    vals = [2.0 + rng.normal(0, 0.2) if y < 2005 else 7.0 + rng.normal(0, 0.2) for y in range(2000, 2023)]
+    d = pd.DataFrame({"well_id": "W", "season": "monsoon", "year": range(2000, 2023), "gwl_m_bgl": vals})
+    e = ft.seasonal_baseline(d, k=5).set_index("year")
+    r = ft.rolling_baseline(d).set_index("year")
+    # The rolling mean has forgotten the old level; the expanding mean has not.
+    assert abs(r.loc[2022, "baseline_roll10_mean_m"] - 7.0) < 0.2
+    assert e.loc[2022, "baseline_mean_m"] < 6.2
+    # The shift also inflates the expanding std (~2 m vs ~0.2 m), which is why
+    # the expanding z does not necessarily look extreme here.
+    assert e.loc[2022, "baseline_std_m"] > 5 * r.loc[2022, "baseline_roll10_std_m"]
