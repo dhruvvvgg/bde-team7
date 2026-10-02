@@ -9,7 +9,7 @@ Source: Figshare 10.6084/m9.figshare.29293877.v3, `Output/CGWB_India_filtered_GW
 - Rows: **253,828** (one per well x monitoring round; 92 rounds, Jan/May/Aug/Nov 2000-2022)
 - Rows with a reading: **219,258**
 - Wells: **2,759**; states: **19**; districts: **365**
-- Columns: 75. Output: `processed/gw_features_by_state/state_slug=<state>/` (55.7 MB in total, largest file 10.3 MB; partitioned by state, see `scripts/07_output.py` for why)
+- Columns: 77. Output: `processed/gw_features_by_state/state_slug=<state>/` (55.8 MB in total, largest file 10.3 MB; partitioned by state, see `scripts/07_output.py` for why)
 
 ### Coverage by state
 

@@ -50,3 +50,13 @@ CROSSWALK = REPO_ROOT / "dataset" / "well_crosswalk.csv"  # committed
 GW_FEATURES = INTERIM_DIR / "gw_features.parquet"  # stage 5 output (stage 7 writes the partitioned final)
 GW_STRESS = INTERIM_DIR / "gw_stress.parquet"      # stage 6 output
 FINAL_DIR = PROCESSED_DIR / "gw_features_by_state" # stage 7: partitioned final table (committed)
+
+# Part D: the three zero readings judged suspicious at checkpoint review
+# (see reports/stage3_cleaning.md). (well_id, period_label). Kept, only flagged.
+SUSPICIOUS_ZEROS = [
+    ("Waf941bb407", "Aug-19"),  # Ujjain: 17.5 -> 16.6 -> 0 -> 4.7 m
+    ("W50b118a710", "Nov-19"),  # Raisen: 8.2 m in May, 0 in Nov
+    ("W9934cc4de3", "Jan-18"),  # Nellore: 0 in Jan, 2.4 m in Aug
+]
+# Plausible India extent (mainland + islands margin). Wells outside are errors.
+INDIA_BBOX = {"lat_min": 6.0, "lat_max": 37.5, "lon_min": 68.0, "lon_max": 97.5}

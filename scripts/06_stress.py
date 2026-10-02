@@ -9,7 +9,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from gwstress import config, stress  # noqa: E402
+from gwstress import config, stress, validity  # noqa: E402
 
 
 def main() -> None:
@@ -21,6 +21,7 @@ def main() -> None:
     # columns are untouched; stress_category remains the primary label.
     df["stress_roll10"] = stress.classify(df["gwl_m_bgl"], df["anomaly_roll10"])
     assert (stress.classify(df["gwl_m_bgl"], df["anomaly_roll10_capped"]) == df["stress_roll10"]).all()
+    df = validity.suspect_flags(df)   # Part D: descriptive QC flag, nothing removed
     df.to_parquet(config.GW_STRESS, index=False)
 
     counts, changes = stress.sensitivity(df)
