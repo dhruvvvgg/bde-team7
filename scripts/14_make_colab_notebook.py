@@ -243,12 +243,12 @@ This runs the full test suite: leakage assertions, perturb-the-future tests at f
 check of the small-sample adjustment, and the data-contract tests.
 """)
 code("""
-r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider"], text=True, capture_output=True)
+r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "--color=no"], text=True, capture_output=True)
 print(r.stdout[-2500:])
 assert r.returncode == 0, "tests failed"
 """)
 code("""
-r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "--color=no",
                     "tests/test_rainfall.py", "tests/test_features.py", "tests/test_extension.py", "-v"],
                    text=True, capture_output=True)
 print("\\n".join(l for l in r.stdout.splitlines() if "leak" in l.lower() or "future" in l.lower()
