@@ -239,3 +239,26 @@ approval" first.
 - **Zero readings:** 87 in 2023–24 (68 of them in May-23), against 11 in 2000–2022. They look like
   placeholders. They are kept and flagged.
 - **Before/after:** main table unchanged.
+
+### Part E, step 2: extension features (new separate outputs)
+
+- **What:**
+  - `dataset/chirps/chirps_monthly_by_well_2023_2024.parquet`: nearest cell, 2023-01 to 2024-12,
+    66,216 rows, 0 NaN. HTTPS only, sequential, rasters deleted.
+  - `processed/extension_2023_2024/extension_features.parquet`: 22,072 rows × 84 columns (the main
+    table's columns plus `is_extension`), 5.6 MB.
+  - Code: `scripts/09_chirps_extension.py` and `scripts/09b_extension_features.py`.
+  - `chirps.build_table()` gained optional `first`/`last` month arguments. The defaults are
+    unchanged, so the main table's build is identical.
+- **How:**
+  - The same functions run on the combined 2000–2024 series and the 1999-07 to 2024-12 rainfall
+    record.
+  - The 87 extension zero readings are flagged `suspect_reason = zero_extension`.
+  - The whole-record descriptive columns (`flag_extreme`, `well_completeness_full_period`,
+    `well_has_no_series_for_season`) use 2000–2024 for the extension rows.
+- **Leakage proof:** recomputing the 2000–2022 rows with 2023–24 data present reproduces the
+  committed main table exactly. That covers 253,828 rows across all 80 columns apart from the three
+  whole-record ones. The script asserts this on every run.
+- **Before/after:**
+  - Main table: unchanged (0 rows, 0 values).
+  - Main rainfall table: unchanged.

@@ -67,3 +67,22 @@ By state (% of cells with a reading):
 Cleaning on extension rows: rows_in=22072, readings_in=6821, placeholders_to_nan=0, exact_duplicate_rows_removed=0, flag_zero=87, flag_extreme=0, flag_negative=0, flag_deeper_than_well=50, rows_out=22072, readings_out=6821
 
 **Zero readings: 87 in 2023-24 (1.28% of readings) vs 11 in all of 2000-2022 (0.005%).** 68 are in May-23, the driest round, in wells whose 2020-22 median depth is about 4 m. They look like placeholders or 'dry' codes rather than water at the surface. Per the zero-reading decision they are kept and flagged (`flag_zero`, and `suspect_reason = zero_extension`), not set to NaN. **Recommend excluding them from any evaluation on this holdout.**
+
+## 4. Extension features
+
+- Written to `processed/extension_2023_2024/extension_features.parquet`: **22,072 rows** (2759 wells x 8 rounds), 84 columns (same columns as the main table plus `is_extension`), 5.6 MB.
+- Computed with the same functions on the combined 2000-2024 series and the CHIRPS record 1999-07..2024-12 (`chirps_monthly_by_well_2023_2024.parquet`, nearest cell, 66,216 rows, 0 NaN).
+- **Leakage proof:** recomputing the 2000-2022 rows with the 2023-24 data present reproduces the committed main table exactly (253,828 rows, all columns except the whole-record descriptive ['flag_extreme', 'well_completeness_full_period', 'well_has_no_series_for_season']).
+- Whole-record columns for the extension (`well_completeness_full_period`, `well_has_no_series_for_season`, `flag_extreme`) use 2000-2024.
+
+Stress categories (readings only):
+
+|                      |   stress_category |   stress_tadj |   stress_roll10 |
+|:---------------------|------------------:|--------------:|----------------:|
+| Insufficient history |                34 |            34 |              34 |
+| Normal               |              5706 |          5762 |            5590 |
+| Watch                |               468 |           484 |             433 |
+| Moderate Stress      |               253 |           248 |             299 |
+| High Stress          |               360 |           293 |             465 |
+
+- Suspect readings: 170 (zero_extension: 87, extreme_anomaly: 77, deeper_than_well: 50).

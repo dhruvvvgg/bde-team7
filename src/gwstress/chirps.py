@@ -94,12 +94,13 @@ def sample(tif: Path, wells: pd.DataFrame) -> np.ndarray:
 
 
 def build_table(wells: pd.DataFrame, out: Path = config.CHIRPS_TABLE,
-                raw_dir: Path = config.CHIRPS_RAW_DIR) -> pd.DataFrame:
+                raw_dir: Path = config.CHIRPS_RAW_DIR,
+                first: pd.Period = FIRST_MONTH, last: pd.Period = LAST_MONTH) -> pd.DataFrame:
     """Resumable download-sample-delete loop. Returns well_id x month long table."""
     done = pd.read_parquet(out) if out.exists() else pd.DataFrame(
         columns=["well_id", "year", "month", "precip_mm"])
     have = set(zip(done.year, done.month))
-    todo = [p for p in months() if (p.year, p.month) not in have]
+    todo = [p for p in pd.period_range(first, last, freq="M") if (p.year, p.month) not in have]
     print(f"CHIRPS: {len(have)} months cached, {len(todo)} to fetch", flush=True)
     for i, p in enumerate(todo, 1):
         t0 = time.time()
