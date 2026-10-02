@@ -71,7 +71,8 @@ def main() -> None:
           "Per reason (a reading can have two):\n",
           reasons.value_counts().to_frame("readings").to_markdown(),
           "\nPer reason combination:\n", s.suspect_reason.value_counts().to_frame("readings").to_markdown(),
-          "\nPer state:\n",
+          "\nPer state (a reading with two reasons is counted once, under its first reason; "
+          "the 17 `deeper_than_well;extreme_anomaly` readings appear under deeper_than_well):\n",
           pd.crosstab(df[df.suspect_reading].state, reasons.groupby(level=0).first().reindex(s.index).values)
           .assign(total_flagged=s.groupby("state").size())
           .join(df[df.gwl_m_bgl.notna()].groupby("state").size().rename("readings"))

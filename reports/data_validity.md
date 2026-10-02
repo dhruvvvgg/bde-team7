@@ -35,7 +35,7 @@ Per reason combination:
 | deeper_than_well;extreme_anomaly |         17 |
 | zero_suspicious                  |          3 |
 
-Per state:
+Per state (a reading with two reasons is counted once, under its first reason; the 17 `deeper_than_well;extreme_anomaly` readings appear under deeper_than_well):
 
 | state            |   deeper_than_well |   extreme_anomaly |   zero_suspicious |   total_flagged |   readings |   pct |
 |:-----------------|-------------------:|------------------:|------------------:|----------------:|-----------:|------:|
@@ -103,3 +103,11 @@ Wells with the most suspect readings:
 - Wells with long-run mean annual > 7000 mm: **4** (max 8024 mm).
 - Individual well-years with monsoon < 50 mm: **1** in 1 wells (('Tamil Nadu', 2002): 1).
 - Months with exactly 0 mm: 44,773 (5.9%), almost all in the dry season (94% in Nov-Apr).
+
+## 4. Interpretation of the flagged items (reviewed by hand)
+
+- **Low monsoon wells**: all are in Erode, Tiruppur and Coimbatore (Tamil Nadu), in the rain shadow of the Western Ghats. This region gets most of its rain from the north-east monsoon (Oct-Dec), so a low Jun-Sep total is expected. Their annual totals (~550-700 mm) are plausible. Implication: Jun-Sep features (`rain_last_monsoon_*`) carry less signal for Tamil Nadu, and the 12-month and monsoon-year-to-date features matter more there.
+- **Annual > 7,000 mm**: all are wells in Udupi (Karnataka) near the Western Ghats crest (around Agumbe, one of the wettest places in India), so the values are plausible.
+- **The single well-year with monsoon < 50 mm** is also in Tamil Nadu (2002, a drought year), consistent with the point above.
+- **Most-flagged well** (`We3954794ef`, Kanpur Dehat): the readings fall steadily from 8 m (2000) to 19 m (2022), while the recorded well depth is 14 m. Every later reading is therefore `deeper_than_well`. A smooth series like this points to a deepened well or an outdated depth record, not bad readings. `deeper_than_well` should be read mainly as a well-depth metadata problem.
+- **Near-duplicate locations**: 2 wells in Chanderi, Ashok Nagar (MP), ~100 m apart (`Chanderi` / `Chanderi(d)`) share the same CHIRPS cell. They are kept as separate wells.

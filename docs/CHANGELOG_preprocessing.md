@@ -115,3 +115,31 @@ approval" first.
 - **Bug found during development:** the first version of the 3×3 sampler counted the edge row twice
   at the raster boundary. It was caught by a synthetic test and fixed before the download. No
   committed output used the buggy version.
+
+### Part D: data-validity checks (added columns + new report)
+
+- **What:**
+  - New columns in the feature table:
+    - `suspect_reading` (bool): descriptive, class B.
+    - `suspect_reason` (`zero_suspicious` / `deeper_than_well` / `extreme_anomaly`, joined with
+      `;` when a reading has two).
+  - Code: `src/gwstress/validity.py`, called from `scripts/06_stress.py`. The three suspicious zeros
+    are listed in `config.SUSPICIOUS_ZEROS`.
+  - New report `reports/data_validity.md` (`scripts/08_validity.py`). It covers coordinates,
+    co-location, CHIRPS nodata, suspect readings by reason and state, and rainfall plausibility
+    per state, with a hand-reviewed interpretation.
+- **Why:** to give one documented QC flag for sensitivity analyses, and to confirm the inputs are
+  physically plausible.
+- **Before/after:**
+  - Rows: 253,828, unchanged.
+  - Columns: 75 → 77.
+  - Existing columns: **0 values changed**, checked with `scripts/compare_to_baseline.py`.
+  - No reading was deleted or modified.
+- **Results:**
+  - **Coordinates:** 0 wells outside the bounding box. 0 wells with a nodata CHIRPS cell, whether
+    nearest or anywhere in the 3×3 block. 0 exactly co-located wells; 1 pair about 100 m apart
+    (Chanderi, MP).
+  - **Suspect readings:** 2,135 (0.97%) in 1,244 wells. By reason: 1,612 extreme anomaly, 537 deeper
+    than the well, 3 suspicious zeros; 17 readings have two reasons.
+  - **Rainfall:** no implausible state totals. The flagged wells are explained by Tamil Nadu's rain
+    shadow (low Jun–Sep rainfall) and the Udupi Ghats crest (over 7,000 mm a year).
