@@ -203,3 +203,12 @@ approval" first.
   - The normal uses only earlier years.
   - The perturb-the-future test explicitly asserts the new columns are covered.
   - 47 tests pass.
+
+### Part D follow-up: documentation only
+
+- **What:** added three sections to `docs/handoff_for_modeling.md`:
+  - "Using `suspect_reading`": do not drop flagged rows by default; run an exclusion sensitivity
+    check instead; how likely each reason code is to be a true error.
+  - "Region-specific notes": Tamil Nadu monsoon timing and the Chanderi pair of nearby wells.
+  - "Rainfall sensitivity resource": the 3×3 CHIRPS table and how to join it.
+- **Before/after:** no data changes.

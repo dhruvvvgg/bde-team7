@@ -115,3 +115,44 @@ current reading.
 7. **Never** use class B columns as inputs. Recompute rainfall normals or baselines inside a fold only
    if your split could change which data counts as "prior". The current columns are already strictly
    past-only per well, so they do not leak across a temporal split.
+
+## Using `suspect_reading`
+
+`suspect_reading` / `suspect_reason` flag 2,135 readings (0.97%) in 1,244 wells. **Do not drop
+flagged rows by default.** Instead, train and evaluate on the full data, then repeat the evaluation
+with flagged rows excluded, and report both as a sensitivity check. How likely each reason is to be
+a genuine error:
+
+| Reason | Readings | How likely a true error | Notes |
+|---|---:|---|---|
+| `zero_suspicious` | 3 | **High** | These are isolated 0.0 m readings between much deeper neighbours (Ujjain Aug-19, Raisen Nov-19, Nellore Jan-18). |
+| `extreme_anomaly` (\|anomaly_z\| > 5) | 1,612 | **Mixed** | Some are single bad readings and some are genuine sharp drops. Check `anomaly_tadj`: under the small-sample adjustment many of these are far less extreme. |
+| `deeper_than_well` | 537 | **Low** | Mostly an outdated **well-depth record**, not a bad reading. The most-flagged well (Kanpur Dehat, `We3954794ef`) falls smoothly from 8 m to 19 m against a recorded depth of 14 m. A smooth series like that points to a deepened well, not 35 bad readings. |
+
+## Region-specific notes
+
+- **Tamil Nadu monsoon timing.** Oct–Dec brings 41% of Tamil Nadu's annual rain, against 40% for
+  Jun–Sep. Andhra Pradesh gets 27% in Oct–Dec, and Kerala 14%. For these states, use the
+  `rain_last_ne_*` features (Oct–Dec of the previous year) alongside the Jun–Sep ones. Expect weaker
+  transfer to a held-out Tamil Nadu from models trained on Jun–Sep-dominated states. Eight wells in
+  Erode, Tiruppur and Coimbatore get less than 150 mm in Jun–Sep; this is genuine rain shadow, not a
+  data error.
+- **Chanderi pair.** `Chanderi` (`Wc1a2cd0be0`) and `Chanderi(d)` (`W3a57256af7`) in Ashok Nagar,
+  Madhya Pradesh, are about 100 m apart and share the same CHIRPS cell, so all their rainfall
+  features are identical. They are kept as separate wells. Any split below state level must keep
+  them in the same fold (for example `GroupKFold` on a location group).
+
+## Rainfall sensitivity resource: 3×3 CHIRPS table
+
+`dataset/chirps/chirps_monthly_by_well_3x3.parquet` (778,038 rows) has the following columns:
+
+- `well_id`, `year`, `month`
+- `precip_nearest_mm`: identical to the primary rainfall table
+- `precip_3x3_mm`: mean of the 3×3 block of 0.05° cells around the well
+- `n_valid_3x3`: number of valid cells in that block; 9 for every well-month
+
+It is **not** used by any feature. The primary rainfall source is the nearest cell, by decision.
+Use it only for a sensitivity analysis. Join it on (`well_id`, `year`, `month`) to the monthly table,
+or rebuild any window feature from it with `gwstress.rainfall.rainfall_windows(obs, rain)` after
+renaming `precip_3x3_mm` to `precip_mm`. See `reports/chirps_sampling_check.md`: overall agreement
+is r = 0.999, and the 13 wells that differ a lot are all in steep terrain.
