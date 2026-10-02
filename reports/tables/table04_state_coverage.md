@@ -1,0 +1,21 @@
+| state            |   wells |   districts |
+|:-----------------|--------:|------------:|
+| Madhya Pradesh   |     501 |          51 |
+| Maharashtra      |     277 |          18 |
+| Gujarat          |     271 |          25 |
+| Uttar Pradesh    |     270 |          52 |
+| Karnataka        |     217 |          22 |
+| Odisha           |     191 |          25 |
+| Tamil Nadu       |     175 |          22 |
+| Kerala           |     171 |          11 |
+| Andhra Pradesh   |     169 |          12 |
+| Chhattisgarh     |     130 |          16 |
+| Telangana        |      82 |           9 |
+| West Bengal      |      68 |          14 |
+| Bihar            |      55 |          29 |
+| Punjab           |      45 |          13 |
+| Himachal Pradesh |      42 |           6 |
+| Jharkhand        |      35 |          13 |
+| Haryana          |      35 |          15 |
+| Assam            |      16 |           8 |
+| Delhi            |       9 |           4 |

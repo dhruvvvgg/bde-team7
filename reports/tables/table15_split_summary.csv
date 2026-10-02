@@ -1,0 +1,5 @@
+split_chrono,post_monsoon_rabi,pre_monsoon,monsoon,post_monsoon_kharif,total
+train,28364,22938,24990,28145,104437
+val,2668,2183,5298,5364,15513
+test,13298,6266,10470,10596,40630
+ext,2612,1489,1258,551,5910

@@ -1,0 +1,8 @@
+stage,applied by,rows (wells),states,years,readings,missing % of cells,what changed
+0 raw CGWB (wells within India),CGWB / authors,32299,28,2000-2024,1125369,65.16,raw download
+1 remove wells with no data,dataset authors,32094,28,2000-2024,1125369,64.94,drop all-empty wells (zero readings NOT removed)
+2 remove wells with any negative,dataset authors,31169,28,2000-2024,1076497,65.46,drop whole wells with any negative value
+3 per-well 3-sigma,dataset authors,31169,28,2000-2024,1067992,65.74,blank readings > 3 sd from the well mean (wells kept)
+"4+5 >= 2 readings every year, no 3x repeats (2000-2022)",dataset authors,2759,19,2000-2022,219258,13.62,"keep complete, non-stuck wells; attach Reference_Sy"
+6 reshape wide -> long,this project,2759,19,2000-2022,219258,13.62,1 row per well x round; 0 rows lost
+7 our cleaning + flags (final),this project,2759,19,2000-2022,219258,13.62,"0 removed; 0 placeholders, 0 duplicates; flags added"
