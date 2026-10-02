@@ -7,6 +7,10 @@ Its output feeds the modeling, evaluation and dashboard stages.
   `state_slug`, with 253,828 rows: 2,759 wells × 92 rounds from 2000 to 2022.
 - **Data quality:** `reports/data_quality.md`.
 - **Column dictionary and modeling caveats:** `docs/handoff_for_modeling.md`.
+- **Extension holdout (2023–2024, kept separate):** `processed/extension_2023_2024/`.
+- **Shared splits:** `processed/splits.parquet`, with cutoffs in `config/splits.json`.
+- **Methods (report-ready prose):** `docs/preprocessing_methods.md`.
+- **Change log since the accepted stage 1–7 baseline:** `docs/CHANGELOG_preprocessing.md`.
 
 ## Data sources
 
@@ -38,6 +42,14 @@ python scripts/04b_rain_windows.py  # stage 4b: 1/3/6-month antecedent rainfall 
 python scripts/05_features.py       # stage 5: baseline, anomaly, trend, rain deviation -> reports/stage5_features.md
 python scripts/06_stress.py         # stage 6: stress categories and threshold sensitivity -> reports/stage6_stress.md
 python scripts/07_output.py         # stage 7: partitioned Parquet + reports/data_quality.md
+python scripts/04c_chirps_3x3.py              # Part C: nearest + 3x3 CHIRPS download (one-off, resumable)
+python scripts/04d_chirps_sampling_check.py   # Part C: sampling-check report
+python scripts/08_validity.py                 # Part D: reports/data_validity.md
+python scripts/09a_extension_match.py         # Part E: 2023-24 matching proof + coverage
+python scripts/09_chirps_extension.py         # Part E: CHIRPS 2023-24 download (one-off)
+python scripts/09b_extension_features.py      # Part E: extension features + leakage proof
+python scripts/10_splits.py                   # Part F: processed/splits.parquet (config/splits.json)
+python scripts/11_handoff_dictionary.py       # Part H: column dictionary from src/gwstress/contract.py
 
 python -m pytest -q                 # tests, including the leakage tests
 ```

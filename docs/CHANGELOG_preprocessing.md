@@ -319,3 +319,34 @@ approval" first.
   - Caveat: the clone used this session's installed environment, which matches the pinned versions,
     not a fresh virtualenv.
 - **Before/after:** no data changes.
+
+### Part H: documentation
+
+- **What:**
+  - `docs/handoff_for_modeling.md` was rebuilt. It now covers:
+    - what to load, including the extension and splits;
+    - a column dictionary for all 84 columns plus `is_extension`, each marked A (safe input),
+      B (descriptive only) or C (label); 60 A, 13 B, 11 C;
+    - which capped scores to use;
+    - updated limitations, including the extension caveats;
+    - split usage, including `eval_eligible`.
+
+    The dictionary is generated from `src/gwstress/contract.py` by
+    `scripts/11_handoff_dictionary.py`. A contract test fails if the doc and the contract drift
+    apart. The Part D sections (suspect readings, region notes, the 3×3 resource) are kept.
+  - New `docs/preprocessing_methods.md`: a report-ready methods section in prose with all key
+    numbers. It states the rolling-baseline and small-sample results as methodological findings.
+  - README: outputs list and step-by-step commands for every script.
+- **Before/after:** no data changes.
+
+## Summary of the main table since the rollback point
+
+| | Rollback `dab7477` | Now |
+|---|---:|---:|
+| Rows | 253,828 | 253,828 |
+| Columns | 44 | 84 |
+| Values changed in the 44 original columns | — | **0** |
+| Primary label | `stress_category` | `stress_category` (unchanged) |
+| Primary rainfall | nearest cell | nearest cell (unchanged) |
+| Separate outputs added | — | extension table, splits file, 3×3 and 2023–24 CHIRPS tables |
+| Tests | 27 | 59 |

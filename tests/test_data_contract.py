@@ -162,3 +162,13 @@ def test_every_committed_file_under_50mb():
     files = subprocess.run(["git", "ls-files"], cwd=root, capture_output=True, text=True).stdout.split()
     big = [f for f in files if (root / f).exists() and (root / f).stat().st_size > 50e6]
     assert not big, big
+
+
+def test_handoff_column_dictionary_in_sync_with_contract():
+    """The dictionary in docs/handoff_for_modeling.md must be exactly what the
+    generator renders from contract.py (rerun scripts/11_handoff_dictionary.py)."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("gen", config.REPO_ROOT / "scripts" / "11_handoff_dictionary.py")
+    gen = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(gen)
+    assert gen.render() in gen.DOC.read_text()
