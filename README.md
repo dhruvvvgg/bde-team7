@@ -11,6 +11,7 @@ Its output feeds the modeling, evaluation and dashboard stages.
 - **Shared splits:** `processed/splits.parquet`, with cutoffs in `config/splits.json`.
 - **Methods (report-ready prose):** `docs/preprocessing_methods.md`.
 - **Change log since the accepted stage 1–7 baseline:** `docs/CHANGELOG_preprocessing.md`.
+- **BigQuery SQL pipeline (reimplementation):** `bigquery/README.md` (see also `bigquery/PARITY_REPORT.md` and `bigquery/bigquery_section.md`).
 
 ## Data sources
 
