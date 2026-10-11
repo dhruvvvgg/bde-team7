@@ -12,6 +12,41 @@ Its output feeds the modeling, evaluation and dashboard stages.
 - **Methods (report-ready prose):** `docs/preprocessing_methods.md`.
 - **Change log since the accepted stage 1–7 baseline:** `docs/CHANGELOG_preprocessing.md`.
 
+## Run the Spark pipeline (default)
+
+The primary entry point now executes real preprocessing in **PySpark**: CSV ingestion,
+wide-to-long reshape, conservative QC, rainfall joins, historical windows, stress labels,
+extension matching and evaluation splits. Spark writes the outputs; pandas is used only
+in the separate parity checker and historical reporting workflow.
+
+```bash
+# Python 3.11+ and Java 17
+pip install -r requirements-spark.txt
+bash scripts/run_all.sh
+```
+
+Outputs live under **`processed/spark/`**, including `gw_features_by_state/`,
+`extension_2023_2024/extension_features.parquet`, `splits.parquet`, `run_manifest.json`,
+`execution_plan.txt` and `spark_run.md`. The committed `processed/` files remain the
+historical pandas baseline for independent comparison.
+
+```bash
+# Optional validation against that baseline (requires pandas, numpy and pyarrow)
+python scripts/verify_spark_parity.py
+# Explicitly reproduce the historical pipeline/reports
+GW_ENGINE=pandas bash scripts/run_all.sh
+```
+
+See [Spark migration and methods](docs/spark_preprocessing.md) for the engine boundary,
+chronological safeguards, correction to extrema across missing rounds and validation.
+Use [the Spark notebook](notebooks/preprocessing_spark.ipynb) for a Spark-first walkthrough.
+`local[2]` runs on one machine; this is not a claim of multi-machine execution.
+
+## Historical pandas baseline
+
+The remainder of this README documents the original reference pipeline and its committed
+outputs. Its commands remain available through `scripts/run_pandas_reference.sh`.
+
 ## Data sources
 
 | Source | Where | Notes |
@@ -21,7 +56,7 @@ Its output feeds the modeling, evaluation and dashboard stages.
 
 ## Reproducing the pipeline from scratch
 
-**One command (no downloads):** `bash scripts/run_all.sh`. It regenerates every output from the committed
+**Historical command (no downloads):** `bash scripts/run_pandas_reference.sh`. It regenerates every output from the committed
 inputs and ends with pytest. It takes about 3 minutes. To check a rerun against the committed outputs,
 use `python scripts/verify_reproduction.py <rerun_repo> <reference_repo>`.
 
