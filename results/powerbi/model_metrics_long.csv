@@ -1,0 +1,881 @@
+model,variant,value,metric,stat
+Prev. round,A,40630.0,n,mean
+Prev. round,B,40630.0,n,mean
+Same season LY,A,40630.0,n,mean
+Same season LY,B,40630.0,n,mean
+Seasonal baseline,A,40630.0,n,mean
+Seasonal baseline,B,40630.0,n,mean
+SVR,A,40630.0,n,mean
+SVR,B,40630.0,n,mean
+RF,A,40630.0,n,mean
+RF,B,40630.0,n,mean
+ANN,A,40630.0,n,mean
+ANN,B,40630.0,n,mean
+XGBoost,A,40630.0,n,mean
+XGBoost,B,40630.0,n,mean
+CNN1D,A,40630.0,n,mean
+CNN1D,B,40630.0,n,mean
+LSTM,A,40630.0,n,mean
+LSTM,B,40630.0,n,mean
+TGT-M,A,40630.0,n,mean
+TGT-M,B,40630.0,n,mean
+Prev. round,A,,n,std
+Prev. round,B,,n,std
+Same season LY,A,,n,std
+Same season LY,B,,n,std
+Seasonal baseline,A,,n,std
+Seasonal baseline,B,,n,std
+SVR,A,0.0,n,std
+SVR,B,0.0,n,std
+RF,A,0.0,n,std
+RF,B,0.0,n,std
+ANN,A,0.0,n,std
+ANN,B,0.0,n,std
+XGBoost,A,0.0,n,std
+XGBoost,B,0.0,n,std
+CNN1D,A,0.0,n,std
+CNN1D,B,0.0,n,std
+LSTM,A,0.0,n,std
+LSTM,B,0.0,n,std
+TGT-M,A,0.0,n,std
+TGT-M,B,0.0,n,std
+Prev. round,A,2.050190994828501,depth_MAE,mean
+Prev. round,B,2.050190994828501,depth_MAE,mean
+Same season LY,A,1.5069743143107104,depth_MAE,mean
+Same season LY,B,1.5069743143107104,depth_MAE,mean
+Seasonal baseline,A,1.5483995774614916,depth_MAE,mean
+Seasonal baseline,B,1.5483995774614916,depth_MAE,mean
+SVR,A,1.458927165737288,depth_MAE,mean
+SVR,B,1.179889814065725,depth_MAE,mean
+RF,A,1.2504799978433117,depth_MAE,mean
+RF,B,1.150102153876517,depth_MAE,mean
+ANN,A,1.2704261777217674,depth_MAE,mean
+ANN,B,1.1249486155661954,depth_MAE,mean
+XGBoost,A,1.263581563718987,depth_MAE,mean
+XGBoost,B,1.1211442613536822,depth_MAE,mean
+CNN1D,A,1.2870507466486745,depth_MAE,mean
+CNN1D,B,1.1131596255645615,depth_MAE,mean
+LSTM,A,1.26864610092267,depth_MAE,mean
+LSTM,B,1.1037684308282636,depth_MAE,mean
+TGT-M,A,1.3377641283478356,depth_MAE,mean
+TGT-M,B,1.1286593413890886,depth_MAE,mean
+Prev. round,A,,depth_MAE,std
+Prev. round,B,,depth_MAE,std
+Same season LY,A,,depth_MAE,std
+Same season LY,B,,depth_MAE,std
+Seasonal baseline,A,,depth_MAE,std
+Seasonal baseline,B,,depth_MAE,std
+SVR,A,0.0039951256220534,depth_MAE,std
+SVR,B,0.0067377327848181,depth_MAE,std
+RF,A,0.0007016469261319,depth_MAE,std
+RF,B,0.0003154018601723,depth_MAE,std
+ANN,A,0.0254400028620592,depth_MAE,std
+ANN,B,0.0174616813155272,depth_MAE,std
+XGBoost,A,0.0036621371188786,depth_MAE,std
+XGBoost,B,0.0008722544737521,depth_MAE,std
+CNN1D,A,0.0108684573218083,depth_MAE,std
+CNN1D,B,0.0188615568546954,depth_MAE,std
+LSTM,A,0.0322419258421544,depth_MAE,std
+LSTM,B,0.0027155877546007,depth_MAE,std
+TGT-M,A,0.007862107722667,depth_MAE,std
+TGT-M,B,0.0083256968710483,depth_MAE,std
+Prev. round,A,3.113956600755248,depth_RMSE,mean
+Prev. round,B,3.113956600755248,depth_RMSE,mean
+Same season LY,A,2.5557051407789024,depth_RMSE,mean
+Same season LY,B,2.5557051407789024,depth_RMSE,mean
+Seasonal baseline,A,2.4452752953540524,depth_RMSE,mean
+Seasonal baseline,B,2.4452752953540524,depth_RMSE,mean
+SVR,A,2.2480077835349106,depth_RMSE,mean
+SVR,B,1.9013185060079103,depth_RMSE,mean
+RF,A,1.974964266131117,depth_RMSE,mean
+RF,B,1.848793865113748,depth_RMSE,mean
+ANN,A,2.021237853397453,depth_RMSE,mean
+ANN,B,1.8176977498348503,depth_RMSE,mean
+XGBoost,A,2.003793608056505,depth_RMSE,mean
+XGBoost,B,1.827365531515775,depth_RMSE,mean
+CNN1D,A,2.0449958754733357,depth_RMSE,mean
+CNN1D,B,1.8073872528397807,depth_RMSE,mean
+LSTM,A,2.00116948296436,depth_RMSE,mean
+LSTM,B,1.7843177698453383,depth_RMSE,mean
+TGT-M,A,2.11655479855481,depth_RMSE,mean
+TGT-M,B,1.8110973199450395,depth_RMSE,mean
+Prev. round,A,,depth_RMSE,std
+Prev. round,B,,depth_RMSE,std
+Same season LY,A,,depth_RMSE,std
+Same season LY,B,,depth_RMSE,std
+Seasonal baseline,A,,depth_RMSE,std
+Seasonal baseline,B,,depth_RMSE,std
+SVR,A,0.0079651021128236,depth_RMSE,std
+SVR,B,0.0040378067749282,depth_RMSE,std
+RF,A,0.0006653490682847,depth_RMSE,std
+RF,B,0.0007897519279631,depth_RMSE,std
+ANN,A,0.0399278713335762,depth_RMSE,std
+ANN,B,0.0221661144270427,depth_RMSE,std
+XGBoost,A,0.0060950760037969,depth_RMSE,std
+XGBoost,B,0.0004241975676781,depth_RMSE,std
+CNN1D,A,0.0207136564318198,depth_RMSE,std
+CNN1D,B,0.0290131476998565,depth_RMSE,std
+LSTM,A,0.037449812002752,depth_RMSE,std
+LSTM,B,0.0061199189641635,depth_RMSE,std
+TGT-M,A,0.0039666718869501,depth_RMSE,std
+TGT-M,B,0.0098734313325579,depth_RMSE,std
+Prev. round,A,0.5812186755694704,depth_R2,mean
+Prev. round,B,0.5812186755694704,depth_R2,mean
+Same season LY,A,0.7179125998836215,depth_R2,mean
+Same season LY,B,0.7179125998836215,depth_R2,mean
+Seasonal baseline,A,0.7417634473458701,depth_R2,mean
+Seasonal baseline,B,0.7417634473458701,depth_R2,mean
+SVR,A,0.7817463823601071,depth_R2,mean
+SVR,B,0.8438747123761515,depth_R2,mean
+RF,A,0.831546238815147,depth_R2,mean
+RF,B,0.8523820293782188,depth_R2,mean
+ANN,A,0.8235141021302149,depth_R2,mean
+ANN,B,0.8572919119637282,depth_R2,mean
+XGBoost,A,0.8265913138852575,depth_R2,mean
+XGBoost,B,0.8557841253356694,depth_R2,mean
+CNN1D,A,0.8193754528222404,depth_R2,mean
+CNN1D,B,0.8588960323531688,depth_R2,mean
+LSTM,A,0.8270058875317736,depth_R2,mean
+LSTM,B,0.8624976874848115,depth_R2,mean
+TGT-M,A,0.8065261624203605,depth_R2,mean
+TGT-M,B,0.8583376716107237,depth_R2,mean
+Prev. round,A,,depth_R2,std
+Prev. round,B,,depth_R2,std
+Same season LY,A,,depth_R2,std
+Same season LY,B,,depth_R2,std
+Seasonal baseline,A,,depth_R2,std
+Seasonal baseline,B,,depth_R2,std
+SVR,A,0.0015451127718427,depth_R2,std
+SVR,B,0.0006627749453852,depth_R2,std
+RF,A,0.0001134947744179,depth_R2,std
+RF,B,0.0001261313297121,depth_R2,std
+ANN,A,0.0070082030358513,depth_R2,std
+ANN,B,0.0034866166831666,depth_R2,std
+XGBoost,A,0.0010542594129433,depth_R2,std
+XGBoost,B,6.695593299764775e-05,depth_R2,std
+CNN1D,A,0.0036643090075077,depth_R2,std
+CNN1D,B,0.0045208964309915,depth_R2,std
+LSTM,A,0.0064773903065121,depth_R2,std
+LSTM,B,0.000943673325045,depth_R2,std
+TGT-M,A,0.0007254618839969,depth_R2,std
+TGT-M,B,0.0015433418234236,depth_R2,std
+Prev. round,A,1.4968978009736789,anom_MAE,mean
+Prev. round,B,1.4968978009736789,anom_MAE,mean
+Same season LY,A,0.980860282273275,anom_MAE,mean
+Same season LY,B,0.980860282273275,anom_MAE,mean
+Seasonal baseline,A,0.9673764690422384,anom_MAE,mean
+Seasonal baseline,B,0.9673764690422384,anom_MAE,mean
+SVR,A,0.9452599724453888,anom_MAE,mean
+SVR,B,0.7903701893291658,anom_MAE,mean
+RF,A,0.833417564991401,anom_MAE,mean
+RF,B,0.776696566629882,anom_MAE,mean
+ANN,A,0.8375638976638599,anom_MAE,mean
+ANN,B,0.759713585795728,anom_MAE,mean
+XGBoost,A,0.8353001007117529,anom_MAE,mean
+XGBoost,B,0.7585008155751556,anom_MAE,mean
+CNN1D,A,0.843891941772401,anom_MAE,mean
+CNN1D,B,0.7506639042482023,anom_MAE,mean
+LSTM,A,0.840490880440802,anom_MAE,mean
+LSTM,B,0.7479546452247648,anom_MAE,mean
+TGT-M,A,0.8795726833675479,anom_MAE,mean
+TGT-M,B,0.762695743836835,anom_MAE,mean
+Prev. round,A,,anom_MAE,std
+Prev. round,B,,anom_MAE,std
+Same season LY,A,,anom_MAE,std
+Same season LY,B,,anom_MAE,std
+Seasonal baseline,A,,anom_MAE,std
+Seasonal baseline,B,,anom_MAE,std
+SVR,A,0.0006672541339835,anom_MAE,std
+SVR,B,0.0037465373914951,anom_MAE,std
+RF,A,0.0005449100740027,anom_MAE,std
+RF,B,0.0002832278591809,anom_MAE,std
+ANN,A,0.0158789655469642,anom_MAE,std
+ANN,B,0.006854311536623,anom_MAE,std
+XGBoost,A,0.0017849630762578,anom_MAE,std
+XGBoost,B,0.0007783518486261,anom_MAE,std
+CNN1D,A,0.0084037297196133,anom_MAE,std
+CNN1D,B,0.0064519212444785,anom_MAE,std
+LSTM,A,0.0205619498723708,anom_MAE,std
+LSTM,B,0.001717409792563,anom_MAE,std
+TGT-M,A,0.0100911091713079,anom_MAE,std
+TGT-M,B,0.003219472312699,anom_MAE,std
+Prev. round,A,2.057000942800069,anom_RMSE,mean
+Prev. round,B,2.057000942800069,anom_RMSE,mean
+Same season LY,A,1.348979622639087,anom_RMSE,mean
+Same season LY,B,1.348979622639087,anom_RMSE,mean
+Seasonal baseline,A,1.255416482041541,anom_RMSE,mean
+Seasonal baseline,B,1.255416482041541,anom_RMSE,mean
+SVR,A,1.2226935887632333,anom_RMSE,mean
+SVR,B,1.0780827622292086,anom_RMSE,mean
+RF,A,1.1169653398143788,anom_RMSE,mean
+RF,B,1.068275822928784,anom_RMSE,mean
+ANN,A,1.123647109569302,anom_RMSE,mean
+ANN,B,1.0538093095556926,anom_RMSE,mean
+XGBoost,A,1.1221775302284556,anom_RMSE,mean
+XGBoost,B,1.05806644270325,anom_RMSE,mean
+CNN1D,A,1.1323134411887323,anom_RMSE,mean
+CNN1D,B,1.046270192370226,anom_RMSE,mean
+LSTM,A,1.1285758212332813,anom_RMSE,mean
+LSTM,B,1.043902676803538,anom_RMSE,mean
+TGT-M,A,1.17356507952135,anom_RMSE,mean
+TGT-M,B,1.056870887941651,anom_RMSE,mean
+Prev. round,A,,anom_RMSE,std
+Prev. round,B,,anom_RMSE,std
+Same season LY,A,,anom_RMSE,std
+Same season LY,B,,anom_RMSE,std
+Seasonal baseline,A,,anom_RMSE,std
+Seasonal baseline,B,,anom_RMSE,std
+SVR,A,0.0006532479359691,anom_RMSE,std
+SVR,B,0.0026239781418781,anom_RMSE,std
+RF,A,0.0004616013971058,anom_RMSE,std
+RF,B,0.0002399101261077,anom_RMSE,std
+ANN,A,0.0184294011553029,anom_RMSE,std
+ANN,B,0.0041530186383971,anom_RMSE,std
+XGBoost,A,0.0016053389650326,anom_RMSE,std
+XGBoost,B,0.0009764060877336,anom_RMSE,std
+CNN1D,A,0.0103782514254646,anom_RMSE,std
+CNN1D,B,0.0046026695176464,anom_RMSE,std
+LSTM,A,0.0192880381161936,anom_RMSE,std
+LSTM,B,0.0025747739834252,anom_RMSE,std
+TGT-M,A,0.0150853875090742,anom_RMSE,std
+TGT-M,B,0.0025993547794159,anom_RMSE,std
+Prev. round,A,-1.7310144997400223,anom_R2,mean
+Prev. round,B,-1.7310144997400223,anom_R2,mean
+Same season LY,A,-0.174534568182834,anom_R2,mean
+Same season LY,B,-0.174534568182834,anom_R2,mean
+Seasonal baseline,A,-0.0172569756526992,anom_R2,mean
+Seasonal baseline,B,-0.0172569756526992,anom_R2,mean
+SVR,A,0.0350820687864705,anom_R2,mean
+SVR,B,0.2498278384588738,anom_R2,mean
+RF,A,0.1947430762717923,anom_R2,mean
+RF,B,0.2634167507579019,anom_R2,mean
+ANN,A,0.1849339933649802,anom_R2,mean
+ANN,B,0.2832237893384324,anom_R2,mean
+XGBoost,A,0.1872092474976383,anom_R2,mean
+XGBoost,B,0.2774279602642494,anom_R2,mean
+CNN1D,A,0.1724148835429006,anom_R2,mean
+CNN1D,B,0.2934411624579268,anom_R2,mean
+LSTM,A,0.1777553283602928,anom_R2,mean
+LSTM,B,0.2966413898304814,anom_R2,mean
+TGT-M,A,0.1109683583650648,anom_R2,mean
+TGT-M,B,0.2790574700967822,anom_R2,mean
+Prev. round,A,,anom_R2,std
+Prev. round,B,,anom_R2,std
+Same season LY,A,,anom_R2,std
+Same season LY,B,,anom_R2,std
+Seasonal baseline,A,,anom_R2,std
+Seasonal baseline,B,,anom_R2,std
+SVR,A,0.0010311067275699,anom_R2,std
+SVR,B,0.0036512794266112,anom_R2,std
+RF,A,0.000665514760215,anom_R2,std
+RF,B,0.0003308470145876,anom_R2,std
+ANN,A,0.0267900568654097,anom_R2,std
+ANN,B,0.005655696643606,anom_R2,std
+XGBoost,A,0.0023262864687236,anom_R2,std
+XGBoost,B,0.001333916177584,anom_R2,std
+CNN1D,A,0.0152097909724497,anom_R2,std
+CNN1D,B,0.0062153035451532,anom_R2,std
+LSTM,A,0.0280980383877162,anom_R2,std
+LSTM,B,0.0034706285288795,anom_R2,std
+TGT-M,A,0.0228659490394049,anom_R2,std
+TGT-M,B,0.003547215686666,anom_R2,std
+Prev. round,A,0.6982771351218312,acc,mean
+Prev. round,B,0.6982771351218312,acc,mean
+Same season LY,A,0.7718926901304455,acc,mean
+Same season LY,B,0.7718926901304455,acc,mean
+Seasonal baseline,A,0.8412010829436377,acc,mean
+Seasonal baseline,B,0.8412010829436377,acc,mean
+SVR,A,0.7873000246123554,acc,mean
+SVR,B,0.8321273279186151,acc,mean
+RF,A,0.8251620313397326,acc,mean
+RF,B,0.8363196324554926,acc,mean
+ANN,A,0.8234555746984986,acc,mean
+ANN,B,0.8365575518910493,acc,mean
+XGBoost,A,0.8264910985314629,acc,mean
+XGBoost,B,0.837476413159406,acc,mean
+CNN1D,A,0.8193042907539585,acc,mean
+CNN1D,B,0.8369021248666831,acc,mean
+LSTM,A,0.8151448026909508,acc,mean
+LSTM,B,0.8365985724833868,acc,mean
+TGT-M,A,0.7995241611288867,acc,mean
+TGT-M,B,0.8307900566084174,acc,mean
+Prev. round,A,,acc,std
+Prev. round,B,,acc,std
+Same season LY,A,,acc,std
+Same season LY,B,,acc,std
+Seasonal baseline,A,,acc,std
+Seasonal baseline,B,,acc,std
+SVR,A,0.000656278199654,acc,std
+SVR,B,0.000247758944467,acc,std
+RF,A,0.0004098776272637,acc,std
+RF,B,0.0003702775977158,acc,std
+ANN,A,0.0124295318988027,acc,std
+ANN,B,0.0024629987941052,acc,std
+XGBoost,A,0.0001109832575147,acc,std
+XGBoost,B,0.0004678506006853,acc,std
+CNN1D,A,0.0087500413886427,acc,std
+CNN1D,B,0.0012113513577062,acc,std
+LSTM,A,0.0111005360995265,acc,std
+LSTM,B,0.0006891459512675,acc,std
+TGT-M,A,0.0089969970579732,acc,std
+TGT-M,B,0.0020894425699556,acc,std
+Prev. round,A,0.3221711998602027,macro_F1,mean
+Prev. round,B,0.3221711998602027,macro_F1,mean
+Same season LY,A,0.3453554710756507,macro_F1,mean
+Same season LY,B,0.3453554710756507,macro_F1,mean
+Seasonal baseline,A,0.2284381349588279,macro_F1,mean
+Seasonal baseline,B,0.2284381349588279,macro_F1,mean
+SVR,A,0.3368011691651602,macro_F1,mean
+SVR,B,0.3125384683725147,macro_F1,mean
+RF,A,0.3127791374695067,macro_F1,mean
+RF,B,0.3132217199414543,macro_F1,mean
+ANN,A,0.3243791561852446,macro_F1,mean
+ANN,B,0.3273425731087242,macro_F1,mean
+XGBoost,A,0.3343596584751065,macro_F1,mean
+XGBoost,B,0.3293489523693225,macro_F1,mean
+CNN1D,A,0.3527394911564516,macro_F1,mean
+CNN1D,B,0.3422877468927879,macro_F1,mean
+LSTM,A,0.348505958710305,macro_F1,mean
+LSTM,B,0.3399793563079733,macro_F1,mean
+TGT-M,A,0.3445802240607339,macro_F1,mean
+TGT-M,B,0.3387983726623663,macro_F1,mean
+Prev. round,A,,macro_F1,std
+Prev. round,B,,macro_F1,std
+Same season LY,A,,macro_F1,std
+Same season LY,B,,macro_F1,std
+Seasonal baseline,A,,macro_F1,std
+Seasonal baseline,B,,macro_F1,std
+SVR,A,0.0013680806694265,macro_F1,std
+SVR,B,0.0024323602770917,macro_F1,std
+RF,A,0.0010633327644051,macro_F1,std
+RF,B,0.0016039986807794,macro_F1,std
+ANN,A,0.0252384855434779,macro_F1,std
+ANN,B,0.0078000183633167,macro_F1,std
+XGBoost,A,0.0028327743846193,macro_F1,std
+XGBoost,B,0.001435152728025,macro_F1,std
+CNN1D,A,0.0056100401587214,macro_F1,std
+CNN1D,B,0.004362309614783,macro_F1,std
+LSTM,A,0.0045348901167626,macro_F1,std
+LSTM,B,0.0028775017750508,macro_F1,std
+TGT-M,A,0.0159169916366667,macro_F1,std
+TGT-M,B,0.0058771150492288,macro_F1,std
+Prev. round,A,0.8827842408837618,P_Normal,mean
+Prev. round,B,0.8827842408837618,P_Normal,mean
+Same season LY,A,0.877864364552855,P_Normal,mean
+Same season LY,B,0.877864364552855,P_Normal,mean
+Seasonal baseline,A,0.8412010829436377,P_Normal,mean
+Seasonal baseline,B,0.8412010829436377,P_Normal,mean
+SVR,A,0.8806561988005598,P_Normal,mean
+SVR,B,0.8688575096053848,P_Normal,mean
+RF,A,0.8676812589895255,P_Normal,mean
+RF,B,0.8661705923724178,P_Normal,mean
+ANN,A,0.871225920570625,P_Normal,mean
+ANN,B,0.8695692304838492,P_Normal,mean
+XGBoost,A,0.8736499991358143,P_Normal,mean
+XGBoost,B,0.8692524051079702,P_Normal,mean
+CNN1D,A,0.8759481114539037,P_Normal,mean
+CNN1D,B,0.8729179050834975,P_Normal,mean
+LSTM,A,0.8759580673443025,P_Normal,mean
+LSTM,B,0.8732751551033023,P_Normal,mean
+TGT-M,A,0.8786894349885369,P_Normal,mean
+TGT-M,B,0.874211801947784,P_Normal,mean
+Prev. round,A,,P_Normal,std
+Prev. round,B,,P_Normal,std
+Same season LY,A,,P_Normal,std
+Same season LY,B,,P_Normal,std
+Seasonal baseline,A,,P_Normal,std
+Seasonal baseline,B,,P_Normal,std
+SVR,A,0.0002732878954131,P_Normal,std
+SVR,B,0.0007247747505006,P_Normal,std
+RF,A,0.0005085360834614,P_Normal,std
+RF,B,0.0003508128779744,P_Normal,std
+ANN,A,0.0088582899131023,P_Normal,std
+ANN,B,0.0027269151308802,P_Normal,std
+XGBoost,A,0.0004995404458566,P_Normal,std
+XGBoost,B,0.0001372468043107,P_Normal,std
+CNN1D,A,0.0039567591340842,P_Normal,std
+CNN1D,B,0.000926938402507,P_Normal,std
+LSTM,A,0.0039276267038042,P_Normal,std
+LSTM,B,0.0005734888933678,P_Normal,std
+TGT-M,A,0.0044729519883466,P_Normal,std
+TGT-M,B,0.0017943029204462,P_Normal,std
+Prev. round,A,0.7926151325414009,R_Normal,mean
+Prev. round,B,0.7926151325414009,R_Normal,mean
+Same season LY,A,0.8866229738428228,R_Normal,mean
+Same season LY,B,0.8866229738428228,R_Normal,mean
+Seasonal baseline,A,1.0,R_Normal,mean
+Seasonal baseline,B,1.0,R_Normal,mean
+SVR,A,0.9080890241285816,R_Normal,mean
+SVR,B,0.9734917198197672,R_Normal,mean
+RF,A,0.9648799422630542,R_Normal,mean
+RF,B,0.979470224510894,R_Normal,mean
+ANN,A,0.9593403163828584,R_Normal,mean
+ANN,B,0.9774026176682856,R_Normal,mean
+XGBoost,A,0.961505451850118,R_Normal,mean
+XGBoost,B,0.9779195193789376,R_Normal,mean
+CNN1D,A,0.9492168451440498,R_Normal,mean
+CNN1D,B,0.9749839077769326,R_Normal,mean
+LSTM,A,0.9444379425361344,R_Normal,mean
+LSTM,B,0.9749839077769326,R_Normal,mean
+TGT-M,A,0.9235473111358184,R_Normal,mean
+TGT-M,B,0.9674449450913843,R_Normal,mean
+Prev. round,A,,R_Normal,std
+Prev. round,B,,R_Normal,std
+Same season LY,A,,R_Normal,std
+Same season LY,B,,R_Normal,std
+Seasonal baseline,A,,R_Normal,std
+Seasonal baseline,B,,R_Normal,std
+SVR,A,0.0009459773852951,R_Normal,std
+SVR,B,0.0007384533597123,R_Normal,std
+RF,A,0.0004057706529095,R_Normal,std
+RF,B,0.0002930731113839,R_Normal,std
+ANN,A,0.0218388325458933,R_Normal,std
+ANN,B,0.0049918557193654,R_Normal,std
+XGBoost,A,0.000501964586672,R_Normal,std
+XGBoost,B,0.0005244827924298,R_Normal,std
+CNN1D,A,0.0129884842087742,R_Normal,std
+CNN1D,B,0.0015206023126205,R_Normal,std
+LSTM,A,0.0163193951410883,R_Normal,std
+LSTM,B,0.0005844398254853,R_Normal,std
+TGT-M,A,0.0144398761913948,R_Normal,std
+TGT-M,B,0.0038396067017704,R_Normal,std
+Prev. round,A,0.8352732598473753,F1_Normal,mean
+Prev. round,B,0.8352732598473753,F1_Normal,mean
+Same season LY,A,0.8822219310886938,F1_Normal,mean
+Same season LY,B,0.8822219310886938,F1_Normal,mean
+Seasonal baseline,A,0.9137525398353116,F1_Normal,mean
+Seasonal baseline,B,0.9137525398353116,F1_Normal,mean
+SVR,A,0.894162015230099,F1_Normal,mean
+SVR,B,0.9182029350014996,F1_Normal,mean
+RF,A,0.9137028475244762,F1_Normal,mean
+RF,B,0.9193427475888852,F1_Normal,mean
+ANN,A,0.9129979535529168,F1_Normal,mean
+ANN,B,0.9203276667277296,F1_Normal,mean
+XGBoost,A,0.9154745982173464,F1_Normal,mean
+XGBoost,B,0.9203895223413872,F1_Normal,mean
+CNN1D,A,0.9110637384006622,F1_Normal,mean
+CNN1D,B,0.9211311630653084,F1_Normal,mean
+LSTM,A,0.9088384558714392,F1_Normal,mean
+LSTM,B,0.921330837807618,F1_Normal,mean
+TGT-M,A,0.9004997386878442,F1_Normal,mean
+TGT-M,B,0.9184629183140924,F1_Normal,mean
+Prev. round,A,,F1_Normal,std
+Prev. round,B,,F1_Normal,std
+Same season LY,A,,F1_Normal,std
+Same season LY,B,,F1_Normal,std
+Seasonal baseline,A,,F1_Normal,std
+Seasonal baseline,B,,F1_Normal,std
+SVR,A,0.000385741327926,F1_Normal,std
+SVR,B,7.665602654878865e-05,F1_Normal,std
+RF,A,0.0003839517063951,F1_Normal,std
+RF,B,0.0001651525494856,F1_Normal,std
+ANN,A,0.0052439731272294,F1_Normal,std
+ANN,B,0.0006978382695868,F1_Normal,std
+XGBoost,A,0.0002153661939486,F1_Normal,std
+XGBoost,B,0.0002206674420674,F1_Normal,std
+CNN1D,A,0.0042644508152532,F1_Normal,std
+CNN1D,B,0.0002809828824752,F1_Normal,std
+LSTM,A,0.0054251433753212,F1_Normal,std
+LSTM,B,0.0002375431099218,F1_Normal,std
+TGT-M,A,0.0051660755352989,F1_Normal,std
+TGT-M,B,0.0007561766039541,F1_Normal,std
+Prev. round,A,0.1670146137787056,P_Watch,mean
+Prev. round,B,0.1670146137787056,P_Watch,mean
+Same season LY,A,0.1746506986027944,P_Watch,mean
+Same season LY,B,0.1746506986027944,P_Watch,mean
+Seasonal baseline,A,0.0,P_Watch,mean
+Seasonal baseline,B,0.0,P_Watch,mean
+SVR,A,0.153820177781239,P_Watch,mean
+SVR,B,0.2010483438731029,P_Watch,mean
+RF,A,0.1733853636619481,P_Watch,mean
+RF,B,0.2287565283419282,P_Watch,mean
+ANN,A,0.2009609701988883,P_Watch,mean
+ANN,B,0.2208506874798436,P_Watch,mean
+XGBoost,A,0.213334059241112,P_Watch,mean
+XGBoost,B,0.2439279822899743,P_Watch,mean
+CNN1D,A,0.2019041976983664,P_Watch,mean
+CNN1D,B,0.2320847117142631,P_Watch,mean
+LSTM,A,0.1947864919818317,P_Watch,mean
+LSTM,B,0.2263374903223758,P_Watch,mean
+TGT-M,A,0.1733296262661914,P_Watch,mean
+TGT-M,B,0.2024885036385737,P_Watch,mean
+Prev. round,A,,P_Watch,std
+Prev. round,B,,P_Watch,std
+Same season LY,A,,P_Watch,std
+Same season LY,B,,P_Watch,std
+Seasonal baseline,A,,P_Watch,std
+Seasonal baseline,B,,P_Watch,std
+SVR,A,0.0012166776728053,P_Watch,std
+SVR,B,0.0020651947087781,P_Watch,std
+RF,A,0.0031337658788046,P_Watch,std
+RF,B,0.0046905549188847,P_Watch,std
+ANN,A,0.0118051630460519,P_Watch,std
+ANN,B,0.0043083609833804,P_Watch,std
+XGBoost,A,0.0001482090139769,P_Watch,std
+XGBoost,B,0.0035784436136729,P_Watch,std
+CNN1D,A,0.0189867757797632,P_Watch,std
+CNN1D,B,0.0037189096815513,P_Watch,std
+LSTM,A,0.0179914737680574,P_Watch,std
+LSTM,B,0.0046906308678296,P_Watch,std
+TGT-M,A,0.0111682027127847,P_Watch,std
+TGT-M,B,0.0059758449418104,P_Watch,std
+Prev. round,A,0.1375042970092815,R_Watch,mean
+Prev. round,B,0.1375042970092815,R_Watch,mean
+Same season LY,A,0.180474389824682,R_Watch,mean
+Same season LY,B,0.180474389824682,R_Watch,mean
+Seasonal baseline,A,0.0,R_Watch,mean
+Seasonal baseline,B,0.0,R_Watch,mean
+SVR,A,0.2093502921966311,R_Watch,mean
+SVR,B,0.1196287383980749,R_Watch,mean
+RF,A,0.1168786524578893,R_Watch,mean
+RF,B,0.1043886788128795,R_Watch,mean
+ANN,A,0.143921164203048,R_Watch,mean
+ANN,B,0.11195141514839,R_Watch,mean
+XGBoost,A,0.1521714220236049,R_Watch,mean
+XGBoost,B,0.1207746075398189,R_Watch,mean
+CNN1D,A,0.1538902257362209,R_Watch,mean
+CNN1D,B,0.124785149535923,R_Watch,mean
+LSTM,A,0.1568694855047553,R_Watch,mean
+LSTM,B,0.1239830411367021,R_Watch,mean
+TGT-M,A,0.1805889767388564,R_Watch,mean
+TGT-M,B,0.129941560673771,R_Watch,mean
+Prev. round,A,,R_Watch,std
+Prev. round,B,,R_Watch,std
+Same season LY,A,,R_Watch,std
+Same season LY,B,,R_Watch,std
+Seasonal baseline,A,,R_Watch,std
+Seasonal baseline,B,,R_Watch,std
+SVR,A,0.0,R_Watch,std
+SVR,B,0.0021467851489853,R_Watch,std
+RF,A,0.0024063251976624,R_Watch,std
+RF,B,0.0016957314755298,R_Watch,std
+ANN,A,0.0444520435319294,R_Watch,std
+ANN,B,0.0155884536685495,R_Watch,std
+XGBoost,A,0.0010502064157112,R_Watch,std
+XGBoost,B,0.0016245498887083,R_Watch,std
+CNN1D,A,0.021452249518046,R_Watch,std
+CNN1D,B,0.0121489151234598,R_Watch,std
+LSTM,A,0.0255803576717171,R_Watch,std
+LSTM,B,0.0053292155170085,R_Watch,std
+TGT-M,A,0.0230097257256832,R_Watch,std
+TGT-M,B,0.0086761288856128,R_Watch,std
+Prev. round,A,0.1508295625942684,F1_Watch,mean
+Prev. round,B,0.1508295625942684,F1_Watch,mean
+Same season LY,A,0.1775147928994082,F1_Watch,mean
+Same season LY,B,0.1775147928994082,F1_Watch,mean
+Seasonal baseline,A,0.0,F1_Watch,mean
+Seasonal baseline,B,0.0,F1_Watch,mean
+SVR,A,0.1773380499622945,F1_Watch,mean
+SVR,B,0.1499943400891377,F1_Watch,mean
+RF,A,0.1396278405674813,F1_Watch,mean
+RF,B,0.143352282311949,F1_Watch,mean
+ANN,A,0.1648640971455381,F1_Watch,mean
+ANN,B,0.1481110793194724,F1_Watch,mean
+XGBoost,A,0.1776337013701404,F1_Watch,mean
+XGBoost,B,0.1615579271418187,F1_Watch,mean
+CNN1D,A,0.1735752986797706,F1_Watch,mean
+CNN1D,B,0.1621159274207796,F1_Watch,mean
+LSTM,A,0.1719036646213322,F1_Watch,mean
+LSTM,B,0.1601955054358191,F1_Watch,mean
+TGT-M,A,0.176731045346156,F1_Watch,mean
+TGT-M,B,0.1581453836793163,F1_Watch,mean
+Prev. round,A,,F1_Watch,std
+Prev. round,B,,F1_Watch,std
+Same season LY,A,,F1_Watch,std
+Same season LY,B,,F1_Watch,std
+Seasonal baseline,A,,F1_Watch,std
+Seasonal baseline,B,,F1_Watch,std
+SVR,A,0.000807995128423,F1_Watch,std
+SVR,B,0.0019133121884341,F1_Watch,std
+RF,A,0.002582953891213,F1_Watch,std
+RF,B,0.0022568843257036,F1_Watch,std
+ANN,A,0.0276272864237341,F1_Watch,std
+ANN,B,0.0129875773524778,F1_Watch,std
+XGBoost,A,0.0006654339740593,F1_Watch,std
+XGBoost,B,0.0022375448939109,F1_Watch,std
+CNN1D,A,0.0141162193417064,F1_Watch,std
+CNN1D,B,0.0107208856706467,F1_Watch,std
+LSTM,A,0.0095891296523828,F1_Watch,std
+LSTM,B,0.0056251553265833,F1_Watch,std
+TGT-M,A,0.0166944943402438,F1_Watch,std
+TGT-M,B,0.0064642151615956,F1_Watch,std
+Prev. round,A,0.1199176531137416,P_Moderate Stress,mean
+Prev. round,B,0.1199176531137416,P_Moderate Stress,mean
+Same season LY,A,0.1475128644939965,P_Moderate Stress,mean
+Same season LY,B,0.1475128644939965,P_Moderate Stress,mean
+Seasonal baseline,A,0.0,P_Moderate Stress,mean
+Seasonal baseline,B,0.0,P_Moderate Stress,mean
+SVR,A,0.1745011914859243,P_Moderate Stress,mean
+SVR,B,0.2284249725032891,P_Moderate Stress,mean
+RF,A,0.2343096891534391,P_Moderate Stress,mean
+RF,B,0.2204276971718832,P_Moderate Stress,mean
+ANN,A,0.2146163932629709,P_Moderate Stress,mean
+ANN,B,0.2375245478197242,P_Moderate Stress,mean
+XGBoost,A,0.2132863430007587,P_Moderate Stress,mean
+XGBoost,B,0.2409037662456138,P_Moderate Stress,mean
+CNN1D,A,0.2017542164970089,P_Moderate Stress,mean
+CNN1D,B,0.2499394136942967,P_Moderate Stress,mean
+LSTM,A,0.1782094032281173,P_Moderate Stress,mean
+LSTM,B,0.2250940265550819,P_Moderate Stress,mean
+TGT-M,A,0.1652216795650849,P_Moderate Stress,mean
+TGT-M,B,0.2210042816810534,P_Moderate Stress,mean
+Prev. round,A,,P_Moderate Stress,std
+Prev. round,B,,P_Moderate Stress,std
+Same season LY,A,,P_Moderate Stress,std
+Same season LY,B,,P_Moderate Stress,std
+Seasonal baseline,A,,P_Moderate Stress,std
+Seasonal baseline,B,,P_Moderate Stress,std
+SVR,A,0.0017425159653014,P_Moderate Stress,std
+SVR,B,0.0037943669786705,P_Moderate Stress,std
+RF,A,0.0050873371918998,P_Moderate Stress,std
+RF,B,0.0065852918059689,P_Moderate Stress,std
+ANN,A,0.0431442146065695,P_Moderate Stress,std
+ANN,B,0.0018840174640209,P_Moderate Stress,std
+XGBoost,A,0.0058190504349842,P_Moderate Stress,std
+XGBoost,B,0.0070112442849712,P_Moderate Stress,std
+CNN1D,A,0.0112523185886076,P_Moderate Stress,std
+CNN1D,B,0.0033739436311387,P_Moderate Stress,std
+LSTM,A,0.0168000158499519,P_Moderate Stress,std
+LSTM,B,0.0176524559592788,P_Moderate Stress,std
+TGT-M,A,0.0212071771608154,P_Moderate Stress,std
+TGT-M,B,0.018988612385566,P_Moderate Stress,std
+Prev. round,A,0.1414693381906496,R_Moderate Stress,mean
+Prev. round,B,0.1414693381906496,R_Moderate Stress,mean
+Same season LY,A,0.1566484517304189,R_Moderate Stress,mean
+Same season LY,B,0.1566484517304189,R_Moderate Stress,mean
+Seasonal baseline,A,0.0,R_Moderate Stress,mean
+Seasonal baseline,B,0.0,R_Moderate Stress,mean
+SVR,A,0.1119206638332321,R_Moderate Stress,mean
+SVR,B,0.066180935033394,R_Moderate Stress,mean
+RF,A,0.0730621331714228,R_Moderate Stress,mean
+RF,B,0.0641570532280914,R_Moderate Stress,mean
+ANN,A,0.0809552722121028,R_Moderate Stress,mean
+ANN,B,0.0750860149767253,R_Moderate Stress,mean
+XGBoost,A,0.095324833029751,R_Moderate Stress,mean
+XGBoost,B,0.0742764622546043,R_Moderate Stress,mean
+CNN1D,A,0.1092896174863388,R_Moderate Stress,mean
+CNN1D,B,0.0928961748633879,R_Moderate Stress,mean
+LSTM,A,0.1013964784456587,R_Moderate Stress,mean
+LSTM,B,0.0799433313094515,R_Moderate Stress,mean
+TGT-M,A,0.1147540983606557,R_Moderate Stress,mean
+TGT-M,B,0.0872293058085407,R_Moderate Stress,mean
+Prev. round,A,,R_Moderate Stress,std
+Prev. round,B,,R_Moderate Stress,std
+Same season LY,A,,R_Moderate Stress,std
+Same season LY,B,,R_Moderate Stress,std
+Seasonal baseline,A,,R_Moderate Stress,std
+Seasonal baseline,B,,R_Moderate Stress,std
+SVR,A,0.0018549183140885,R_Moderate Stress,std
+SVR,B,0.0043783257746982,R_Moderate Stress,std
+RF,A,0.0012639137823109,R_Moderate Stress,std
+RF,B,0.0022986878550092,R_Moderate Stress,std
+ANN,A,0.0286870521515931,R_Moderate Stress,std
+ANN,B,0.0102020507274872,R_Moderate Stress,std
+XGBoost,A,0.0016064063819457,R_Moderate Stress,std
+XGBoost,B,0.0024538262807087,R_Moderate Stress,std
+CNN1D,A,0.0086080430350685,R_Moderate Stress,std
+CNN1D,B,0.003693237723314,R_Moderate Stress,std
+LSTM,A,0.0077517579446288,R_Moderate Stress,std
+LSTM,B,0.0062314528712166,R_Moderate Stress,std
+TGT-M,A,0.0195427770970626,R_Moderate Stress,std
+TGT-M,B,0.0073196281400627,R_Moderate Stress,std
+Prev. round,A,0.1298050139275766,F1_Moderate Stress,mean
+Prev. round,B,0.1298050139275766,F1_Moderate Stress,mean
+Same season LY,A,0.1519434628975265,F1_Moderate Stress,mean
+Same season LY,B,0.1519434628975265,F1_Moderate Stress,mean
+Seasonal baseline,A,0.0,F1_Moderate Stress,mean
+Seasonal baseline,B,0.0,F1_Moderate Stress,mean
+SVR,A,0.1363711557182069,F1_Moderate Stress,mean
+SVR,B,0.1025921597691239,F1_Moderate Stress,mean
+RF,A,0.1113848450414492,F1_Moderate Stress,mean
+RF,B,0.0993852117655018,F1_Moderate Stress,mean
+ANN,A,0.1132306553863836,F1_Moderate Stress,mean
+ANN,B,0.1138742284933187,F1_Moderate Stress,mean
+XGBoost,A,0.1317521796840823,F1_Moderate Stress,mean
+XGBoost,B,0.1135259456270205,F1_Moderate Stress,mean
+CNN1D,A,0.1413952708698342,F1_Moderate Stress,mean
+CNN1D,B,0.1354080645572414,F1_Moderate Stress,mean
+LSTM,A,0.1286759033194694,F1_Moderate Stress,mean
+LSTM,B,0.117883290303389,F1_Moderate Stress,mean
+TGT-M,A,0.1344308673481604,F1_Moderate Stress,mean
+TGT-M,B,0.1250468279675435,F1_Moderate Stress,mean
+Prev. round,A,,F1_Moderate Stress,std
+Prev. round,B,,F1_Moderate Stress,std
+Same season LY,A,,F1_Moderate Stress,std
+Same season LY,B,,F1_Moderate Stress,std
+Seasonal baseline,A,,F1_Moderate Stress,std
+Seasonal baseline,B,,F1_Moderate Stress,std
+SVR,A,0.0017858149608996,F1_Moderate Stress,std
+SVR,B,0.0055931939154715,F1_Moderate Stress,std
+RF,A,0.0017989226909465,F1_Moderate Stress,std
+RF,B,0.003400098769557,F1_Moderate Stress,std
+ANN,A,0.0219366351760033,F1_Moderate Stress,std
+ANN,B,0.0118738007254794,F1_Moderate Stress,std
+XGBoost,A,0.0023835877204061,F1_Moderate Stress,std
+XGBoost,B,0.0031836689562047,F1_Moderate Stress,std
+CNN1D,A,0.0043989197913538,F1_Moderate Stress,std
+CNN1D,B,0.0037384802998499,F1_Moderate Stress,std
+LSTM,A,0.0022472200072034,F1_Moderate Stress,std
+LSTM,B,0.008291553546266,F1_Moderate Stress,std
+TGT-M,A,0.0140367801933057,F1_Moderate Stress,std
+TGT-M,B,0.0101573249150666,F1_Moderate Stress,std
+Prev. round,A,0.1156110615521855,P_High Stress,mean
+Prev. round,B,0.1156110615521855,P_High Stress,mean
+Same season LY,A,0.2035398230088495,P_High Stress,mean
+Same season LY,B,0.2035398230088495,P_High Stress,mean
+Seasonal baseline,A,0.0,P_High Stress,mean
+Seasonal baseline,B,0.0,P_High Stress,mean
+SVR,A,0.4250669439661201,P_High Stress,mean
+SVR,B,0.6284883951812908,P_High Stress,mean
+RF,A,0.5940757808998617,P_High Stress,mean
+RF,B,0.5392008757525999,P_High Stress,mean
+ANN,A,0.573686714237173,P_High Stress,mean
+ANN,B,0.6248377132067385,P_High Stress,mean
+XGBoost,A,0.5817175195578099,P_High Stress,mean
+XGBoost,B,0.5612968902442587,P_High Stress,mean
+CNN1D,A,0.4840394735837095,P_High Stress,mean
+CNN1D,B,0.5889506828449571,P_High Stress,mean
+LSTM,A,0.4821648432827945,P_High Stress,mean
+LSTM,B,0.6037913333011488,P_High Stress,mean
+TGT-M,A,0.4192671365376828,P_High Stress,mean
+TGT-M,B,0.5877455353238531,P_High Stress,mean
+Prev. round,A,,P_High Stress,std
+Prev. round,B,,P_High Stress,std
+Same season LY,A,,P_High Stress,std
+Same season LY,B,,P_High Stress,std
+Seasonal baseline,A,,P_High Stress,std
+Seasonal baseline,B,,P_High Stress,std
+SVR,A,0.0021066431022642,P_High Stress,std
+SVR,B,0.0182752583096829,P_High Stress,std
+RF,A,0.0103778853064855,P_High Stress,std
+RF,B,0.0173332553483678,P_High Stress,std
+ANN,A,0.1123212931783818,P_High Stress,std
+ANN,B,0.0455323705426913,P_High Stress,std
+XGBoost,A,0.0077370385835516,P_High Stress,std
+XGBoost,B,0.003765389886415,P_High Stress,std
+CNN1D,A,0.036077055749429,P_High Stress,std
+CNN1D,B,0.0133952175742818,P_High Stress,std
+LSTM,A,0.0216929335673947,P_High Stress,std
+LSTM,B,0.0317780942178735,P_High Stress,std
+TGT-M,A,0.0874533825078471,P_High Stress,std
+TGT-M,B,0.0286184464526483,P_High Stress,std
+Prev. round,A,0.3417721518987341,R_High Stress,mean
+Prev. round,B,0.3417721518987341,R_High Stress,mean
+Same season LY,A,0.1455696202531645,R_High Stress,mean
+Same season LY,B,0.1455696202531645,R_High Stress,mean
+Seasonal baseline,A,0.0,R_High Stress,mean
+Seasonal baseline,B,0.0,R_High Stress,mean
+SVR,A,0.0833333333333333,R_High Stress,mean
+SVR,B,0.0423699015471167,R_High Stress,mean
+RF,A,0.0465893108298171,R_High Stress,mean
+RF,B,0.0495780590717299,R_High Stress,mean
+ANN,A,0.0615330520393811,R_High Stress,mean
+ANN,B,0.0708509142053445,R_High Stress,mean
+XGBoost,A,0.0624120956399437,R_High Stress,mean
+XGBoost,B,0.0683895921237693,R_High Stress,mean
+CNN1D,A,0.115154711673699,R_High Stress,mean
+CNN1D,B,0.0866736990154711,R_High Stress,mean
+LSTM,A,0.1144514767932489,R_High Stress,mean
+LSTM,B,0.0926511954992967,R_High Stress,mean
+TGT-M,A,0.1082981715893108,R_High Stress,mean
+TGT-M,B,0.0886075949367088,R_High Stress,mean
+Prev. round,A,,R_High Stress,std
+Prev. round,B,,R_High Stress,std
+Same season LY,A,,R_High Stress,std
+Same season LY,B,,R_High Stress,std
+Seasonal baseline,A,,R_High Stress,std
+Seasonal baseline,B,,R_High Stress,std
+SVR,A,0.0032082080856003,R_High Stress,std
+SVR,B,0.0027065408435901,R_High Stress,std
+RF,A,0.0016113135354978,R_High Stress,std
+RF,B,0.0015822784810126,R_High Stress,std
+ANN,A,0.0392049503931543,R_High Stress,std
+ANN,B,0.0069638897047603,R_High Stress,std
+XGBoost,A,0.0087357652945181,R_High Stress,std
+XGBoost,B,0.0013273267291263,R_High Stress,std
+CNN1D,A,0.0190482886508886,R_High Stress,std
+CNN1D,B,0.0182731155430129,R_High Stress,std
+LSTM,A,0.0110508052952304,R_High Stress,std
+LSTM,B,0.0054896255260182,R_High Stress,std
+TGT-M,A,0.0385790995653503,R_High Stress,std
+TGT-M,B,0.0133116344558269,R_High Stress,std
+Prev. round,A,0.1727769630715904,F1_High Stress,mean
+Prev. round,B,0.1727769630715904,F1_High Stress,mean
+Same season LY,A,0.1697416974169741,F1_High Stress,mean
+Same season LY,B,0.1697416974169741,F1_High Stress,mean
+Seasonal baseline,A,0.0,F1_High Stress,mean
+Seasonal baseline,B,0.0,F1_High Stress,mean
+SVR,A,0.1393334557500403,F1_High Stress,mean
+SVR,B,0.0793644386302975,F1_High Stress,mean
+RF,A,0.0864010167446203,F1_High Stress,mean
+RF,B,0.0908066380994813,F1_High Stress,mean
+ANN,A,0.10642391865614,F1_High Stress,mean
+ANN,B,0.1270573178943761,F1_High Stress,mean
+XGBoost,A,0.1125781546288567,F1_High Stress,mean
+XGBoost,B,0.1219224143670633,F1_High Stress,mean
+CNN1D,A,0.1849236566755394,F1_High Stress,mean
+CNN1D,B,0.1504958325278221,F1_High Stress,mean
+LSTM,A,0.1846058110289794,F1_High Stress,mean
+LSTM,B,0.1605077916850669,F1_High Stress,mean
+TGT-M,A,0.1666592448607748,F1_High Stress,mean
+TGT-M,B,0.1535383606885128,F1_High Stress,mean
+Prev. round,A,,F1_High Stress,std
+Prev. round,B,,F1_High Stress,std
+Same season LY,A,,F1_High Stress,std
+Same season LY,B,,F1_High Stress,std
+Seasonal baseline,A,,F1_High Stress,std
+Seasonal baseline,B,,F1_High Stress,std
+SVR,A,0.0045831260153829,F1_High Stress,std
+SVR,B,0.0046446199623458,F1_High Stress,std
+RF,A,0.0028693880220043,F1_High Stress,std
+RF,B,0.0028986613040736,F1_High Stress,std
+ANN,A,0.0574882236328459,F1_High Stress,std
+ANN,B,0.0104662390884083,F1_High Stress,std
+XGBoost,A,0.0141657544668799,F1_High Stress,std
+XGBoost,B,0.0021960489657923,F1_High Stress,std
+CNN1D,A,0.0213899177894807,F1_High Stress,std
+CNN1D,B,0.027503326120562,F1_High Stress,std
+LSTM,A,0.0126327855691383,F1_High Stress,std
+LSTM,B,0.007386319412347,F1_High Stress,std
+TGT-M,A,0.0386179162811157,F1_High Stress,std
+TGT-M,B,0.0192716227074684,F1_High Stress,std
+Prev. round,A,0.6800928248893005,AUC_stressed,mean
+Prev. round,B,0.6800928248893005,AUC_stressed,mean
+Same season LY,A,0.6782719886487015,AUC_stressed,mean
+Same season LY,B,0.6782719886487015,AUC_stressed,mean
+Seasonal baseline,A,0.5,AUC_stressed,mean
+Seasonal baseline,B,0.5,AUC_stressed,mean
+SVR,A,0.7360084675070535,AUC_stressed,mean
+SVR,B,0.7809038638206441,AUC_stressed,mean
+RF,A,0.7602763626313488,AUC_stressed,mean
+RF,B,0.7808855075502302,AUC_stressed,mean
+ANN,A,0.7555732202948316,AUC_stressed,mean
+ANN,B,0.7932578329479595,AUC_stressed,mean
+XGBoost,A,0.7634961199408045,AUC_stressed,mean
+XGBoost,B,0.7884221644781038,AUC_stressed,mean
+CNN1D,A,0.7681669815226203,AUC_stressed,mean
+CNN1D,B,0.7970114137366542,AUC_stressed,mean
+LSTM,A,0.7675809684978825,AUC_stressed,mean
+LSTM,B,0.8006301117066575,AUC_stressed,mean
+TGT-M,A,0.7594639606784335,AUC_stressed,mean
+TGT-M,B,0.7946664369748276,AUC_stressed,mean
+Prev. round,A,,AUC_stressed,std
+Prev. round,B,,AUC_stressed,std
+Same season LY,A,,AUC_stressed,std
+Same season LY,B,,AUC_stressed,std
+Seasonal baseline,A,,AUC_stressed,std
+Seasonal baseline,B,,AUC_stressed,std
+SVR,A,0.0003392734343802,AUC_stressed,std
+SVR,B,0.0005963352604616,AUC_stressed,std
+RF,A,0.0003423445627114,AUC_stressed,std
+RF,B,0.0007936206662848,AUC_stressed,std
+ANN,A,0.0076528913870311,AUC_stressed,std
+ANN,B,0.0011072312707438,AUC_stressed,std
+XGBoost,A,0.0006708022651253,AUC_stressed,std
+XGBoost,B,0.0006401575394622,AUC_stressed,std
+CNN1D,A,0.0011932266439643,AUC_stressed,std
+CNN1D,B,0.0044931781753459,AUC_stressed,std
+LSTM,A,0.0035878170795767,AUC_stressed,std
+LSTM,B,0.0022393838462211,AUC_stressed,std
+TGT-M,A,0.0032933794546025,AUC_stressed,std
+TGT-M,B,0.00059181647028,AUC_stressed,std

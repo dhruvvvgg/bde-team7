@@ -1,0 +1,1344 @@
+state,year,stress_category,n
+Andhra Pradesh,2005,High Stress,37
+Andhra Pradesh,2005,Moderate Stress,28
+Andhra Pradesh,2005,Normal,412
+Andhra Pradesh,2005,Watch,51
+Andhra Pradesh,2006,High Stress,18
+Andhra Pradesh,2006,Moderate Stress,8
+Andhra Pradesh,2006,Normal,612
+Andhra Pradesh,2006,Watch,24
+Andhra Pradesh,2007,High Stress,16
+Andhra Pradesh,2007,Moderate Stress,14
+Andhra Pradesh,2007,Normal,596
+Andhra Pradesh,2007,Watch,35
+Andhra Pradesh,2008,High Stress,15
+Andhra Pradesh,2008,Moderate Stress,13
+Andhra Pradesh,2008,Normal,612
+Andhra Pradesh,2008,Watch,21
+Andhra Pradesh,2009,High Stress,29
+Andhra Pradesh,2009,Moderate Stress,24
+Andhra Pradesh,2009,Normal,553
+Andhra Pradesh,2009,Watch,50
+Andhra Pradesh,2010,High Stress,17
+Andhra Pradesh,2010,Moderate Stress,6
+Andhra Pradesh,2010,Normal,618
+Andhra Pradesh,2010,Watch,15
+Andhra Pradesh,2011,High Stress,15
+Andhra Pradesh,2011,Moderate Stress,12
+Andhra Pradesh,2011,Normal,614
+Andhra Pradesh,2011,Watch,18
+Andhra Pradesh,2012,High Stress,22
+Andhra Pradesh,2012,Moderate Stress,21
+Andhra Pradesh,2012,Normal,414
+Andhra Pradesh,2012,Watch,30
+Andhra Pradesh,2013,High Stress,28
+Andhra Pradesh,2013,Moderate Stress,13
+Andhra Pradesh,2013,Normal,432
+Andhra Pradesh,2013,Watch,25
+Andhra Pradesh,2014,High Stress,35
+Andhra Pradesh,2014,Moderate Stress,30
+Andhra Pradesh,2014,Normal,550
+Andhra Pradesh,2014,Watch,32
+Andhra Pradesh,2015,High Stress,55
+Andhra Pradesh,2015,Moderate Stress,49
+Andhra Pradesh,2015,Normal,508
+Andhra Pradesh,2015,Watch,47
+Andhra Pradesh,2016,High Stress,43
+Andhra Pradesh,2016,Moderate Stress,25
+Andhra Pradesh,2016,Normal,357
+Andhra Pradesh,2016,Watch,35
+Andhra Pradesh,2017,High Stress,57
+Andhra Pradesh,2017,Moderate Stress,51
+Andhra Pradesh,2017,Normal,484
+Andhra Pradesh,2017,Watch,66
+Andhra Pradesh,2018,High Stress,47
+Andhra Pradesh,2018,Moderate Stress,32
+Andhra Pradesh,2018,Normal,509
+Andhra Pradesh,2018,Watch,65
+Andhra Pradesh,2019,High Stress,43
+Andhra Pradesh,2019,Moderate Stress,34
+Andhra Pradesh,2019,Normal,485
+Andhra Pradesh,2019,Watch,86
+Andhra Pradesh,2020,High Stress,4
+Andhra Pradesh,2020,Moderate Stress,6
+Andhra Pradesh,2020,Normal,336
+Andhra Pradesh,2020,Watch,13
+Andhra Pradesh,2021,High Stress,5
+Andhra Pradesh,2021,Moderate Stress,8
+Andhra Pradesh,2021,Normal,469
+Andhra Pradesh,2021,Watch,21
+Andhra Pradesh,2022,High Stress,9
+Andhra Pradesh,2022,Moderate Stress,7
+Andhra Pradesh,2022,Normal,616
+Andhra Pradesh,2022,Watch,18
+Assam,2005,High Stress,3
+Assam,2005,Moderate Stress,1
+Assam,2005,Normal,41
+Assam,2006,High Stress,11
+Assam,2006,Moderate Stress,4
+Assam,2006,Normal,25
+Assam,2006,Watch,7
+Assam,2007,High Stress,7
+Assam,2007,Moderate Stress,2
+Assam,2007,Normal,34
+Assam,2007,Watch,2
+Assam,2008,High Stress,5
+Assam,2008,Moderate Stress,3
+Assam,2008,Normal,36
+Assam,2008,Watch,3
+Assam,2009,High Stress,4
+Assam,2009,Moderate Stress,9
+Assam,2009,Normal,30
+Assam,2009,Watch,2
+Assam,2010,High Stress,4
+Assam,2010,Moderate Stress,2
+Assam,2010,Normal,35
+Assam,2010,Watch,7
+Assam,2011,High Stress,4
+Assam,2011,Moderate Stress,1
+Assam,2011,Normal,40
+Assam,2011,Watch,3
+Assam,2012,High Stress,1
+Assam,2012,Normal,27
+Assam,2012,Watch,4
+Assam,2013,High Stress,4
+Assam,2013,Normal,33
+Assam,2013,Watch,4
+Assam,2014,High Stress,6
+Assam,2014,Moderate Stress,3
+Assam,2014,Normal,24
+Assam,2015,High Stress,2
+Assam,2015,Moderate Stress,4
+Assam,2015,Normal,37
+Assam,2015,Watch,4
+Assam,2016,High Stress,6
+Assam,2016,Moderate Stress,2
+Assam,2016,Normal,21
+Assam,2016,Watch,3
+Assam,2017,High Stress,8
+Assam,2017,Normal,31
+Assam,2017,Watch,6
+Assam,2018,High Stress,1
+Assam,2018,Moderate Stress,3
+Assam,2018,Normal,41
+Assam,2018,Watch,3
+Assam,2019,High Stress,2
+Assam,2019,Moderate Stress,1
+Assam,2019,Normal,40
+Assam,2019,Watch,3
+Assam,2020,High Stress,1
+Assam,2020,Normal,31
+Assam,2020,Watch,1
+Assam,2021,High Stress,6
+Assam,2021,Moderate Stress,3
+Assam,2021,Normal,35
+Assam,2021,Watch,1
+Assam,2022,High Stress,4
+Assam,2022,Moderate Stress,1
+Assam,2022,Normal,38
+Assam,2022,Watch,3
+Bihar,2005,High Stress,20
+Bihar,2005,Moderate Stress,11
+Bihar,2005,Normal,67
+Bihar,2005,Watch,16
+Bihar,2006,High Stress,20
+Bihar,2006,Moderate Stress,11
+Bihar,2006,Normal,116
+Bihar,2006,Watch,21
+Bihar,2007,High Stress,12
+Bihar,2007,Moderate Stress,14
+Bihar,2007,Normal,126
+Bihar,2007,Watch,18
+Bihar,2008,High Stress,8
+Bihar,2008,Moderate Stress,7
+Bihar,2008,Normal,157
+Bihar,2008,Watch,15
+Bihar,2009,High Stress,29
+Bihar,2009,Moderate Stress,12
+Bihar,2009,Normal,145
+Bihar,2009,Watch,18
+Bihar,2010,High Stress,43
+Bihar,2010,Moderate Stress,23
+Bihar,2010,Normal,116
+Bihar,2010,Watch,21
+Bihar,2011,High Stress,23
+Bihar,2011,Moderate Stress,24
+Bihar,2011,Normal,143
+Bihar,2011,Watch,21
+Bihar,2012,High Stress,6
+Bihar,2012,Moderate Stress,9
+Bihar,2012,Normal,130
+Bihar,2012,Watch,14
+Bihar,2013,High Stress,20
+Bihar,2013,Moderate Stress,16
+Bihar,2013,Normal,139
+Bihar,2013,Watch,21
+Bihar,2014,High Stress,5
+Bihar,2014,Moderate Stress,9
+Bihar,2014,Normal,185
+Bihar,2014,Watch,16
+Bihar,2015,High Stress,21
+Bihar,2015,Moderate Stress,21
+Bihar,2015,Normal,154
+Bihar,2015,Watch,20
+Bihar,2016,High Stress,13
+Bihar,2016,Moderate Stress,13
+Bihar,2016,Normal,112
+Bihar,2016,Watch,14
+Bihar,2017,High Stress,11
+Bihar,2017,Moderate Stress,12
+Bihar,2017,Normal,168
+Bihar,2017,Watch,17
+Bihar,2018,High Stress,15
+Bihar,2018,Moderate Stress,4
+Bihar,2018,Normal,118
+Bihar,2018,Watch,22
+Bihar,2019,High Stress,28
+Bihar,2019,Moderate Stress,31
+Bihar,2019,Normal,126
+Bihar,2019,Watch,18
+Bihar,2020,High Stress,7
+Bihar,2020,Moderate Stress,2
+Bihar,2020,Normal,105
+Bihar,2020,Watch,13
+Bihar,2021,High Stress,4
+Bihar,2021,Moderate Stress,3
+Bihar,2021,Normal,134
+Bihar,2021,Watch,10
+Bihar,2022,High Stress,10
+Bihar,2022,Moderate Stress,12
+Bihar,2022,Normal,167
+Bihar,2022,Watch,13
+Chhattisgarh,2005,High Stress,11
+Chhattisgarh,2005,Moderate Stress,9
+Chhattisgarh,2005,Normal,345
+Chhattisgarh,2005,Watch,25
+Chhattisgarh,2006,High Stress,20
+Chhattisgarh,2006,Moderate Stress,14
+Chhattisgarh,2006,Normal,424
+Chhattisgarh,2006,Watch,24
+Chhattisgarh,2007,High Stress,21
+Chhattisgarh,2007,Moderate Stress,19
+Chhattisgarh,2007,Normal,436
+Chhattisgarh,2007,Watch,36
+Chhattisgarh,2008,High Stress,25
+Chhattisgarh,2008,Moderate Stress,14
+Chhattisgarh,2008,Normal,430
+Chhattisgarh,2008,Watch,38
+Chhattisgarh,2009,High Stress,45
+Chhattisgarh,2009,Moderate Stress,40
+Chhattisgarh,2009,Normal,362
+Chhattisgarh,2009,Watch,63
+Chhattisgarh,2010,High Stress,43
+Chhattisgarh,2010,Moderate Stress,27
+Chhattisgarh,2010,Normal,370
+Chhattisgarh,2010,Watch,59
+Chhattisgarh,2011,High Stress,37
+Chhattisgarh,2011,Moderate Stress,18
+Chhattisgarh,2011,Normal,414
+Chhattisgarh,2011,Watch,36
+Chhattisgarh,2012,High Stress,6
+Chhattisgarh,2012,Moderate Stress,5
+Chhattisgarh,2012,Normal,375
+Chhattisgarh,2012,Watch,20
+Chhattisgarh,2013,High Stress,22
+Chhattisgarh,2013,Moderate Stress,14
+Chhattisgarh,2013,Normal,427
+Chhattisgarh,2013,Watch,41
+Chhattisgarh,2014,High Stress,12
+Chhattisgarh,2014,Moderate Stress,10
+Chhattisgarh,2014,Normal,468
+Chhattisgarh,2014,Watch,17
+Chhattisgarh,2015,High Stress,45
+Chhattisgarh,2015,Moderate Stress,28
+Chhattisgarh,2015,Normal,363
+Chhattisgarh,2015,Watch,40
+Chhattisgarh,2016,High Stress,66
+Chhattisgarh,2016,Moderate Stress,32
+Chhattisgarh,2016,Normal,266
+Chhattisgarh,2016,Watch,41
+Chhattisgarh,2017,High Stress,72
+Chhattisgarh,2017,Moderate Stress,36
+Chhattisgarh,2017,Normal,325
+Chhattisgarh,2017,Watch,65
+Chhattisgarh,2018,High Stress,71
+Chhattisgarh,2018,Moderate Stress,36
+Chhattisgarh,2018,Normal,319
+Chhattisgarh,2018,Watch,48
+Chhattisgarh,2019,High Stress,47
+Chhattisgarh,2019,Moderate Stress,38
+Chhattisgarh,2019,Normal,303
+Chhattisgarh,2019,Watch,50
+Chhattisgarh,2020,High Stress,19
+Chhattisgarh,2020,Moderate Stress,14
+Chhattisgarh,2020,Normal,310
+Chhattisgarh,2020,Watch,37
+Chhattisgarh,2021,High Stress,34
+Chhattisgarh,2021,Moderate Stress,20
+Chhattisgarh,2021,Normal,297
+Chhattisgarh,2021,Watch,36
+Chhattisgarh,2022,High Stress,8
+Chhattisgarh,2022,Moderate Stress,12
+Chhattisgarh,2022,Normal,413
+Chhattisgarh,2022,Watch,27
+Delhi,2005,High Stress,3
+Delhi,2005,Moderate Stress,2
+Delhi,2005,Normal,24
+Delhi,2005,Watch,2
+Delhi,2006,High Stress,2
+Delhi,2006,Moderate Stress,3
+Delhi,2006,Normal,21
+Delhi,2006,Watch,9
+Delhi,2007,High Stress,1
+Delhi,2007,Normal,18
+Delhi,2007,Watch,3
+Delhi,2008,High Stress,2
+Delhi,2008,Normal,27
+Delhi,2008,Watch,5
+Delhi,2009,High Stress,3
+Delhi,2009,Moderate Stress,2
+Delhi,2009,Normal,29
+Delhi,2009,Watch,2
+Delhi,2010,High Stress,1
+Delhi,2010,Moderate Stress,1
+Delhi,2010,Normal,21
+Delhi,2010,Watch,7
+Delhi,2011,Moderate Stress,1
+Delhi,2011,Normal,33
+Delhi,2011,Watch,2
+Delhi,2012,Moderate Stress,1
+Delhi,2012,Normal,24
+Delhi,2012,Watch,2
+Delhi,2013,Moderate Stress,1
+Delhi,2013,Normal,31
+Delhi,2013,Watch,4
+Delhi,2014,High Stress,2
+Delhi,2014,Moderate Stress,1
+Delhi,2014,Normal,31
+Delhi,2014,Watch,2
+Delhi,2015,Normal,34
+Delhi,2015,Watch,2
+Delhi,2016,Moderate Stress,2
+Delhi,2016,Normal,28
+Delhi,2017,Moderate Stress,4
+Delhi,2017,Normal,30
+Delhi,2017,Watch,1
+Delhi,2018,High Stress,2
+Delhi,2018,Moderate Stress,4
+Delhi,2018,Normal,23
+Delhi,2018,Watch,1
+Delhi,2019,High Stress,3
+Delhi,2019,Moderate Stress,1
+Delhi,2019,Normal,30
+Delhi,2020,High Stress,2
+Delhi,2020,Normal,22
+Delhi,2020,Watch,3
+Delhi,2021,High Stress,1
+Delhi,2021,Moderate Stress,1
+Delhi,2021,Normal,20
+Delhi,2021,Watch,2
+Delhi,2022,Normal,34
+Gujarat,2005,High Stress,21
+Gujarat,2005,Moderate Stress,18
+Gujarat,2005,Normal,536
+Gujarat,2005,Watch,21
+Gujarat,2006,High Stress,19
+Gujarat,2006,Moderate Stress,5
+Gujarat,2006,Normal,860
+Gujarat,2006,Watch,23
+Gujarat,2007,High Stress,12
+Gujarat,2007,Moderate Stress,12
+Gujarat,2007,Normal,948
+Gujarat,2007,Watch,30
+Gujarat,2008,High Stress,27
+Gujarat,2008,Moderate Stress,7
+Gujarat,2008,Normal,970
+Gujarat,2008,Watch,27
+Gujarat,2009,High Stress,42
+Gujarat,2009,Moderate Stress,31
+Gujarat,2009,Normal,935
+Gujarat,2009,Watch,36
+Gujarat,2010,High Stress,37
+Gujarat,2010,Moderate Stress,34
+Gujarat,2010,Normal,933
+Gujarat,2010,Watch,46
+Gujarat,2011,High Stress,12
+Gujarat,2011,Moderate Stress,15
+Gujarat,2011,Normal,989
+Gujarat,2011,Watch,27
+Gujarat,2012,High Stress,31
+Gujarat,2012,Moderate Stress,22
+Gujarat,2012,Normal,688
+Gujarat,2012,Watch,56
+Gujarat,2013,High Stress,27
+Gujarat,2013,Moderate Stress,34
+Gujarat,2013,Normal,892
+Gujarat,2013,Watch,80
+Gujarat,2014,High Stress,24
+Gujarat,2014,Moderate Stress,18
+Gujarat,2014,Normal,950
+Gujarat,2014,Watch,49
+Gujarat,2015,High Stress,85
+Gujarat,2015,Moderate Stress,39
+Gujarat,2015,Normal,787
+Gujarat,2015,Watch,91
+Gujarat,2016,High Stress,42
+Gujarat,2016,Moderate Stress,34
+Gujarat,2016,Normal,635
+Gujarat,2016,Watch,77
+Gujarat,2017,High Stress,23
+Gujarat,2017,Moderate Stress,32
+Gujarat,2017,Normal,892
+Gujarat,2017,Watch,68
+Gujarat,2018,High Stress,28
+Gujarat,2018,Moderate Stress,17
+Gujarat,2018,Normal,668
+Gujarat,2018,Watch,54
+Gujarat,2019,High Stress,35
+Gujarat,2019,Moderate Stress,50
+Gujarat,2019,Normal,868
+Gujarat,2019,Watch,73
+Gujarat,2020,High Stress,9
+Gujarat,2020,Moderate Stress,7
+Gujarat,2020,Normal,731
+Gujarat,2020,Watch,24
+Gujarat,2021,High Stress,45
+Gujarat,2021,Moderate Stress,25
+Gujarat,2021,Normal,674
+Gujarat,2021,Watch,37
+Gujarat,2022,High Stress,13
+Gujarat,2022,Moderate Stress,14
+Gujarat,2022,Normal,920
+Gujarat,2022,Watch,24
+Haryana,2005,High Stress,7
+Haryana,2005,Moderate Stress,5
+Haryana,2005,Normal,85
+Haryana,2005,Watch,12
+Haryana,2006,High Stress,9
+Haryana,2006,Moderate Stress,8
+Haryana,2006,Normal,100
+Haryana,2006,Watch,12
+Haryana,2007,High Stress,10
+Haryana,2007,Moderate Stress,12
+Haryana,2007,Normal,100
+Haryana,2007,Watch,12
+Haryana,2008,High Stress,8
+Haryana,2008,Moderate Stress,9
+Haryana,2008,Normal,102
+Haryana,2008,Watch,15
+Haryana,2009,High Stress,11
+Haryana,2009,Moderate Stress,7
+Haryana,2009,Normal,108
+Haryana,2009,Watch,11
+Haryana,2010,High Stress,9
+Haryana,2010,Moderate Stress,8
+Haryana,2010,Normal,105
+Haryana,2010,Watch,11
+Haryana,2011,High Stress,3
+Haryana,2011,Moderate Stress,8
+Haryana,2011,Normal,115
+Haryana,2011,Watch,10
+Haryana,2012,High Stress,7
+Haryana,2012,Moderate Stress,5
+Haryana,2012,Normal,63
+Haryana,2012,Watch,6
+Haryana,2013,High Stress,12
+Haryana,2013,Moderate Stress,8
+Haryana,2013,Normal,89
+Haryana,2013,Watch,11
+Haryana,2014,High Stress,7
+Haryana,2014,Moderate Stress,5
+Haryana,2014,Normal,83
+Haryana,2014,Watch,8
+Haryana,2015,High Stress,8
+Haryana,2015,Moderate Stress,11
+Haryana,2015,Normal,79
+Haryana,2015,Watch,4
+Haryana,2016,High Stress,12
+Haryana,2016,Moderate Stress,5
+Haryana,2016,Normal,71
+Haryana,2016,Watch,5
+Haryana,2017,High Stress,16
+Haryana,2017,Moderate Stress,10
+Haryana,2017,Normal,71
+Haryana,2017,Watch,8
+Haryana,2018,High Stress,20
+Haryana,2018,Moderate Stress,14
+Haryana,2018,Normal,77
+Haryana,2018,Watch,15
+Haryana,2019,High Stress,13
+Haryana,2019,Moderate Stress,15
+Haryana,2019,Normal,84
+Haryana,2019,Watch,14
+Haryana,2020,High Stress,12
+Haryana,2020,Moderate Stress,9
+Haryana,2020,Normal,61
+Haryana,2020,Watch,11
+Haryana,2021,High Stress,17
+Haryana,2021,Moderate Stress,15
+Haryana,2021,Normal,50
+Haryana,2021,Watch,8
+Haryana,2022,High Stress,10
+Haryana,2022,Moderate Stress,13
+Haryana,2022,Normal,94
+Haryana,2022,Watch,10
+Himachal Pradesh,2005,High Stress,6
+Himachal Pradesh,2005,Normal,59
+Himachal Pradesh,2005,Watch,6
+Himachal Pradesh,2006,High Stress,15
+Himachal Pradesh,2006,Moderate Stress,9
+Himachal Pradesh,2006,Normal,115
+Himachal Pradesh,2006,Watch,12
+Himachal Pradesh,2007,High Stress,21
+Himachal Pradesh,2007,Moderate Stress,7
+Himachal Pradesh,2007,Normal,122
+Himachal Pradesh,2007,Watch,15
+Himachal Pradesh,2008,High Stress,8
+Himachal Pradesh,2008,Moderate Stress,6
+Himachal Pradesh,2008,Normal,138
+Himachal Pradesh,2008,Watch,10
+Himachal Pradesh,2009,High Stress,18
+Himachal Pradesh,2009,Moderate Stress,9
+Himachal Pradesh,2009,Normal,128
+Himachal Pradesh,2009,Watch,11
+Himachal Pradesh,2010,High Stress,4
+Himachal Pradesh,2010,Moderate Stress,9
+Himachal Pradesh,2010,Normal,137
+Himachal Pradesh,2010,Watch,14
+Himachal Pradesh,2011,High Stress,4
+Himachal Pradesh,2011,Moderate Stress,1
+Himachal Pradesh,2011,Normal,153
+Himachal Pradesh,2011,Watch,8
+Himachal Pradesh,2012,High Stress,8
+Himachal Pradesh,2012,Moderate Stress,6
+Himachal Pradesh,2012,Normal,137
+Himachal Pradesh,2012,Watch,14
+Himachal Pradesh,2013,High Stress,6
+Himachal Pradesh,2013,Moderate Stress,2
+Himachal Pradesh,2013,Normal,145
+Himachal Pradesh,2013,Watch,9
+Himachal Pradesh,2014,High Stress,5
+Himachal Pradesh,2014,Moderate Stress,4
+Himachal Pradesh,2014,Normal,117
+Himachal Pradesh,2014,Watch,9
+Himachal Pradesh,2015,High Stress,3
+Himachal Pradesh,2015,Moderate Stress,3
+Himachal Pradesh,2015,Normal,139
+Himachal Pradesh,2015,Watch,11
+Himachal Pradesh,2016,High Stress,14
+Himachal Pradesh,2016,Moderate Stress,9
+Himachal Pradesh,2016,Normal,91
+Himachal Pradesh,2016,Watch,8
+Himachal Pradesh,2017,High Stress,20
+Himachal Pradesh,2017,Moderate Stress,12
+Himachal Pradesh,2017,Normal,106
+Himachal Pradesh,2017,Watch,17
+Himachal Pradesh,2018,High Stress,7
+Himachal Pradesh,2018,Moderate Stress,9
+Himachal Pradesh,2018,Normal,134
+Himachal Pradesh,2018,Watch,12
+Himachal Pradesh,2019,Moderate Stress,2
+Himachal Pradesh,2019,Normal,165
+Himachal Pradesh,2019,Watch,1
+Himachal Pradesh,2020,High Stress,3
+Himachal Pradesh,2020,Moderate Stress,1
+Himachal Pradesh,2020,Normal,112
+Himachal Pradesh,2020,Watch,4
+Himachal Pradesh,2021,High Stress,5
+Himachal Pradesh,2021,Moderate Stress,1
+Himachal Pradesh,2021,Normal,93
+Himachal Pradesh,2021,Watch,14
+Himachal Pradesh,2022,High Stress,6
+Himachal Pradesh,2022,Moderate Stress,8
+Himachal Pradesh,2022,Normal,126
+Himachal Pradesh,2022,Watch,14
+Jharkhand,2005,High Stress,6
+Jharkhand,2005,Moderate Stress,8
+Jharkhand,2005,Normal,43
+Jharkhand,2005,Watch,14
+Jharkhand,2006,High Stress,10
+Jharkhand,2006,Moderate Stress,4
+Jharkhand,2006,Normal,79
+Jharkhand,2006,Watch,11
+Jharkhand,2007,High Stress,6
+Jharkhand,2007,Moderate Stress,4
+Jharkhand,2007,Normal,89
+Jharkhand,2007,Watch,10
+Jharkhand,2008,High Stress,6
+Jharkhand,2008,Moderate Stress,6
+Jharkhand,2008,Normal,102
+Jharkhand,2008,Watch,8
+Jharkhand,2009,High Stress,13
+Jharkhand,2009,Moderate Stress,8
+Jharkhand,2009,Normal,90
+Jharkhand,2009,Watch,20
+Jharkhand,2010,High Stress,36
+Jharkhand,2010,Moderate Stress,12
+Jharkhand,2010,Normal,63
+Jharkhand,2010,Watch,20
+Jharkhand,2011,High Stress,19
+Jharkhand,2011,Moderate Stress,12
+Jharkhand,2011,Normal,93
+Jharkhand,2011,Watch,14
+Jharkhand,2012,High Stress,4
+Jharkhand,2012,Moderate Stress,4
+Jharkhand,2012,Normal,75
+Jharkhand,2012,Watch,7
+Jharkhand,2013,High Stress,4
+Jharkhand,2013,Moderate Stress,5
+Jharkhand,2013,Normal,103
+Jharkhand,2013,Watch,12
+Jharkhand,2014,High Stress,4
+Jharkhand,2014,Moderate Stress,3
+Jharkhand,2014,Normal,118
+Jharkhand,2014,Watch,7
+Jharkhand,2015,High Stress,10
+Jharkhand,2015,Moderate Stress,7
+Jharkhand,2015,Normal,108
+Jharkhand,2015,Watch,11
+Jharkhand,2016,High Stress,1
+Jharkhand,2016,Moderate Stress,1
+Jharkhand,2016,Normal,86
+Jharkhand,2016,Watch,9
+Jharkhand,2017,High Stress,1
+Jharkhand,2017,Normal,115
+Jharkhand,2017,Watch,7
+Jharkhand,2018,High Stress,4
+Jharkhand,2018,Moderate Stress,8
+Jharkhand,2018,Normal,80
+Jharkhand,2018,Watch,11
+Jharkhand,2019,High Stress,13
+Jharkhand,2019,Moderate Stress,16
+Jharkhand,2019,Normal,84
+Jharkhand,2019,Watch,16
+Jharkhand,2020,High Stress,2
+Jharkhand,2020,Moderate Stress,2
+Jharkhand,2020,Normal,77
+Jharkhand,2020,Watch,4
+Jharkhand,2021,High Stress,1
+Jharkhand,2021,Moderate Stress,1
+Jharkhand,2021,Normal,90
+Jharkhand,2021,Watch,4
+Jharkhand,2022,High Stress,5
+Jharkhand,2022,Moderate Stress,7
+Jharkhand,2022,Normal,99
+Jharkhand,2022,Watch,6
+Karnataka,2005,High Stress,46
+Karnataka,2005,Moderate Stress,38
+Karnataka,2005,Normal,530
+Karnataka,2005,Watch,54
+Karnataka,2006,High Stress,37
+Karnataka,2006,Moderate Stress,17
+Karnataka,2006,Normal,696
+Karnataka,2006,Watch,30
+Karnataka,2007,High Stress,39
+Karnataka,2007,Moderate Stress,26
+Karnataka,2007,Normal,707
+Karnataka,2007,Watch,47
+Karnataka,2008,High Stress,34
+Karnataka,2008,Moderate Stress,19
+Karnataka,2008,Normal,746
+Karnataka,2008,Watch,47
+Karnataka,2009,High Stress,25
+Karnataka,2009,Moderate Stress,23
+Karnataka,2009,Normal,760
+Karnataka,2009,Watch,45
+Karnataka,2010,High Stress,24
+Karnataka,2010,Moderate Stress,17
+Karnataka,2010,Normal,771
+Karnataka,2010,Watch,32
+Karnataka,2011,High Stress,18
+Karnataka,2011,Moderate Stress,14
+Karnataka,2011,Normal,782
+Karnataka,2011,Watch,34
+Karnataka,2012,High Stress,40
+Karnataka,2012,Moderate Stress,31
+Karnataka,2012,Normal,532
+Karnataka,2012,Watch,37
+Karnataka,2013,High Stress,60
+Karnataka,2013,Moderate Stress,40
+Karnataka,2013,Normal,676
+Karnataka,2013,Watch,57
+Karnataka,2014,High Stress,37
+Karnataka,2014,Moderate Stress,34
+Karnataka,2014,Normal,734
+Karnataka,2014,Watch,45
+Karnataka,2015,High Stress,56
+Karnataka,2015,Moderate Stress,34
+Karnataka,2015,Normal,699
+Karnataka,2015,Watch,59
+Karnataka,2016,High Stress,57
+Karnataka,2016,Moderate Stress,43
+Karnataka,2016,Normal,459
+Karnataka,2016,Watch,67
+Karnataka,2017,High Stress,76
+Karnataka,2017,Moderate Stress,63
+Karnataka,2017,Normal,626
+Karnataka,2017,Watch,73
+Karnataka,2018,High Stress,47
+Karnataka,2018,Moderate Stress,33
+Karnataka,2018,Normal,714
+Karnataka,2018,Watch,54
+Karnataka,2019,High Stress,66
+Karnataka,2019,Moderate Stress,52
+Karnataka,2019,Normal,595
+Karnataka,2019,Watch,68
+Karnataka,2020,High Stress,37
+Karnataka,2020,Moderate Stress,20
+Karnataka,2020,Normal,387
+Karnataka,2020,Watch,30
+Karnataka,2021,High Stress,13
+Karnataka,2021,Moderate Stress,10
+Karnataka,2021,Normal,595
+Karnataka,2021,Watch,18
+Karnataka,2022,High Stress,10
+Karnataka,2022,Moderate Stress,15
+Karnataka,2022,Normal,729
+Karnataka,2022,Watch,31
+Kerala,2005,High Stress,27
+Kerala,2005,Moderate Stress,14
+Kerala,2005,Normal,328
+Kerala,2005,Watch,44
+Kerala,2006,High Stress,8
+Kerala,2006,Moderate Stress,6
+Kerala,2006,Normal,456
+Kerala,2006,Watch,26
+Kerala,2007,High Stress,7
+Kerala,2007,Moderate Stress,7
+Kerala,2007,Normal,474
+Kerala,2007,Watch,18
+Kerala,2008,High Stress,14
+Kerala,2008,Moderate Stress,16
+Kerala,2008,Normal,429
+Kerala,2008,Watch,51
+Kerala,2009,High Stress,25
+Kerala,2009,Moderate Stress,12
+Kerala,2009,Normal,442
+Kerala,2009,Watch,23
+Kerala,2010,High Stress,12
+Kerala,2010,Moderate Stress,7
+Kerala,2010,Normal,448
+Kerala,2010,Watch,22
+Kerala,2011,High Stress,11
+Kerala,2011,Moderate Stress,4
+Kerala,2011,Normal,475
+Kerala,2011,Watch,14
+Kerala,2012,High Stress,28
+Kerala,2012,Moderate Stress,24
+Kerala,2012,Normal,255
+Kerala,2012,Watch,35
+Kerala,2013,High Stress,38
+Kerala,2013,Moderate Stress,34
+Kerala,2013,Normal,363
+Kerala,2013,Watch,68
+Kerala,2014,High Stress,6
+Kerala,2014,Moderate Stress,9
+Kerala,2014,Normal,462
+Kerala,2014,Watch,29
+Kerala,2015,High Stress,36
+Kerala,2015,Moderate Stress,27
+Kerala,2015,Normal,375
+Kerala,2015,Watch,61
+Kerala,2016,High Stress,59
+Kerala,2016,Moderate Stress,52
+Kerala,2016,Normal,160
+Kerala,2016,Watch,71
+Kerala,2017,High Stress,50
+Kerala,2017,Moderate Stress,23
+Kerala,2017,Normal,370
+Kerala,2017,Watch,61
+Kerala,2018,High Stress,25
+Kerala,2018,Moderate Stress,26
+Kerala,2018,Normal,377
+Kerala,2018,Watch,74
+Kerala,2019,High Stress,13
+Kerala,2019,Moderate Stress,8
+Kerala,2019,Normal,462
+Kerala,2019,Watch,17
+Kerala,2020,High Stress,9
+Kerala,2020,Moderate Stress,8
+Kerala,2020,Normal,293
+Kerala,2020,Watch,32
+Kerala,2021,High Stress,13
+Kerala,2021,Moderate Stress,7
+Kerala,2021,Normal,456
+Kerala,2021,Watch,18
+Kerala,2022,High Stress,21
+Kerala,2022,Moderate Stress,15
+Kerala,2022,Normal,391
+Kerala,2022,Watch,53
+Madhya Pradesh,2005,High Stress,115
+Madhya Pradesh,2005,Moderate Stress,72
+Madhya Pradesh,2005,Normal,1280
+Madhya Pradesh,2005,Watch,90
+Madhya Pradesh,2006,High Stress,154
+Madhya Pradesh,2006,Moderate Stress,89
+Madhya Pradesh,2006,Normal,1449
+Madhya Pradesh,2006,Watch,156
+Madhya Pradesh,2007,High Stress,289
+Madhya Pradesh,2007,Moderate Stress,129
+Madhya Pradesh,2007,Normal,1333
+Madhya Pradesh,2007,Watch,163
+Madhya Pradesh,2008,High Stress,236
+Madhya Pradesh,2008,Moderate Stress,142
+Madhya Pradesh,2008,Normal,1387
+Madhya Pradesh,2008,Watch,182
+Madhya Pradesh,2009,High Stress,242
+Madhya Pradesh,2009,Moderate Stress,160
+Madhya Pradesh,2009,Normal,1256
+Madhya Pradesh,2009,Watch,217
+Madhya Pradesh,2010,High Stress,123
+Madhya Pradesh,2010,Moderate Stress,97
+Madhya Pradesh,2010,Normal,1378
+Madhya Pradesh,2010,Watch,163
+Madhya Pradesh,2011,High Stress,108
+Madhya Pradesh,2011,Moderate Stress,82
+Madhya Pradesh,2011,Normal,1602
+Madhya Pradesh,2011,Watch,121
+Madhya Pradesh,2012,High Stress,46
+Madhya Pradesh,2012,Moderate Stress,39
+Madhya Pradesh,2012,Normal,1276
+Madhya Pradesh,2012,Watch,79
+Madhya Pradesh,2013,High Stress,64
+Madhya Pradesh,2013,Moderate Stress,35
+Madhya Pradesh,2013,Normal,1735
+Madhya Pradesh,2013,Watch,91
+Madhya Pradesh,2014,High Stress,73
+Madhya Pradesh,2014,Moderate Stress,42
+Madhya Pradesh,2014,Normal,1774
+Madhya Pradesh,2014,Watch,93
+Madhya Pradesh,2015,High Stress,122
+Madhya Pradesh,2015,Moderate Stress,94
+Madhya Pradesh,2015,Normal,1605
+Madhya Pradesh,2015,Watch,153
+Madhya Pradesh,2016,High Stress,88
+Madhya Pradesh,2016,Moderate Stress,82
+Madhya Pradesh,2016,Normal,1229
+Madhya Pradesh,2016,Watch,104
+Madhya Pradesh,2017,High Stress,121
+Madhya Pradesh,2017,Moderate Stress,90
+Madhya Pradesh,2017,Normal,1559
+Madhya Pradesh,2017,Watch,200
+Madhya Pradesh,2018,High Stress,174
+Madhya Pradesh,2018,Moderate Stress,128
+Madhya Pradesh,2018,Normal,1406
+Madhya Pradesh,2018,Watch,229
+Madhya Pradesh,2019,High Stress,86
+Madhya Pradesh,2019,Moderate Stress,81
+Madhya Pradesh,2019,Normal,1648
+Madhya Pradesh,2019,Watch,141
+Madhya Pradesh,2020,High Stress,21
+Madhya Pradesh,2020,Moderate Stress,16
+Madhya Pradesh,2020,Normal,1380
+Madhya Pradesh,2020,Watch,53
+Madhya Pradesh,2021,High Stress,44
+Madhya Pradesh,2021,Moderate Stress,42
+Madhya Pradesh,2021,Normal,1304
+Madhya Pradesh,2021,Watch,88
+Madhya Pradesh,2022,High Stress,50
+Madhya Pradesh,2022,Moderate Stress,34
+Madhya Pradesh,2022,Normal,1680
+Madhya Pradesh,2022,Watch,82
+Maharashtra,2005,High Stress,79
+Maharashtra,2005,Moderate Stress,31
+Maharashtra,2005,Normal,283
+Maharashtra,2005,Watch,59
+Maharashtra,2006,High Stress,68
+Maharashtra,2006,Moderate Stress,34
+Maharashtra,2006,Normal,856
+Maharashtra,2006,Watch,72
+Maharashtra,2007,High Stress,55
+Maharashtra,2007,Moderate Stress,28
+Maharashtra,2007,Normal,934
+Maharashtra,2007,Watch,52
+Maharashtra,2008,High Stress,117
+Maharashtra,2008,Moderate Stress,56
+Maharashtra,2008,Normal,823
+Maharashtra,2008,Watch,84
+Maharashtra,2009,High Stress,157
+Maharashtra,2009,Moderate Stress,70
+Maharashtra,2009,Normal,709
+Maharashtra,2009,Watch,88
+Maharashtra,2010,High Stress,70
+Maharashtra,2010,Moderate Stress,44
+Maharashtra,2010,Normal,875
+Maharashtra,2010,Watch,62
+Maharashtra,2011,High Stress,61
+Maharashtra,2011,Moderate Stress,40
+Maharashtra,2011,Normal,880
+Maharashtra,2011,Watch,64
+Maharashtra,2012,High Stress,64
+Maharashtra,2012,Moderate Stress,42
+Maharashtra,2012,Normal,592
+Maharashtra,2012,Watch,76
+Maharashtra,2013,High Stress,43
+Maharashtra,2013,Moderate Stress,48
+Maharashtra,2013,Normal,884
+Maharashtra,2013,Watch,75
+Maharashtra,2014,High Stress,92
+Maharashtra,2014,Moderate Stress,54
+Maharashtra,2014,Normal,848
+Maharashtra,2014,Watch,76
+Maharashtra,2015,High Stress,65
+Maharashtra,2015,Moderate Stress,51
+Maharashtra,2015,Normal,878
+Maharashtra,2015,Watch,99
+Maharashtra,2016,High Stress,46
+Maharashtra,2016,Moderate Stress,45
+Maharashtra,2016,Normal,656
+Maharashtra,2016,Watch,71
+Maharashtra,2017,High Stress,82
+Maharashtra,2017,Moderate Stress,66
+Maharashtra,2017,Normal,816
+Maharashtra,2017,Watch,121
+Maharashtra,2018,High Stress,43
+Maharashtra,2018,Moderate Stress,35
+Maharashtra,2018,Normal,663
+Maharashtra,2018,Watch,65
+Maharashtra,2019,High Stress,61
+Maharashtra,2019,Moderate Stress,59
+Maharashtra,2019,Normal,852
+Maharashtra,2019,Watch,104
+Maharashtra,2020,High Stress,23
+Maharashtra,2020,Moderate Stress,15
+Maharashtra,2020,Normal,518
+Maharashtra,2020,Watch,32
+Maharashtra,2021,High Stress,31
+Maharashtra,2021,Moderate Stress,23
+Maharashtra,2021,Normal,720
+Maharashtra,2021,Watch,42
+Maharashtra,2022,High Stress,31
+Maharashtra,2022,Moderate Stress,28
+Maharashtra,2022,Normal,907
+Maharashtra,2022,Watch,55
+Odisha,2005,High Stress,28
+Odisha,2005,Moderate Stress,17
+Odisha,2005,Normal,401
+Odisha,2005,Watch,32
+Odisha,2006,High Stress,13
+Odisha,2006,Moderate Stress,17
+Odisha,2006,Normal,474
+Odisha,2006,Watch,42
+Odisha,2007,High Stress,20
+Odisha,2007,Moderate Stress,20
+Odisha,2007,Normal,486
+Odisha,2007,Watch,31
+Odisha,2008,High Stress,31
+Odisha,2008,Moderate Stress,23
+Odisha,2008,Normal,459
+Odisha,2008,Watch,29
+Odisha,2009,High Stress,27
+Odisha,2009,Moderate Stress,13
+Odisha,2009,Normal,465
+Odisha,2009,Watch,39
+Odisha,2010,High Stress,58
+Odisha,2010,Moderate Stress,36
+Odisha,2010,Normal,417
+Odisha,2010,Watch,51
+Odisha,2011,High Stress,54
+Odisha,2011,Moderate Stress,24
+Odisha,2011,Normal,426
+Odisha,2011,Watch,54
+Odisha,2012,High Stress,22
+Odisha,2012,Moderate Stress,15
+Odisha,2012,Normal,314
+Odisha,2012,Watch,31
+Odisha,2013,High Stress,29
+Odisha,2013,Moderate Stress,15
+Odisha,2013,Normal,483
+Odisha,2013,Watch,32
+Odisha,2014,High Stress,19
+Odisha,2014,Moderate Stress,14
+Odisha,2014,Normal,516
+Odisha,2014,Watch,15
+Odisha,2015,High Stress,60
+Odisha,2015,Moderate Stress,20
+Odisha,2015,Normal,423
+Odisha,2015,Watch,64
+Odisha,2016,High Stress,27
+Odisha,2016,Moderate Stress,18
+Odisha,2016,Normal,302
+Odisha,2016,Watch,35
+Odisha,2017,High Stress,30
+Odisha,2017,Moderate Stress,25
+Odisha,2017,Normal,462
+Odisha,2017,Watch,33
+Odisha,2018,High Stress,7
+Odisha,2018,Moderate Stress,8
+Odisha,2018,Normal,346
+Odisha,2018,Watch,21
+Odisha,2019,High Stress,9
+Odisha,2019,Moderate Stress,12
+Odisha,2019,Normal,514
+Odisha,2019,Watch,27
+Odisha,2020,High Stress,13
+Odisha,2020,Moderate Stress,3
+Odisha,2020,Normal,430
+Odisha,2020,Watch,15
+Odisha,2021,High Stress,32
+Odisha,2021,Moderate Stress,20
+Odisha,2021,Normal,471
+Odisha,2021,Watch,39
+Odisha,2022,High Stress,10
+Odisha,2022,Moderate Stress,10
+Odisha,2022,Normal,519
+Odisha,2022,Watch,20
+Punjab,2005,High Stress,12
+Punjab,2005,Moderate Stress,15
+Punjab,2005,Normal,79
+Punjab,2005,Watch,35
+Punjab,2006,High Stress,17
+Punjab,2006,Moderate Stress,9
+Punjab,2006,Normal,109
+Punjab,2006,Watch,36
+Punjab,2007,High Stress,21
+Punjab,2007,Moderate Stress,16
+Punjab,2007,Normal,106
+Punjab,2007,Watch,35
+Punjab,2008,High Stress,20
+Punjab,2008,Moderate Stress,8
+Punjab,2008,Normal,114
+Punjab,2008,Watch,24
+Punjab,2009,High Stress,22
+Punjab,2009,Moderate Stress,16
+Punjab,2009,Normal,121
+Punjab,2009,Watch,18
+Punjab,2010,High Stress,16
+Punjab,2010,Moderate Stress,20
+Punjab,2010,Normal,119
+Punjab,2010,Watch,20
+Punjab,2011,High Stress,14
+Punjab,2011,Moderate Stress,15
+Punjab,2011,Normal,134
+Punjab,2011,Watch,15
+Punjab,2012,High Stress,14
+Punjab,2012,Moderate Stress,8
+Punjab,2012,Normal,91
+Punjab,2012,Watch,13
+Punjab,2013,High Stress,10
+Punjab,2013,Moderate Stress,16
+Punjab,2013,Normal,136
+Punjab,2013,Watch,13
+Punjab,2014,High Stress,10
+Punjab,2014,Moderate Stress,13
+Punjab,2014,Normal,133
+Punjab,2014,Watch,16
+Punjab,2015,High Stress,14
+Punjab,2015,Moderate Stress,16
+Punjab,2015,Normal,119
+Punjab,2015,Watch,13
+Punjab,2016,High Stress,13
+Punjab,2016,Moderate Stress,14
+Punjab,2016,Normal,87
+Punjab,2016,Watch,15
+Punjab,2017,High Stress,20
+Punjab,2017,Moderate Stress,24
+Punjab,2017,Normal,100
+Punjab,2017,Watch,24
+Punjab,2018,High Stress,20
+Punjab,2018,Moderate Stress,22
+Punjab,2018,Normal,100
+Punjab,2018,Watch,27
+Punjab,2019,High Stress,20
+Punjab,2019,Moderate Stress,22
+Punjab,2019,Normal,108
+Punjab,2019,Watch,21
+Punjab,2020,High Stress,13
+Punjab,2020,Moderate Stress,13
+Punjab,2020,Normal,91
+Punjab,2020,Watch,9
+Punjab,2021,High Stress,27
+Punjab,2021,Moderate Stress,10
+Punjab,2021,Normal,71
+Punjab,2021,Watch,17
+Punjab,2022,High Stress,18
+Punjab,2022,Moderate Stress,17
+Punjab,2022,Normal,111
+Punjab,2022,Watch,25
+Tamil Nadu,2005,High Stress,15
+Tamil Nadu,2005,Moderate Stress,8
+Tamil Nadu,2005,Normal,315
+Tamil Nadu,2005,Watch,18
+Tamil Nadu,2006,High Stress,12
+Tamil Nadu,2006,Moderate Stress,3
+Tamil Nadu,2006,Normal,548
+Tamil Nadu,2006,Watch,8
+Tamil Nadu,2007,High Stress,17
+Tamil Nadu,2007,Moderate Stress,7
+Tamil Nadu,2007,Normal,602
+Tamil Nadu,2007,Watch,35
+Tamil Nadu,2008,High Stress,11
+Tamil Nadu,2008,Moderate Stress,6
+Tamil Nadu,2008,Normal,627
+Tamil Nadu,2008,Watch,13
+Tamil Nadu,2009,High Stress,37
+Tamil Nadu,2009,Moderate Stress,27
+Tamil Nadu,2009,Normal,555
+Tamil Nadu,2009,Watch,41
+Tamil Nadu,2010,High Stress,24
+Tamil Nadu,2010,Moderate Stress,23
+Tamil Nadu,2010,Normal,568
+Tamil Nadu,2010,Watch,51
+Tamil Nadu,2011,High Stress,8
+Tamil Nadu,2011,Moderate Stress,13
+Tamil Nadu,2011,Normal,617
+Tamil Nadu,2011,Watch,19
+Tamil Nadu,2012,High Stress,14
+Tamil Nadu,2012,Moderate Stress,12
+Tamil Nadu,2012,Normal,433
+Tamil Nadu,2012,Watch,23
+Tamil Nadu,2013,High Stress,64
+Tamil Nadu,2013,Moderate Stress,60
+Tamil Nadu,2013,Normal,376
+Tamil Nadu,2013,Watch,78
+Tamil Nadu,2014,High Stress,66
+Tamil Nadu,2014,Moderate Stress,36
+Tamil Nadu,2014,Normal,324
+Tamil Nadu,2014,Watch,71
+Tamil Nadu,2015,High Stress,28
+Tamil Nadu,2015,Moderate Stress,28
+Tamil Nadu,2015,Normal,526
+Tamil Nadu,2015,Watch,52
+Tamil Nadu,2016,High Stress,43
+Tamil Nadu,2016,Moderate Stress,26
+Tamil Nadu,2016,Normal,361
+Tamil Nadu,2016,Watch,51
+Tamil Nadu,2017,High Stress,119
+Tamil Nadu,2017,Moderate Stress,73
+Tamil Nadu,2017,Normal,348
+Tamil Nadu,2017,Watch,85
+Tamil Nadu,2018,High Stress,46
+Tamil Nadu,2018,Moderate Stress,39
+Tamil Nadu,2018,Normal,467
+Tamil Nadu,2018,Watch,65
+Tamil Nadu,2019,High Stress,60
+Tamil Nadu,2019,Moderate Stress,59
+Tamil Nadu,2019,Normal,476
+Tamil Nadu,2019,Watch,92
+Tamil Nadu,2020,High Stress,10
+Tamil Nadu,2020,Moderate Stress,17
+Tamil Nadu,2020,Normal,431
+Tamil Nadu,2020,Watch,41
+Tamil Nadu,2021,High Stress,3
+Tamil Nadu,2021,Moderate Stress,1
+Tamil Nadu,2021,Normal,473
+Tamil Nadu,2021,Watch,13
+Tamil Nadu,2022,High Stress,4
+Tamil Nadu,2022,Moderate Stress,2
+Tamil Nadu,2022,Normal,639
+Tamil Nadu,2022,Watch,5
+Telangana,2005,High Stress,26
+Telangana,2005,Moderate Stress,10
+Telangana,2005,Normal,162
+Telangana,2005,Watch,25
+Telangana,2006,High Stress,3
+Telangana,2006,Moderate Stress,3
+Telangana,2006,Normal,292
+Telangana,2006,Watch,7
+Telangana,2007,High Stress,9
+Telangana,2007,Moderate Stress,7
+Telangana,2007,Normal,294
+Telangana,2007,Watch,10
+Telangana,2008,High Stress,6
+Telangana,2008,Moderate Stress,5
+Telangana,2008,Normal,303
+Telangana,2008,Watch,12
+Telangana,2009,High Stress,41
+Telangana,2009,Moderate Stress,16
+Telangana,2009,Normal,233
+Telangana,2009,Watch,33
+Telangana,2010,High Stress,32
+Telangana,2010,Moderate Stress,14
+Telangana,2010,Normal,239
+Telangana,2010,Watch,19
+Telangana,2011,High Stress,10
+Telangana,2011,Moderate Stress,8
+Telangana,2011,Normal,277
+Telangana,2011,Watch,15
+Telangana,2012,High Stress,13
+Telangana,2012,Moderate Stress,11
+Telangana,2012,Normal,194
+Telangana,2012,Watch,14
+Telangana,2013,High Stress,3
+Telangana,2013,Moderate Stress,6
+Telangana,2013,Normal,298
+Telangana,2013,Watch,13
+Telangana,2014,High Stress,10
+Telangana,2014,Moderate Stress,10
+Telangana,2014,Normal,291
+Telangana,2014,Watch,11
+Telangana,2015,High Stress,32
+Telangana,2015,Moderate Stress,22
+Telangana,2015,Normal,223
+Telangana,2015,Watch,41
+Telangana,2016,High Stress,17
+Telangana,2016,Moderate Stress,11
+Telangana,2016,Normal,155
+Telangana,2016,Watch,25
+Telangana,2017,High Stress,5
+Telangana,2017,Moderate Stress,11
+Telangana,2017,Normal,287
+Telangana,2017,Watch,19
+Telangana,2018,High Stress,16
+Telangana,2018,Moderate Stress,12
+Telangana,2018,Normal,263
+Telangana,2018,Watch,25
+Telangana,2019,High Stress,11
+Telangana,2019,Moderate Stress,18
+Telangana,2019,Normal,253
+Telangana,2019,Watch,32
+Telangana,2020,High Stress,1
+Telangana,2020,Moderate Stress,1
+Telangana,2020,Normal,167
+Telangana,2020,Watch,2
+Telangana,2021,High Stress,4
+Telangana,2021,Normal,233
+Telangana,2021,Watch,4
+Telangana,2022,High Stress,2
+Telangana,2022,Moderate Stress,2
+Telangana,2022,Normal,307
+Telangana,2022,Watch,3
+Uttar Pradesh,2005,High Stress,80
+Uttar Pradesh,2005,Moderate Stress,48
+Uttar Pradesh,2005,Normal,448
+Uttar Pradesh,2005,Watch,70
+Uttar Pradesh,2006,High Stress,169
+Uttar Pradesh,2006,Moderate Stress,75
+Uttar Pradesh,2006,Normal,581
+Uttar Pradesh,2006,Watch,144
+Uttar Pradesh,2007,High Stress,191
+Uttar Pradesh,2007,Moderate Stress,85
+Uttar Pradesh,2007,Normal,592
+Uttar Pradesh,2007,Watch,120
+Uttar Pradesh,2008,High Stress,121
+Uttar Pradesh,2008,Moderate Stress,75
+Uttar Pradesh,2008,Normal,760
+Uttar Pradesh,2008,Watch,98
+Uttar Pradesh,2009,High Stress,121
+Uttar Pradesh,2009,Moderate Stress,97
+Uttar Pradesh,2009,Normal,748
+Uttar Pradesh,2009,Watch,79
+Uttar Pradesh,2010,High Stress,127
+Uttar Pradesh,2010,Moderate Stress,99
+Uttar Pradesh,2010,Normal,674
+Uttar Pradesh,2010,Watch,140
+Uttar Pradesh,2011,High Stress,79
+Uttar Pradesh,2011,Moderate Stress,65
+Uttar Pradesh,2011,Normal,741
+Uttar Pradesh,2011,Watch,120
+Uttar Pradesh,2012,High Stress,37
+Uttar Pradesh,2012,Moderate Stress,38
+Uttar Pradesh,2012,Normal,634
+Uttar Pradesh,2012,Watch,83
+Uttar Pradesh,2013,High Stress,38
+Uttar Pradesh,2013,Moderate Stress,47
+Uttar Pradesh,2013,Normal,863
+Uttar Pradesh,2013,Watch,83
+Uttar Pradesh,2014,High Stress,34
+Uttar Pradesh,2014,Moderate Stress,29
+Uttar Pradesh,2014,Normal,665
+Uttar Pradesh,2014,Watch,60
+Uttar Pradesh,2015,High Stress,146
+Uttar Pradesh,2015,Moderate Stress,87
+Uttar Pradesh,2015,Normal,622
+Uttar Pradesh,2015,Watch,140
+Uttar Pradesh,2016,High Stress,117
+Uttar Pradesh,2016,Moderate Stress,81
+Uttar Pradesh,2016,Normal,423
+Uttar Pradesh,2016,Watch,129
+Uttar Pradesh,2017,High Stress,135
+Uttar Pradesh,2017,Moderate Stress,96
+Uttar Pradesh,2017,Normal,654
+Uttar Pradesh,2017,Watch,142
+Uttar Pradesh,2018,High Stress,119
+Uttar Pradesh,2018,Moderate Stress,100
+Uttar Pradesh,2018,Normal,607
+Uttar Pradesh,2018,Watch,143
+Uttar Pradesh,2019,High Stress,82
+Uttar Pradesh,2019,Moderate Stress,108
+Uttar Pradesh,2019,Normal,640
+Uttar Pradesh,2019,Watch,153
+Uttar Pradesh,2020,High Stress,25
+Uttar Pradesh,2020,Moderate Stress,34
+Uttar Pradesh,2020,Normal,606
+Uttar Pradesh,2020,Watch,64
+Uttar Pradesh,2021,High Stress,21
+Uttar Pradesh,2021,Moderate Stress,32
+Uttar Pradesh,2021,Normal,672
+Uttar Pradesh,2021,Watch,44
+Uttar Pradesh,2022,High Stress,35
+Uttar Pradesh,2022,Moderate Stress,44
+Uttar Pradesh,2022,Normal,854
+Uttar Pradesh,2022,Watch,86
+West Bengal,2005,High Stress,11
+West Bengal,2005,Moderate Stress,8
+West Bengal,2005,Normal,139
+West Bengal,2005,Watch,16
+West Bengal,2006,High Stress,19
+West Bengal,2006,Moderate Stress,8
+West Bengal,2006,Normal,141
+West Bengal,2006,Watch,15
+West Bengal,2007,High Stress,17
+West Bengal,2007,Moderate Stress,12
+West Bengal,2007,Normal,163
+West Bengal,2007,Watch,8
+West Bengal,2008,High Stress,19
+West Bengal,2008,Moderate Stress,8
+West Bengal,2008,Normal,162
+West Bengal,2008,Watch,13
+West Bengal,2009,High Stress,21
+West Bengal,2009,Moderate Stress,6
+West Bengal,2009,Normal,151
+West Bengal,2009,Watch,22
+West Bengal,2010,High Stress,58
+West Bengal,2010,Moderate Stress,16
+West Bengal,2010,Normal,98
+West Bengal,2010,Watch,21
+West Bengal,2011,High Stress,24
+West Bengal,2011,Moderate Stress,10
+West Bengal,2011,Normal,142
+West Bengal,2011,Watch,18
+West Bengal,2012,High Stress,17
+West Bengal,2012,Moderate Stress,8
+West Bengal,2012,Normal,96
+West Bengal,2012,Watch,15
+West Bengal,2013,High Stress,7
+West Bengal,2013,Moderate Stress,11
+West Bengal,2013,Normal,162
+West Bengal,2013,Watch,19
+West Bengal,2014,High Stress,7
+West Bengal,2014,Moderate Stress,4
+West Bengal,2014,Normal,116
+West Bengal,2014,Watch,9
+West Bengal,2015,High Stress,16
+West Bengal,2015,Moderate Stress,21
+West Bengal,2015,Normal,130
+West Bengal,2015,Watch,27
+West Bengal,2016,High Stress,16
+West Bengal,2016,Moderate Stress,4
+West Bengal,2016,Normal,106
+West Bengal,2016,Watch,10
+West Bengal,2017,High Stress,17
+West Bengal,2017,Moderate Stress,13
+West Bengal,2017,Normal,142
+West Bengal,2017,Watch,10
+West Bengal,2018,High Stress,28
+West Bengal,2018,Moderate Stress,14
+West Bengal,2018,Normal,126
+West Bengal,2018,Watch,21
+West Bengal,2019,High Stress,22
+West Bengal,2019,Moderate Stress,14
+West Bengal,2019,Normal,127
+West Bengal,2019,Watch,21
+West Bengal,2020,High Stress,14
+West Bengal,2020,Moderate Stress,6
+West Bengal,2020,Normal,157
+West Bengal,2020,Watch,12
+West Bengal,2021,High Stress,10
+West Bengal,2021,Moderate Stress,7
+West Bengal,2021,Normal,169
+West Bengal,2021,Watch,6
+West Bengal,2022,High Stress,13
+West Bengal,2022,Moderate Stress,10
+West Bengal,2022,Normal,154
+West Bengal,2022,Watch,24

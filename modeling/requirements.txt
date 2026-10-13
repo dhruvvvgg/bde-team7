@@ -1,0 +1,9 @@
+# CPU-only; tested with Python 3.12 (Windows) - Colab/Kaggle defaults also work
+torch>=2.2
+numpy
+pandas>=2.2
+pyarrow
+scikit-learn>=1.4
+xgboost>=2.0
+scipy
+plotly>=5.20
