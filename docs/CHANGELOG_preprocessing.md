@@ -451,3 +451,16 @@ approval" first.
 
 - `docs/review_checklist.md` maps review items 1–12 to the files that deliver them. Items 2, 6, 7
   and 8 are owned by the modeling teammate; items 9 and 11 are manual.
+
+### Error scores before vs after cleaning (new report only)
+
+- **What:** `scripts/15_error_scores.py` writes `reports/preprocessing_error_scores.md` and
+  `reports/tables/table17_error_scores.{csv,md}`. It is added to `run_all.sh`.
+- **Method:** two fixed, past-only forecasting rules ("same season last year" and "seasonal mean of
+  earlier years") are applied identically before and after cleaning and scored on the 2018–2022
+  readings. Metrics: RMSE, MAE, R², median absolute error, bias and sMAPE. These are data-quality
+  scores, not model results.
+- **Result on the same 2,759 wells (raw vs cleaned):** for "same season last year", RMSE goes from
+  2.684 to 2.554 m (−4.8%), MAE from 1.542 to 1.491 m and R² from 0.689 to 0.712. The only
+  difference is the 1,217 readings the dataset authors blanked; our pipeline changes no values.
+- **Before/after:** no data changes.
