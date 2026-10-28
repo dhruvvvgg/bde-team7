@@ -48,9 +48,11 @@ fig = go.Figure()
 for v in ("A", "B"):
     for k, (mk, mn) in enumerate(metrics.items()):
         d = S[S.variant == v].set_index("model")
-        fig.add_bar(x=[lab(m) for m in models], y=[d.loc[m, f"{mk}_mean"] for m in models],
-                    error_y=dict(type="data", array=[0 if pd.isna(d.loc[m, f"{mk}_std"]) else d.loc[m, f"{mk}_std"] for m in models]),
-                    name=f"Model {v} ({'no rainfall' if v == 'A' else 'with rainfall'})", marker_color=COL[v], visible=(k == 0), legendgroup=v, showlegend=(k == 0))
+        off = -0.12 if v == "A" else 0.12      # dot plot: A and B sit side by side at each model position
+        fig.add_scatter(x=[i + off for i in range(len(models))], y=[d.loc[m, f"{mk}_mean"] for m in models], mode="markers",
+                        marker=dict(size=11, color=COL[v], symbol="circle" if v == "A" else "diamond"),
+                        error_y=dict(type="data", array=[0 if pd.isna(d.loc[m, f"{mk}_std"]) else d.loc[m, f"{mk}_std"] for m in models]),
+                        name=f"Model {v} ({'no rainfall' if v == 'A' else 'with rainfall'})", visible=(k == 0), legendgroup=v, showlegend=(k == 0))
 nm, nv = len(metrics), 2
 buttons = []
 for k, (mk, mn) in enumerate(metrics.items()):
@@ -58,16 +60,18 @@ for k, (mk, mn) in enumerate(metrics.items()):
     for v in range(nv):
         vis[v * nm + k] = True
     buttons.append(dict(label=mn, method="update", args=[{"visible": vis}, {"yaxis.title": mn}]))
-fig.update_layout(updatemenus=[dict(buttons=buttons, x=0.0, y=1.09, xanchor="left")], barmode="group", yaxis_title="Depth MAE (m)")
+fig.update_layout(updatemenus=[dict(buttons=buttons, x=0.0, y=1.09, xanchor="left")], yaxis_title="Depth MAE (m)", xaxis_title="Model",
+                  xaxis=dict(tickmode="array", tickvals=list(range(len(models))), ticktext=[lab(m) for m in models], title="Model"))
 figs["models"] = lay(fig, "Test results by model (2018-2022, mean +/- sd over 3 seeds); use the menu to change the metric")
 
 # ---------------------------------------------------------------- 2 rainfall effect with CI
 if not BOOT.empty:
     b = BOOT[BOOT.comparison.str.endswith("B - A (rainfall effect)") & (BOOT.metric == "depth_MAE")].copy()
     b["model"] = b.comparison.str.split(":").str[0]
-    fig = go.Figure(go.Bar(x=[lab(m) for m in b.model], y=b["diff"], marker_color="#548235",
-                           error_y=dict(type="data", symmetric=False, array=b.ci_hi - b["diff"], arrayminus=b["diff"] - b.ci_lo)))
-    fig.update_layout(yaxis_title="Change in depth MAE when rainfall is added (m); negative = rainfall helps")
+    fig = go.Figure(go.Scatter(x=[lab(m) for m in b.model], y=b["diff"], mode="markers", marker=dict(size=12, color="#548235"),
+                               error_y=dict(type="data", symmetric=False, array=b.ci_hi - b["diff"], arrayminus=b["diff"] - b.ci_lo)))
+    fig.add_hline(y=0, line_dash="dash", line_color="#555")
+    fig.update_layout(xaxis_title="Model", yaxis_title="Change in depth MAE when rainfall is added (m); negative = rainfall helps")
     figs["rain"] = lay(fig, "Contribution of rainfall (B minus A) with 95% paired-bootstrap interval over wells")
 
 # ---------------------------------------------------------------- 3 season
@@ -76,8 +80,9 @@ if not SEA.empty:
     fig = go.Figure()
     for m in [x for x in ["Seasonal baseline", "SVR", "RF", "ANN", "XGBoost", "CNN1D", "LSTM", "TGT-M"] if (SEA.model == x).any()]:
         d = SEA[(SEA.model == m) & (SEA.variant == "B")].set_index("season")
-        fig.add_bar(x=[nmap[s] for s in nmap], y=[d.loc[s, "depth_MAE"] for s in nmap], name=lab(m))
-    fig.update_layout(barmode="group", yaxis_title="Depth MAE (m), Model B")
+        fig.add_scatter(x=[nmap[s] for s in nmap], y=[d.loc[s, "depth_MAE"] for s in nmap], name=lab(m), mode="lines+markers",
+                        line=dict(width=4 if m == "TGT-M" else 2))
+    fig.update_layout(xaxis_title="Month of the round", yaxis_title="Depth MAE (m), Model B")
     figs["season"] = lay(fig, "Error by round month (test split, Model B)")
 
 # ---------------------------------------------------------------- 4 state: seen vs unseen (model dropdown)
@@ -89,21 +94,28 @@ if not GPS.empty and not PST.empty:
         c = PST[(PST.model == m) & (PST.variant == "B")].set_index("state")
         st = u.index.intersection(c.index)
         st = sorted(st, key=lambda s: -u.loc[s, "n"])
-        fig.add_bar(x=st, y=[c.loc[s, "anom_MAE"] for s in st], name="Seen (chronological)", marker_color="#1F4E79", visible=(k == 0), legendgroup="s", showlegend=(k == 0))
-        fig.add_bar(x=st, y=[u.loc[s, "anom_MAE"] for s in st], name="Unseen (state held out)", marker_color="#C55A11", visible=(k == 0), legendgroup="u", showlegend=(k == 0))
+        lx, ly = [], []
+        for s_ in st:                                     # dumbbell: a line joins the seen and unseen error of each state
+            lx += [s_, s_, None]; ly += [c.loc[s_, "anom_MAE"], u.loc[s_, "anom_MAE"], None]
+        fig.add_scatter(x=lx, y=ly, mode="lines", line=dict(color="#999", width=2), visible=(k == 0), showlegend=False, hoverinfo="skip")
+        fig.add_scatter(x=st, y=[c.loc[s, "anom_MAE"] for s in st], mode="markers", marker=dict(size=10, color="#1F4E79"), name="Seen (chronological)",
+                        visible=(k == 0), legendgroup="s", showlegend=(k == 0))
+        fig.add_scatter(x=st, y=[u.loc[s, "anom_MAE"] for s in st], mode="markers", marker=dict(size=10, color="#C55A11"), name="Unseen (state held out)",
+                        visible=(k == 0), legendgroup="u", showlegend=(k == 0))
     buttons = []
     for k, m in enumerate(mods):
-        vis = [False] * (2 * len(mods)); vis[2 * k] = vis[2 * k + 1] = True
+        vis = [False] * (3 * len(mods)); vis[3 * k] = vis[3 * k + 1] = vis[3 * k + 2] = True
         buttons.append(dict(label=lab(m), method="update", args=[{"visible": vis}]))
-    fig.update_layout(updatemenus=[dict(buttons=buttons, x=0.0, y=1.09, xanchor="left")], barmode="group", yaxis_title="Anomaly MAE (z)", xaxis_tickangle=-45)
+    fig.update_layout(updatemenus=[dict(buttons=buttons, x=0.0, y=1.09, xanchor="left")], xaxis_title="State", yaxis_title="Anomaly MAE (z)", xaxis_tickangle=-45)
     figs["states"] = lay(fig, "Per-state error: state seen in training vs held out (Model B; states sorted by test rows)", 560)
 
 # ---------------------------------------------------------------- 5 generalization gap
 if not GAP.empty:
     g = GAP[GAP.what == "own gap"]
-    fig = go.Figure(go.Bar(x=[lab(m) for m in g.comparison], y=g.estimate, marker_color="#7030A0",
-                           error_y=dict(type="data", symmetric=False, array=g.ci_hi - g.estimate, arrayminus=g.estimate - g.ci_lo)))
-    fig.update_layout(yaxis_title="Anomaly MAE: unseen state minus seen state")
+    fig = go.Figure(go.Scatter(x=[lab(m) for m in g.comparison], y=g.estimate, mode="markers", marker=dict(size=12, color="#7030A0"),
+                               error_y=dict(type="data", symmetric=False, array=g.ci_hi - g.estimate, arrayminus=g.estimate - g.ci_lo)))
+    fig.add_hline(y=0, line_dash="dash", line_color="#555")
+    fig.update_layout(xaxis_title="Model", yaxis_title="Anomaly MAE: unseen state minus seen state")
     figs["gap"] = lay(fig, "Change in error when a state is held out (post-hoc comparison, seed 0, 95% bootstrap CI)")
 
 # ---------------------------------------------------------------- 6 intervals
@@ -111,9 +123,9 @@ if not INT.empty:
     d = INT.copy()
     d["method"] = d.method.str.replace(" point + conformal", " + conformal")
     fig = go.Figure()
-    fig.add_bar(x=d.method, y=d.interval_score, marker_color=["#7030A0" if m.startswith("TGT-M") else "#7F7F7F" for m in d.method],
-                text=[f"{v:.3f}" for v in d.interval_score], textposition="outside", name="Interval score")
-    fig.update_layout(yaxis=dict(title="Interval score (lower is better)", range=[3.4, 4.0]), xaxis_tickangle=-40)
+    fig.add_scatter(x=d.method, y=d.interval_score, mode="markers+text", marker=dict(size=13, color=["#7030A0" if m.startswith("TGT-M") else "#7F7F7F" for m in d.method]),
+                    text=[f"{v:.3f}" for v in d.interval_score], textposition="top center", name="Interval score")
+    fig.update_layout(yaxis=dict(title="Interval score (lower is better)", range=[3.4, 4.0]), xaxis_title="Interval method", xaxis_tickangle=-40)
     figs["interval"] = lay(fig, "H1 (pre-registered): quality of 80% intervals", 560)
 
 # ---------------------------------------------------------------- 7 robustness
@@ -155,8 +167,8 @@ cnt = cnt.div(cnt.sum(axis=1), axis=0) * 100
 fig = go.Figure()
 for k, c in STRESS_COL.items():
     if k in cnt:
-        fig.add_bar(x=cnt.index, y=cnt[k], name=k, marker_color=c)
-fig.update_layout(barmode="stack", yaxis_title="Share of classified readings (%)", xaxis_title="Year")
+        fig.add_scatter(x=cnt.index, y=cnt[k], name=k, mode="lines", stackgroup="one", line=dict(width=0.5, color=c), fillcolor=c)
+fig.update_layout(yaxis_title="Share of classified readings (%)", xaxis_title="Year")
 figs["stressyear"] = lay(fig, "Stress category share by year (all rounds with a baseline)")
 
 # ---------------------------------------------------------------- 9 predicted vs actual explorer (state dropdown)
