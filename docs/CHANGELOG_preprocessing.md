@@ -464,3 +464,19 @@ approval" first.
   2.684 to 2.554 m (−4.8%), MAE from 1.542 to 1.491 m and R² from 0.689 to 0.712. The only
   difference is the 1,217 readings the dataset authors blanked; our pipeline changes no values.
 - **Before/after:** no data changes.
+
+### Error-metric notebooks before vs after preprocessing (new files only)
+
+- **What:**
+  - `notebooks/error_metrics_before.ipynb` and `notebooks/error_metrics_after.ipynb`, executed, with tables and graphs.
+  - `src/gwstress/error_metrics.py` (RMSE, MSE, MAE, MAPE, R², NRMSE, MedAE, Bias, plus sMAPE and NRMSE relative to the mean) and
+    `tests/test_error_metrics.py` (hand-computed values and a check that no prediction uses a later round).
+  - `scripts/16_make_error_notebooks.py` generates both notebooks.
+  - Saved results: `reports/tables/error_metrics_{before,after,comparison}.csv` and `error_metrics_{before,after}_by_season.csv`.
+- **Method:** the same three past-only forecasting rules are scored on the 2018–2022 readings, on the raw table, on the raw values of
+  the same 2,759 wells, and on the cleaned table. MAPE is computed only where |actual| ≥ 1 m (the count is reported).
+- **Results (same 2,759 wells, rule "same season last year"):** all eight metrics improve after cleaning. RMSE 2.684 → 2.554 m (−4.8%),
+  MAE 1.542 → 1.491 m, R² 0.689 → 0.712. Across the whole raw table, 93.5% of the RMSE reduction comes from which wells the authors
+  kept and 6.5% from blanking outlier readings. This corrects an earlier statement that the gain came from removing wells with
+  impossible values.
+- **Before/after:** no pipeline data changes.
