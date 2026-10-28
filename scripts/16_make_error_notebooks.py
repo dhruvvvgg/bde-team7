@@ -1,22 +1,14 @@
-"""Generate notebooks/error_metrics_before.ipynb and notebooks/error_metrics_after.ipynb.
+"""Cell library for the before/after error-metric sections of notebooks/preprocessing_colab*.ipynb.
 
-Both notebooks run the same analysis (same cells, same metrics module,
-gwstress.error_metrics) on different data:
-  before: the RAW CGWB table (and, like-for-like, the raw values of the same
-          2,759 wells that survive cleaning)
-  after : the CLEANED table the pipeline uses, followed by a before/after
-          comparison section.
+This module no longer writes notebooks of its own: scripts/14_make_colab_notebook.py imports it and embeds
+  intro_cells()        definitions, method, reading notes and the setup cell
+  sections("before")   the RAW CGWB table (and, like-for-like, the raw values of the 2,759 kept wells)
+  sections("after")    the CLEANED table the pipeline uses, then the before/after comparison
+(the "after" section cross-checks its numbers against the CSV the "before" section saves, so the
+"before" section must run first).
 
-The notebooks are then executed with nbconvert so the committed files carry
-their tables and graphs:
-    jupyter nbconvert --to notebook --execute --inplace notebooks/error_metrics_before.ipynb
-    jupyter nbconvert --to notebook --execute --inplace notebooks/error_metrics_after.ipynb
-(run "before" first: "after" cross-checks its numbers against the CSV the
-"before" notebook saves).
-
-Run: python scripts/16_make_error_notebooks.py
+Run: python scripts/14_make_colab_notebook.py
 """
-import json
 import sys
 from pathlib import Path
 
@@ -51,7 +43,7 @@ def metric_definitions() -> str:
 
 
 INTRO = """
-## How these scores are produced
+### How these scores are produced
 
 Data preprocessing does not make predictions, so there is nothing for RMSE, MAE or R² to score directly.
 To get *before* and *after* error scores anyway, the **same fixed forecasting rules** are applied to the data
@@ -70,7 +62,7 @@ These scores measure **data quality, not model skill**; the classifier results b
 """
 
 NOTES = """
-## Reading notes
+### Reading notes
 
 - **Units:** RMSE, MAE, MedAE and Bias are in metres of depth to groundwater; MSE is in m²; MAPE is a percentage; R² and NRMSE have no unit.
 - **MAPE** divides by the actual value, which explodes for shallow water (0–1 m is common). It is therefore computed only
@@ -480,7 +472,7 @@ shift = np.nanmean(ds.values[:, em.TEST_FIRST_COL:]) - np.nanmean(ds.values[:, :
 cmp = side_by_side(t_same, t_after, em.PRIMARY_RULE)
 better = int((cmp.verdict == "better").sum())
 display(Markdown(f'''
-## Scorecard: did preprocessing help? (same 2,759 wells, rule: {em.PRIMARY_RULE}, test period 2018–2022)
+### Scorecard: did preprocessing help? (same 2,759 wells, rule: {em.PRIMARY_RULE}, test period 2018–2022)
 
 **{better} of {len(cmp)} metrics improved** after cleaning.
 
@@ -497,47 +489,32 @@ This pipeline's own steps add flags and features and change no reading, so on th
 """
 
 
-def build(stage: str) -> dict:
+def sections(stage: str) -> list[dict]:
+    """Analysis cells for one stage, ready to embed in notebooks/preprocessing_colab*.ipynb.
+
+    Headings are one level deeper (###) than in a stand-alone notebook because the host notebook owns the
+    numbered ## sections. The setup cell is NOT included (see SETUP and setup_cells()).
+    """
     after = stage == "after"
-    cells = [md(f"""
-# Error metrics {'AFTER' if after else 'BEFORE'} data preprocessing
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dhruvvvgg/bde-team7/blob/main/notebooks/error_metrics_{stage}.ipynb)
-
-{'The cleaned groundwater dataset the pipeline uses (2,759 quality-controlled wells). Ends with a before/after comparison.' if after else 'The raw CGWB groundwater table, before any quality control. Run this notebook first; the after notebook cross-checks against the numbers saved here.'}
-
-Eight error metrics: RMSE, MSE, MAE, MAPE, R², NRMSE, MedAE and Bias (mean error), plus sMAPE.
-"""), md("## The metrics\n\n" + metric_definitions()), md(INTRO), md(NOTES),
-        md("## 0. Setup"), code(SETUP)]
+    cells = []
     loader, color = ("load_cleaned", "AFTER") if after else ("load_raw_all", "BEFORE")
-    cells += [md(f"## 1. The data ({'after' if after else 'before'} cleaning)"),
+    cells += [md(f"### The data ({'after' if after else 'before'} cleaning)"),
               code(LOAD.replace("__LOADER__", loader).replace("__COLOR__", color)), code(DISTRIBUTION),
-              md("## 2. The forecasting rules in action"), code(RULES_SECTION.replace("__EXAMPLE__", EXAMPLE_WELL)),
-              md("## 3. All eight metrics"), code(TABLE), code(PANELS),
-              md("## 4. Where the errors are"), code(SCATTER),
-              md("## 5. Breakdown by season, year and state"), code(BY_SEASON), code(BY_YEAR), code(BY_STATE)]
+              md("### The forecasting rules in action"), code(RULES_SECTION.replace("__EXAMPLE__", EXAMPLE_WELL)),
+              md("### All eight metrics"), code(TABLE), code(PANELS),
+              md("### Where the errors are"), code(SCATTER),
+              md("### Breakdown by season, year and state"), code(BY_SEASON), code(BY_YEAR), code(BY_STATE)]
     if not after:
-        cells += [md("## 6. Like-for-like baseline"), code(BEFORE_ONLY_SAME),
-                  md("## 7. Save the results"), code(BEFORE_SAVE), code(BEFORE_TAKEAWAYS)]
+        cells += [md("### Like-for-like baseline"), code(BEFORE_ONLY_SAME),
+                  md("### Save the results"), code(BEFORE_SAVE), code(BEFORE_TAKEAWAYS)]
     else:
-        cells += [md("## 6. Before vs after comparison"), code(AFTER_COMPARE_LOAD), code(AFTER_COMPARE_TABLES),
+        cells += [md("### Before vs after comparison"), code(AFTER_COMPARE_LOAD), code(AFTER_COMPARE_TABLES),
                   code(AFTER_COMPARE_PANELS), code(AFTER_COMPARE_BREAKDOWN), code(AFTER_COMPARE_B),
-                  md("## C. Where does the improvement come from?"), code(AFTER_DECOMPOSE),
-                  md("## 7. Save the results and summarise"), code(AFTER_SAVE), code(AFTER_TAKEAWAYS)]
-    for i, c in enumerate(cells):
-        c["id"] = f"{stage}-{i:02d}"
-    return {"cells": cells, "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
-                                         "language_info": {"name": "python"}}, "nbformat": 4, "nbformat_minor": 5}
+                  md("### Where does the improvement come from?"), code(AFTER_DECOMPOSE),
+                  md("### Save the results and summarise"), code(AFTER_SAVE), code(AFTER_TAKEAWAYS)]
+    return cells
 
 
-def main() -> None:
-    out = ROOT / "notebooks"
-    out.mkdir(exist_ok=True)
-    for stage in ("before", "after"):
-        p = out / f"error_metrics_{stage}.ipynb"
-        p.write_text(json.dumps(build(stage), indent=1, ensure_ascii=False) + "\n")
-        print("wrote", p)
-
-
-if __name__ == "__main__":
-    main()
+def intro_cells() -> list[dict]:
+    """Definitions, method and reading notes (shown once), then the shared setup cell."""
+    return [md("### The metrics\n\n" + metric_definitions()), md(INTRO), md(NOTES), code(SETUP)]

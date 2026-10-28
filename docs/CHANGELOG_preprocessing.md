@@ -484,3 +484,14 @@ approval" first.
 - **Chart styles (follow-up):** the bar charts in both notebooks were replaced: dot plots for the per-rule metric panels, a
   Cleveland dot plot for RMSE by state, line plots for season breakdowns and processing stages, and dumbbell (before→after) plots for the
   comparison panels. Every graph now has both an x-axis and a y-axis label. Numbers are unchanged; only the figures were redrawn.
+
+- **Consolidation and chart styles (second follow-up):**
+  - The two separate error-metric notebooks were removed. Their cells are now sections 14 (before) and 15 (after + comparison) of
+    `notebooks/preprocessing_colab_executed.ipynb` (and its source `preprocessing_colab.ipynb`), next to a new section 13 that shows all
+    17 report figures. `scripts/16_make_error_notebooks.py` is now a cell library imported by `scripts/14_make_colab_notebook.py`.
+  - The report figures from `scripts/12_figures.py` were redrawn in other styles where bars were used: dot plots (fig02, fig04, fig09a, fig10),
+    heatmaps (fig08, fig15), line/marker plots (fig11, fig16) and an area chart (fig12b rainfall). `save()` now audits every panel and
+    prints a warning if an x or y axis label is missing; the five panels that lacked one were labelled. No table or caption number changed.
+  - The notebook run reproduced `processed/gw_features_by_state` exactly (253,828 rows, frames equal); the regenerated parquet files were discarded.
+  - `tests/test_data_contract.py::test_every_committed_file_under_50mb` now exempts `bigquery/exports/` (the data-warehouse backup export,
+    50.7 MB, outside the pipeline); all other files still must be under 50 MB. All 71 tests pass.

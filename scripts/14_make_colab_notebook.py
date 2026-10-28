@@ -6,13 +6,20 @@ visible check, show figures, run pytest, and an OPTIONAL PySpark section.
 
 Run: python scripts/14_make_colab_notebook.py
 """
+import importlib.util
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 USER, REPO = "dhruvvvgg", "bde-team7"
 BADGE = (f"https://colab.research.google.com/github/{USER}/{REPO}/blob/main/notebooks/"
          "preprocessing_colab.ipynb")
+
+sys.path.insert(0, str(ROOT / "src"))
+_spec = importlib.util.spec_from_file_location("error_cells", ROOT / "scripts" / "16_make_error_notebooks.py")
+error_cells = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(error_cells)       # the before/after error-metric cell library
 
 cells = []
 
@@ -35,7 +42,8 @@ This notebook reproduces the complete preprocessing pipeline of the Big Data Ess
 It does not reimplement anything: every stage calls the repository's own scripts and modules
 (`scripts/*.py`, `src/gwstress/`), so the notebook and the repository cannot drift apart.
 
-**Runtime:** about 5 minutes on a standard Colab CPU runtime. No GPU is needed.
+**Contents:** the pipeline stages (1-12), all report figures (13), before/after error metrics with tables and graphs (14-15), tests (16).
+**Runtime:** about 10 minutes on a standard Colab CPU runtime. No GPU is needed.
 **Data:** the groundwater dataset and the extracted CHIRPS rainfall tables are committed to the repository.
 Raw CHIRPS rasters are **not** downloaded unless you switch `RUN_CHIRPS_DOWNLOAD` on below.
 """)
@@ -224,20 +232,52 @@ spl = pd.read_parquet("processed/splits.parquet")
 pd.crosstab(spl[spl.eval_eligible].split_chrono, spl[spl.eval_eligible].season, margins=True)
 """)
 
-md("## 12. Documentation, figures and architecture diagram")
+md("## 12. Documentation and architecture diagram")
 code("""
 for s in ["scripts/11_handoff_dictionary.py", "scripts/12_figures.py", "scripts/13_architecture.py"]:
     run(s)
 from IPython.display import Image, display
-for f in ["docs/architecture_preprocessing.png", "reports/figures/fig01_missingness_heatmap.png",
-          "reports/figures/fig09_excess_high_stress.png", "reports/figures/fig13_leakage_timeline.png",
-          "reports/figures/fig16_extension_coverage.png"]:
-    print(f)
-    display(Image(filename=f, width=900))
+display(Image(filename="docs/architecture_preprocessing.png", width=900))
 """)
 
 md("""
-## 13. Tests, including the leakage tests
+## 13. All report figures
+
+The 17 review figures (written to `reports/figures/` by `scripts/12_figures.py`), shown at screen size.
+Chart type follows the question: dot plots to compare categories, heatmaps for count tables, lines for change over
+time, hexbin and histograms for distributions. Every panel has both axis labels (checked inside the script).
+Full-resolution (300 dpi) PNGs and one-paragraph captions are in `reports/figures/` and `reports/figure_captions.md`.
+""")
+code("""
+import io
+from PIL import Image as PILImage
+for f in sorted(Path("reports/figures").glob("fig*.png")):
+    im = PILImage.open(f).convert("RGB")
+    im.thumbnail((1300, 1300))
+    buf = io.BytesIO(); im.save(buf, "PNG", optimize=True)
+    print(f.name)
+    display(Image(data=buf.getvalue()))
+""")
+
+md("""
+## 14. Error metrics BEFORE preprocessing
+
+RMSE, MSE, MAE, MAPE, R², NRMSE, MedAE and Bias (mean error) computed on the raw CGWB table, with tables and graphs.
+Run this section before section 15, which cross-checks against the numbers saved here.
+""")
+cells.extend(error_cells.intro_cells())
+cells.extend(error_cells.sections("before"))
+
+md("""
+## 15. Error metrics AFTER preprocessing, and the before/after comparison
+
+The same eight metrics on the cleaned table, followed by the like-for-like comparison, the whole-table comparison,
+where the improvement comes from, and a scorecard.
+""")
+cells.extend(error_cells.sections("after"))
+
+md("""
+## 16. Tests, including the leakage tests
 
 This runs the full test suite: leakage assertions, perturb-the-future tests at four cutoffs, the Monte Carlo
 check of the small-sample adjustment, and the data-contract tests.
