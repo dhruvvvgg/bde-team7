@@ -166,7 +166,7 @@ ax.plot(cols, ds.values[i, cols], color="black", lw=2, marker="o", ms=4, label="
 for (rule, p), mk, ls in zip(preds.items(), ["s", "^", "v"], ["-", "--", ":"]):
     ax.plot(cols, p[i, cols], color=COLOR, lw=1.6, ls=ls, marker=mk, ms=4, label=rule)
 ax.set_xticks(cols[::2], [ROUND_LABELS[c] for c in cols[::2]], rotation=60)
-ax.set_ylabel("Depth to groundwater (m)")
+ax.set_ylabel("Depth to groundwater (m)"); ax.set_xlabel("Round (season-year)")
 ax.invert_yaxis()
 ax.set_title(f"Worked example, well {ds.well_ids[i]} (test period 2018–2022; deeper is lower)")
 ax.legend(ncol=4, loc="lower center", bbox_to_anchor=(0.5, -0.45))
@@ -188,10 +188,13 @@ PANELS = """
 fig, axes = plt.subplots(2, 4, figsize=(15, 6.6))
 for ax, (m, unit) in zip(axes.ravel(), METRICS):
     vals = tbl[m].to_numpy()
-    bars = ax.bar(range(3), vals, color=COLOR, width=0.6)
-    ax.bar_label(bars, fmt="%.3g", fontsize=8, padding=2)
+    ax.plot(range(3), vals, color=COLOR, lw=1, alpha=0.5, marker="o", ms=9)
+    for xi, vi in zip(range(3), vals):
+        ax.annotate(f"{vi:.3g}", (xi, vi), textcoords="offset points", xytext=(0, 9), ha="center", fontsize=8)
     ax.set_xticks(range(3), [SHORT[r] for r in tbl.rule], fontsize=7.5)
-    ax.set_title(f"{m} ({unit})" if unit else m)
+    ax.set_xlim(-0.4, 2.4)
+    ax.set_xlabel("Forecasting rule"); ax.set_ylabel(f"{m} ({unit})" if unit else m)
+    ax.set_title(m)
     if m == "Bias":
         ax.axhline(0, color=INK2, lw=0.8)
     ax.margins(y=0.15)
@@ -234,9 +237,11 @@ display(Markdown("RMSE (m) by season for every rule:"))
 display(piv.round(3))
 fig, ax = plt.subplots(1, 3, figsize=(14, 3.8))
 for a, m in zip(ax, ["RMSE", "MAE", "Bias"]):
-    b = a.bar(bs.season.astype(str), bs[m], color=COLOR, width=0.6)
-    a.bar_label(b, fmt="%.2f", fontsize=8.5, padding=2)
-    a.set_title(f"{m} by season (m)")
+    a.plot(bs.season.astype(str), bs[m], color=COLOR, lw=2, marker="o", ms=7)
+    for xi, vi in zip(range(4), bs[m]):
+        a.annotate(f"{vi:.2f}", (xi, vi), textcoords="offset points", xytext=(0, 8), ha="center", fontsize=8.5)
+    a.set_xlabel("Season of the round"); a.set_ylabel(f"{m} (m)")
+    a.set_title(f"{m} by season")
     if m == "Bias":
         a.axhline(0, color=INK2, lw=0.8)
     a.margins(y=0.15)
@@ -260,10 +265,12 @@ st = em.breakdown(ds, em.PRIMARY_RULE, "state").sort_values("RMSE", ascending=Fa
 display(Markdown(f"### By state ({em.PRIMARY_RULE}), sorted by RMSE"))
 display(st[["state", "wells", "n", "RMSE", "MAE", "R2", "MedAE", "Bias"]].round(3).set_index("state"))
 fig, ax = plt.subplots(figsize=(8, max(3.5, 0.28 * len(st))))
-b = ax.barh(st.state[::-1], st.RMSE[::-1], color=COLOR)
-ax.bar_label(b, fmt="%.2f", fontsize=8, padding=2)
-ax.set_xlabel("RMSE (m)"); ax.set_title("RMSE by state (larger = harder to forecast)")
-ax.margins(x=0.12)
+ax.hlines(st.state[::-1], 0, st.RMSE[::-1], color=COLOR, lw=0.8, alpha=0.4)
+ax.plot(st.RMSE[::-1], st.state[::-1], "o", color=COLOR, ms=7)
+for xv, yv in zip(st.RMSE[::-1], st.state[::-1]):
+    ax.annotate(f"{xv:.2f}", (xv, yv), textcoords="offset points", xytext=(8, 0), va="center", fontsize=8)
+ax.set_xlabel("RMSE (m)"); ax.set_ylabel("State"); ax.set_title("RMSE by state (larger = harder to forecast)")
+ax.set_xlim(0, st.RMSE.max() * 1.15)
 plt.tight_layout(); plt.show()
 """
 
@@ -350,11 +357,16 @@ def compare_panels(tb, ta, title, lb="before", la="after"):
     fig, axes = plt.subplots(2, 4, figsize=(15.5, 6.8))
     x = np.arange(3); w = 0.38
     for ax, (m, unit) in zip(axes.ravel(), METRICS):
-        b1 = ax.bar(x - w / 2, tb[m], w, color=BEFORE, label=lb)
-        b2 = ax.bar(x + w / 2, ta[m], w, color=AFTER, label=la)
-        ax.bar_label(b1, fmt="%.3g", fontsize=7, padding=1); ax.bar_label(b2, fmt="%.3g", fontsize=7, padding=1)
+        ax.vlines(x, tb[m], ta[m], color=INK2, lw=1.5, alpha=0.6)
+        ax.plot(x, tb[m], "o", color=BEFORE, ms=9, label=lb)
+        ax.plot(x, ta[m], "o", color=AFTER, ms=9, label=la)
+        for xi, vb, va in zip(x, tb[m], ta[m]):
+            ax.annotate(f"{vb:.3g}", (xi, vb), textcoords="offset points", xytext=(11, 0), va="center", fontsize=7)
+            ax.annotate(f"{va:.3g}", (xi, va), textcoords="offset points", xytext=(11, 0), va="center", fontsize=7)
         ax.set_xticks(x, [SHORT[r] for r in tb.rule], fontsize=7.5)
-        ax.set_title(f"{m} ({unit})" if unit else m)
+        ax.set_xlim(-0.5, 2.9)
+        ax.set_xlabel("Forecasting rule"); ax.set_ylabel(f"{m} ({unit})" if unit else m)
+        ax.set_title(m)
         if m == "Bias":
             ax.axhline(0, color=INK2, lw=0.8)
         ax.margins(y=0.18)
@@ -377,9 +389,10 @@ display(sea.round(3))
 fig, ax = plt.subplots(1, 3, figsize=(14.5, 3.8))
 x = np.arange(4); w = 0.38
 for a, m in zip(ax, ["RMSE", "MAE", "R2"]):
-    b1 = a.bar(x - w / 2, bsb[m], w, color=BEFORE, label="raw values"); b2 = a.bar(x + w / 2, bsa[m], w, color=AFTER, label="cleaned")
-    a.bar_label(b1, fmt="%.2f", fontsize=7.5, padding=1); a.bar_label(b2, fmt="%.2f", fontsize=7.5, padding=1)
+    a.plot(x, bsb[m], color=BEFORE, lw=2, marker="o", ms=7, label="raw values")
+    a.plot(x, bsa[m], color=AFTER, lw=2, marker="s", ms=7, label="cleaned")
     a.set_xticks(x, em.SEASONS); a.set_title(f"{m} by season"); a.margins(y=0.15)
+    a.set_xlabel("Season of the round"); a.set_ylabel(m if m == "R2" else f"{m} (m)")
 ax[0].legend(fontsize=8)
 plt.tight_layout(); plt.show()
 
@@ -388,7 +401,7 @@ fig, ax = plt.subplots(1, 2, figsize=(13, 3.8))
 for a, m in zip(ax, ["RMSE", "MAE"]):
     a.plot(yb.year, yb[m], color=BEFORE, lw=2, marker="o", label="raw values")
     a.plot(ya.year, ya[m], color=AFTER, lw=2, marker="o", label="cleaned")
-    a.set_xticks(ya.year); a.set_title(f"{m} by year (m)"); a.set_xlabel("Year of the scored round")
+    a.set_xticks(ya.year); a.set_title(f"{m} by year"); a.set_xlabel("Year of the scored round"); a.set_ylabel(f"{m} (m)")
 ax[0].legend()
 plt.tight_layout(); plt.show()
 
@@ -398,13 +411,13 @@ fig, ax = plt.subplots(1, 2, figsize=(13, 3.9))
 bins = np.linspace(-12, 12, 97)
 ax[0].hist(np.clip(eb, -12, 12), bins=bins, histtype="step", lw=2, color=BEFORE, density=True, label="raw values")
 ax[0].hist(np.clip(ea, -12, 12), bins=bins, histtype="step", lw=2, color=AFTER, density=True, label="cleaned")
-ax[0].set_title("Error distribution (density, clipped to ±12 m)"); ax[0].set_xlabel("Error = predicted − actual (m)"); ax[0].legend()
+ax[0].set_title("Error distribution (density, clipped to ±12 m)"); ax[0].set_xlabel("Error = predicted − actual (m)"); ax[0].set_ylabel("Density"); ax[0].legend()
 ax[1].boxplot([np.abs(eb), np.abs(ea)], showfliers=False, patch_artist=True,
               boxprops=dict(alpha=0.6), medianprops=dict(color="black"))
 ax[1].set_xticks([1, 2], ["raw values", "cleaned"])
 for patch, c in zip(ax[1].patches, [BEFORE, AFTER]):
     patch.set_facecolor(c)
-ax[1].set_ylabel("Absolute error (m)"); ax[1].set_title("Absolute error (outliers hidden)")
+ax[1].set_ylabel("Absolute error (m)"); ax[1].set_xlabel("Data version"); ax[1].set_title("Absolute error (outliers hidden)")
 plt.tight_layout(); plt.show()
 """
 
@@ -437,11 +450,13 @@ display(Markdown(f"Share of the total reduction going from step 1 to step 3: RMS
                  f"MAE {selm:.1f}% / {100 - selm:.1f}%. (R² is not comparable between stage 1 and the others; see the reading notes.)"))
 fig, ax = plt.subplots(1, 3, figsize=(14, 3.9))
 for a, m in zip(ax, ["RMSE", "MAE", "MedAE"]):
-    b = a.bar(range(3), dec[m], color=[BEFORE, BEFORE, AFTER], width=0.6)
-    b[1].set_hatch("//"); b[1].set_edgecolor("white")
-    a.bar_label(b, fmt="%.2f", padding=2)
+    a.plot(range(3), dec[m], color=INK2, lw=1.5, alpha=0.6)
+    a.scatter(range(3), dec[m], c=[BEFORE, BEFORE, AFTER], s=90, zorder=3)
+    for xi, vi in zip(range(3), dec[m]):
+        a.annotate(f"{vi:.2f}", (xi, vi), textcoords="offset points", xytext=(0, 9), ha="center", fontsize=8.5)
     a.set_xticks(range(3), ["1. raw,\\nall wells", "2. raw values,\\nsame wells", "3. cleaned"])
-    a.set_title(f"{m} (m)"); a.margins(y=0.15)
+    a.set_xlim(-0.4, 2.4); a.set_xlabel("Processing stage"); a.set_ylabel(f"{m} (m)")
+    a.set_title(m); a.margins(y=0.15)
 plt.tight_layout(); plt.show()
 """
 

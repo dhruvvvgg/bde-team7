@@ -480,3 +480,7 @@ approval" first.
   kept and 6.5% from blanking outlier readings. This corrects an earlier statement that the gain came from removing wells with
   impossible values.
 - **Before/after:** no pipeline data changes.
+
+- **Chart styles (follow-up):** the bar charts in both notebooks were replaced: dot plots for the per-rule metric panels, a
+  Cleveland dot plot for RMSE by state, line plots for season breakdowns and processing stages, and dumbbell (before→after) plots for the
+  comparison panels. Every graph now has both an x-axis and a y-axis label. Numbers are unchanged; only the figures were redrawn.
