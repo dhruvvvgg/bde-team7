@@ -79,7 +79,7 @@ def step_robust():
 
 
 def step_evaluate():
-    for s in ("aggregate.py", "robust_eval.py", "interval_eval.py", "gap_test.py", "export_powerbi.py"):
+    for s in ("aggregate.py", "metrics_full.py", "robust_eval.py", "interval_eval.py", "gap_test.py", "export_powerbi.py"):
         run([s], {"BDE_THREADS": NCPU})
 
 

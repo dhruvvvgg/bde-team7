@@ -13,9 +13,10 @@ Transformer), each with Model A (no rainfall) and Model B (with rainfall). Input
 | `tgtm_job.py`, `tgtm_merge.py` | TGT-M as parallel 1-thread jobs (same protocol; pick best config on validation) |
 | `run_geo.py <model> <loso\|g5>` | Time-respecting hold-out of states (19-fold LOSO or grouped 5-fold) |
 | `aggregate.py` | Tables, paired bootstrap over wells, validation-calibrated class thresholds -> `results/tables/` |
+| `metrics_full.py` | Full regression (RMSE, MSE, MAE, MAPE, R2, NRMSE, MedAE, bias) and classification (accuracy, precision, recall, F1, specificity, AUC, MCC, kappa, balanced accuracy) metrics from saved predictions -> `results/tables/model_metrics_*.csv` |
 | `export_powerbi.py` | Flat CSVs for Power BI / Tableau -> `results/powerbi/` |
 
-Run order: `run_chrono.py` for each model, `run_geo.py`, `aggregate.py`, `export_powerbi.py`.
+Run order: `run_chrono.py` for each model, `run_geo.py`, `aggregate.py`, `metrics_full.py`, `export_powerbi.py`.
 On Windows import `torch` before pandas/pyarrow (the DLL load order matters).
 
 Leakage rules: no lat/lon/state/district or calendar-year inputs; depth lags are expressed relative to the past-only baseline;

@@ -18,7 +18,8 @@ long = summ.melt(id_vars=["model", "variant"], var_name="metric_stat", value_nam
 long[["metric", "stat"]] = long["metric_stat"].str.rsplit("_", n=1, expand=True)
 long.drop(columns="metric_stat").to_csv(OUT / "model_metrics_long.csv", index=False)
 for f in ("chrono_by_season", "chrono_by_completeness", "chrono_excluding_suspect", "bootstrap", "chrono_perclass_B",
-          "geo_summary", "geo_per_state"):
+          "geo_summary", "geo_per_state", "model_metrics_regression_depth", "model_metrics_regression_anomaly",
+          "model_metrics_classification", "model_metrics_classification_per_class"):
     if (TAB / f"{f}.csv").exists():
         pd.read_csv(TAB / f"{f}.csv").to_csv(OUT / f"{f}.csv", index=False)
 
