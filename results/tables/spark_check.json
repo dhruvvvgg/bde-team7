@@ -1,0 +1,18 @@
+{
+ "spark_version": "3.5.3",
+ "rows": 253828,
+ "partitions": 2,
+ "rows_compared": 166306,
+ "max_abs_diff_baseline_mean_m": 0.0,
+ "max_abs_diff_z": 1.2968293106041529e-11,
+ "stress_counts": {
+  "Moderate Stress": 7513,
+  "High Stress": 10609,
+  "No reading": 34570,
+  "Insufficient history": 52952,
+  "Normal": 135523,
+  "Watch": 12661
+ },
+ "seconds": 17.4,
+ "platform": "linux"
+}

@@ -1,0 +1,89 @@
+input,weight
+month,0.01202974064896504
+season_order,0.0066105771499375505
+well_depth_m,0.011457323096692562
+specific_yield,0.008456681234141191
+rain_1m_mm,0.01009310595691204
+rain_3m_mm,0.009531501214951277
+rain_6m_mm,0.01295346301048994
+rain_1m_normal_mm,0.010256318685909113
+rain_3m_normal_mm,0.013991997577250004
+rain_6m_normal_mm,0.008854617675145468
+rain_1m_dev_mm,0.011696080366770426
+rain_3m_dev_mm,0.012988889900346598
+rain_6m_dev_mm,0.012112418189644814
+rain_1m_dev_pct,0.011068365691850582
+rain_3m_dev_pct,0.01180310919880867
+rain_6m_dev_pct,0.010388375880817572
+rain_3m_z,0.010148017046352228
+rain_3m_z_capped,0.009740147118767103
+rain_6m_z,0.010519307417174181
+rain_6m_z_capped,0.010243187037607035
+rain_12m_mm,0.008584970453133186
+rain_monsoon_ytd_mm,0.01539127187182506
+rain_last_monsoon_mm,0.00887697096914053
+rain_last_monsoon_dev_mm,0.009672952505449453
+rain_last_monsoon_dev_pct,0.009042995050549507
+rain_last_ne_mm,0.017488044841835897
+rain_last_ne_dev_mm,0.008702448258797327
+rain_last_ne_z_capped,0.011677139749129614
+n_prior_same_season,0.011798637453466654
+baseline_mean_m,0.014210422523319721
+baseline_std_m,0.013376167975366116
+flag_std_floored,0.009822473861277103
+n_roll10,0.0110132930179437
+baseline_roll10_mean_m,0.00838251831009984
+baseline_roll10_std_m,0.011539199699958166
+flag_roll10_std_floored,0.009955653299887976
+trend_5y_m_per_yr,0.011676721585293611
+completeness_to_date,0.015585451697309812
+gw_prev_round_m,0.014592656555275122
+gw_last_obs_m,0.008352279663085938
+rounds_since_last_obs,0.011176716536283493
+gw_same_season_lag1y_m,0.01991561707109213
+gw_same_season_lag2y_m,0.01208938534061114
+gw_prev_change_m,0.008052849986900886
+gw_max_to_date_m,0.010488498645524183
+gw_min_to_date_m,0.013188454632957777
+n_readings_to_date,0.011445454942683378
+gw_fluct_prev_wy_m,0.012126761799057325
+gw_prev_round_m_rz,0.01602673965195815
+gw_last_obs_m_rz,0.009837372849384943
+gw_same_season_lag1y_m_rz,0.012367089899877707
+gw_same_season_lag2y_m_rz,0.01215885921070973
+gw_max_to_date_m_rz,0.009263358078897
+gw_min_to_date_m_rz,0.01237440388649702
+season_monsoon,0.008266705088317394
+season_post_monsoon_kharif,0.01226749581595262
+season_post_monsoon_rabi,0.010764679871499538
+season_pre_monsoon,0.00796017594014605
+well_type_Bore well,0.010333179030567408
+well_type_Dug cum bore well,0.007131362489114205
+well_type_Dug well,0.008365917640427748
+well_type_Tube well,0.014207360645135244
+aquifer_type_Confined,0.008605437353253365
+aquifer_type_Semi-confined,0.010597224657734236
+aquifer_type_Unconfined,0.011788724611202875
+aquifer_type_unknown,0.010862241809566816
+rain_1m_dev_pct (missing flag),0.01217257883399725
+rain_3m_dev_pct (missing flag),0.012155946809798479
+rain_6m_dev_pct (missing flag),0.011043159446368614
+rain_3m_z (missing flag),0.010257693318029245
+rain_3m_z_capped (missing flag),0.013799607443312803
+rain_6m_z (missing flag),0.012116621248424053
+rain_6m_z_capped (missing flag),0.009794601239264011
+rain_last_monsoon_dev_mm (missing flag),0.013585368171334267
+rain_last_monsoon_dev_pct (missing flag),0.011215863128503164
+trend_5y_m_per_yr (missing flag),0.011001186445355415
+gw_prev_round_m (missing flag),0.01021533397336801
+gw_same_season_lag1y_m (missing flag),0.01181583572179079
+gw_same_season_lag2y_m (missing flag),0.01280280202627182
+gw_prev_change_m (missing flag),0.012757791206240654
+gw_max_to_date_m (missing flag),0.01180135365575552
+gw_min_to_date_m (missing flag),0.010384210074941317
+gw_fluct_prev_wy_m (missing flag),0.014909512052933374
+gw_prev_round_m_rz (missing flag),0.013612275011837482
+gw_same_season_lag1y_m_rz (missing flag),0.0135702940945824
+gw_same_season_lag2y_m_rz (missing flag),0.010709689153979221
+gw_max_to_date_m_rz (missing flag),0.012699544429779053
+gw_min_to_date_m_rz (missing flag),0.011230752182503542
