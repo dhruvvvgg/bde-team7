@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
+from matplotlib.lines import Line2D  # noqa: E402
 from matplotlib.patches import Patch, Rectangle  # noqa: E402
 from scipy import stats  # noqa: E402
 
@@ -48,6 +49,14 @@ captions: list[tuple[str, str, str, str]] = []
 
 def save(fig, name: str) -> str:
     FIG.mkdir(parents=True, exist_ok=True)
+    for a in fig.axes:   # every plotted panel needs both axis labels (colorbars and legends-only panels are exempt)
+        if a.get_label() == "<colorbar>" or not (a.lines or a.collections or a.patches or a.images):
+            continue
+        shares_x_label = any(o is not a and o.get_xlabel() and a.get_shared_x_axes().joined(a, o) for o in fig.axes)
+        if (not a.get_xlabel() and not shares_x_label) or not a.get_ylabel():
+            print(f"  [axis-label audit] {name}: panel '{a.get_title()}' is missing "
+                  f"{'x' if not a.get_xlabel() else ''}{'/' if not a.get_xlabel() and not a.get_ylabel() else ''}"
+                  f"{'y' if not a.get_ylabel() else ''} label")
     fig.savefig(FIG / name, dpi=DPI, bbox_inches="tight")
     plt.close(fig)
     return f"reports/figures/{name}"
@@ -104,6 +113,7 @@ def main() -> None:
     cb.set_label("% of 2,759 wells with a reading")
     ax.set_title("Data availability by season and year (main table 2000-2022 | extension 2023-2024)")
     ax.set_xlabel("Year")
+    ax.set_ylabel("Season of the round")
     f1 = save(fig, "fig01_missingness_heatmap.png")
     table(av.round(1), "table01_availability_season_year")
     c = {k: av.loc[k[0], k[1]] for k in callouts}
@@ -154,14 +164,16 @@ def main() -> None:
     fig, ax = plt.subplots(figsize=(10, 4.2))
     y = np.arange(len(st))[::-1]
     colors = [CAT[1] if b == "dataset authors" or b.startswith("CGWB") else CAT[0] for b in st["applied by"]]
-    ax.barh(y, st["rows (wells)"], color=colors, height=0.6)
+    ax.plot(st["rows (wells)"], y, color=MUTED, lw=1, zorder=1)          # the funnel path, stage to stage
+    ax.scatter(st["rows (wells)"], y, c=colors, s=70, zorder=3)
     for yi, v in zip(y, st["rows (wells)"]):
-        ax.text(v, yi, f" {v:,}", va="center", fontsize=9)
+        ax.annotate(f"{v:,}", (v, yi), textcoords="offset points", xytext=(9, 0), va="center", fontsize=9)
     ax.set_yticks(y, st.stage)
+    ax.set_ylabel("Quality-control stage")
     ax.set_xlabel("Wells (rows in the table)")
     ax.set_title("Wells remaining at each quality-control stage")
-    ax.legend(handles=[Patch(color=CAT[1], label="dataset authors' QC"), Patch(color=CAT[0], label="this project")],
-              loc="lower right")
+    ax.legend(handles=[Line2D([], [], marker="o", ls="", color=CAT[1], label="dataset authors' QC"),
+                       Line2D([], [], marker="o", ls="", color=CAT[0], label="this project")], loc="center right")
     ax.set_xlim(0, st["rows (wells)"].max() * 1.15)
     f2 = save(fig, "fig02_cleaning_stages.png")
     cap("2", "Rows, wells and missingness at each cleaning stage",
@@ -190,10 +202,12 @@ def main() -> None:
     # ---------------------------------------------------------------- 4
     wps = main_t.drop_duplicates("well_id").state.value_counts().sort_values()
     fig, ax = plt.subplots(figsize=(7, 5.5))
-    ax.barh(wps.index, wps.values, color=CAT[0], height=0.65)
+    ax.hlines(wps.index, 0, wps.values, color=CAT[0], lw=0.8, alpha=0.4)
+    ax.plot(wps.values, wps.index, "o", color=CAT[0], ms=7)
     for i, v in enumerate(wps.values):
-        ax.text(v, i, f" {v}", va="center", fontsize=8.5)
+        ax.annotate(f"{v}", (v, i), textcoords="offset points", xytext=(8, 0), va="center", fontsize=8.5)
     ax.set_xlabel("Number of wells")
+    ax.set_ylabel("State")
     ax.set_title("Wells per state")
     ax.set_xlim(0, wps.max() * 1.12)
     f4 = save(fig, "fig04_wells_per_state.png")
@@ -250,6 +264,7 @@ def main() -> None:
         ax.text(i, ax.get_ylim()[0], f"{n_out:,} deeper\nbeyond whisker\nmax {v.max():.1f} m", ha="center",
                 va="top", fontsize=7.5, color=INK2)
     ax.set_title("Groundwater depth by season (deeper = lower on the chart)")
+    ax.set_xlabel("Season of the round")
     f6 = save(fig, "fig06_depth_by_season.png")
     med = {s: np.median(v) for s, v in zip(SEASONS, data)}
     table(rd.groupby("season", observed=True).gwl_m_bgl.describe(percentiles=[.25, .5, .75, .95, .99]).round(2),
@@ -290,17 +305,21 @@ def main() -> None:
     meth = [("Expanding (primary)", "stress_category"), ("Rolling 10", "stress_roll10"),
             ("Small-sample adjusted", "stress_tadj")]
     cc = pd.DataFrame({lab: rd[col].astype(str).value_counts().reindex(CLASSES) for lab, col in meth})
-    fig, ax = plt.subplots(figsize=(9, 4.3))
-    x = np.arange(len(CLASSES))
-    w = 0.26
-    for i, (lab, _) in enumerate(meth):
-        b = ax.bar(x + (i - 1) * w, cc[lab], width=w - 0.02, color=CAT[i], label=lab)
-        ax.bar_label(b, labels=[f"{v:,}" for v in cc[lab]], fontsize=7, padding=1)
-    ax.set_xticks(x, CLASSES)
-    ax.set_yscale("log")
-    ax.set_ylabel("Readings (log scale)")
-    ax.set_title("Stress category counts by baseline method")
-    ax.legend(fontsize=8.5)
+    from matplotlib.colors import LogNorm
+    fig, ax = plt.subplots(figsize=(9, 3.8))
+    mat = cc.T.to_numpy(float)
+    im = ax.imshow(mat, cmap=SEQ_CMAP, norm=LogNorm(vmin=mat.min(), vmax=mat.max()), aspect="auto")
+    for i in range(mat.shape[0]):
+        for j in range(mat.shape[1]):
+            ax.text(j, i, f"{int(mat[i, j]):,}", ha="center", va="center", fontsize=10,
+                    color="white" if mat[i, j] > np.sqrt(mat.min() * mat.max()) else INK)
+    ax.set_xticks(range(len(CLASSES)), CLASSES)
+    ax.set_yticks(range(len(meth)), [m[0] for m in meth])
+    ax.grid(False)
+    ax.set_xlabel("Stress category")
+    ax.set_ylabel("Baseline method")
+    ax.set_title("Stress category counts by baseline method (colour = log count)")
+    fig.colorbar(im, ax=ax, label="readings (log scale)")
     f8 = save(fig, "fig08_stress_counts_by_method.png")
     full = pd.DataFrame({lab: rd[col].astype(str).value_counts().reindex(stress.CATEGORIES[1:]) for lab, col in meth})
     table(full, "table08_stress_counts_by_method")
@@ -325,8 +344,11 @@ def main() -> None:
         mc_raw.append(100 * (z >= 2).mean())
         mc_adj.append(100 * (za >= 2).mean())
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(11, 4.2), sharey=True)
-    b = a1.bar([m[0] for m in meth], obs_rate, color=CAT[:3], width=0.6)
-    a1.bar_label(b, labels=[f"{v:.2f}%" for v in obs_rate], fontsize=9)
+    a1.scatter([m[0] for m in meth], obs_rate, c=CAT[:3], s=110, zorder=3)
+    for xi, v in enumerate(obs_rate):
+        a1.annotate(f"{v:.2f}%", (xi, v), textcoords="offset points", xytext=(0, 11), ha="center", fontsize=9)
+    a1.set_xlim(-0.5, 2.5)
+    a1.set_xlabel("Baseline method")
     a1.axhline(nominal, color=INK, ls="--", lw=1)
     a1.text(-0.45, nominal + 0.08, f"nominal {nominal:.2f}%", va="bottom", ha="left", fontsize=8.5,
             bbox=dict(fc=SURF, ec="none", pad=1))
@@ -337,6 +359,7 @@ def main() -> None:
     a2.plot(ns, mc_adj, color=CAT[2], lw=2, marker="o", ms=4, label="t-adjusted z")
     a2.axhline(nominal, color=INK, ls="--", lw=1)
     a2.set_xlabel("Earlier same-season readings n")
+    a2.set_ylabel("High Stress rate (%)")
     a2.set_title("(b) Monte Carlo, i.i.d. Gaussian data")
     a2.legend(fontsize=8.5)
     f9 = save(fig, "fig09_excess_high_stress.png")
@@ -355,15 +378,21 @@ def main() -> None:
     counts, changes = stress.sensitivity(main_t)
     ch = changes[changes["threshold set"] != "default (1/1.5/2)"]
     fig, ax = plt.subplots(figsize=(8, 3.6))
-    b1 = ax.barh(ch["threshold set"], ch["moved to more severe"], color=CAT[1], label="moved to more severe")
-    b2 = ax.barh(ch["threshold set"], ch["moved to less severe"], left=ch["moved to more severe"], color=CAT[0],
-                 label="moved to less severe")
-    for i, (tot, p) in enumerate(zip(ch["rows changed vs default"], ch["% of classified rows"])):
-        ax.text(tot, i, f" {tot:,} ({p}%)", va="center", fontsize=9)
+    yy = np.arange(len(ch))
+    ax.hlines(yy, ch["moved to more severe"], ch["moved to less severe"], color=MUTED, lw=1.2)
+    ax.scatter(ch["moved to more severe"], yy, color=CAT[1], s=80, zorder=3, label="moved to more severe")
+    ax.scatter(ch["moved to less severe"], yy, color=CAT[0], s=80, zorder=3, label="moved to less severe")
+    for i, (tot, p, a_, b_) in enumerate(zip(ch["rows changed vs default"], ch["% of classified rows"],
+                                            ch["moved to more severe"], ch["moved to less severe"])):
+        ax.annotate(f"{tot:,} changed ({p}%)", (max(a_, b_), i), textcoords="offset points", xytext=(10, 0),
+                    va="center", fontsize=9)
+    ax.set_yticks(yy, ch["threshold set"])
+    ax.set_ylabel("Threshold set")
+    ax.set_xlabel("Readings moved (more / less severe)")
     ax.set_xlabel("Readings that change category vs default thresholds (1 / 1.5 / 2)")
     ax.set_title("Threshold sensitivity of the stress label")
-    ax.legend(fontsize=8.5, loc="lower right")
-    ax.set_xlim(0, ch["rows changed vs default"].max() * 1.3)
+    ax.legend(fontsize=8.5, loc="center right")
+    ax.set_xlim(0, max(ch["moved to more severe"].max(), ch["moved to less severe"].max()) * 1.6)
     f10 = save(fig, "fig10_threshold_sensitivity.png")
     table(counts, "table10_threshold_sensitivity_counts")
     table(changes, "table10_threshold_sensitivity_changes", index=False)
@@ -381,12 +410,15 @@ def main() -> None:
         kk.append({"K": k, "excluded": ex, "excluded_pct": round(100 * ex / len(rd), 2)})
     kk = pd.DataFrame(kk)
     fig, ax = plt.subplots(figsize=(6, 3.6))
-    b = ax.bar(kk.K.astype(str), kk.excluded, color=[SEQ[2], SEQ[4], SEQ[6]], width=0.55)
-    ax.bar_label(b, labels=[f"{e:,}\n({p}%)" for e, p in zip(kk.excluded, kk.excluded_pct)], fontsize=9)
+    ax.plot(kk.K, kk.excluded, color=MUTED, lw=1.5, zorder=1)
+    ax.scatter(kk.K, kk.excluded, c=[SEQ[2], SEQ[4], SEQ[6]], s=100, zorder=3)
+    for k_, e_, p_ in zip(kk.K, kk.excluded, kk.excluded_pct):
+        ax.annotate(f"{e_:,}\n({p_}%)", (k_, e_), textcoords="offset points", xytext=(0, 12), ha="center", fontsize=9)
+    ax.set_xticks(kk.K)
     ax.set_xlabel("Minimum earlier same-season readings K")
     ax.set_ylabel("Readings without a baseline")
     ax.set_title("Readings excluded by the minimum-history rule")
-    ax.set_ylim(0, kk.excluded.max() * 1.25)
+    ax.set_ylim(0, kk.excluded.max() * 1.3)
     f11 = save(fig, "fig11_min_history_rule.png")
     table(kk, "table11_min_history_rule", index=False)
     cap("11", "Readings excluded by the minimum-history rule",
@@ -412,6 +444,7 @@ def main() -> None:
     ax.set_xlim(0.7, 13.6)
     ax.set_ylabel("Mean monthly rainfall (mm)")
     ax.set_title("Monthly rainfall climatology at the wells, 2000-2022 (CHIRPS v3.0)")
+    ax.set_xlabel("Month of the year")
     f12a = save(fig, "fig12a_rainfall_climatology.png")
     table(clim.round(1), "table12_rainfall_climatology")
     tn = clim["Tamil Nadu"]
@@ -425,7 +458,7 @@ def main() -> None:
     er = rain[(rain.well_id == ex_id) & (rain.year.between(2000, 2022))].copy()
     er["date"] = pd.to_datetime(dict(year=er.year, month=er.month, day=15))
     fig, (a1, a2) = plt.subplots(2, 1, figsize=(11, 6), sharex=True, gridspec_kw={"height_ratios": [1, 1.2]})
-    a1.bar(er.date, er.precip_mm, width=25, color=CAT[0])
+    a1.fill_between(er.date, er.precip_mm, color=CAT[0], alpha=0.5, lw=0.8, label="monthly rainfall (mm)")
     a1.plot(ew.date, ew.rain_6m_mm / 6, color=CAT[1], lw=1.5, marker="o", ms=3,
             label="rain_6m_mm / 6 (mean of the 6 months before each round)")
     a1.set_ylabel("Rainfall (mm/month)")
@@ -500,6 +533,8 @@ def main() -> None:
                        Patch(color="#f3d6d6", label="month M and later: never used"),
                        plt.Line2D([], [], marker="o", ls="", color=CAT[2], ms=8, label="earlier reading used")],
               loc="upper left", fontsize=8.5, ncol=4, bbox_to_anchor=(0, -0.12))
+    ax.set_xlabel("Calendar month (observation month M is boxed)")
+    ax.set_ylabel("Feature built from these months")
     f13 = save(fig, "fig13_leakage_timeline.png")
     cap("13", "Which data feed the features of one reading",
         f"For well {ex_id}'s November 2015 reading, rainfall windows end in October 2015 (M-1): the 1-, 3-, 6- and "
@@ -531,16 +566,21 @@ def main() -> None:
     # ---------------------------------------------------------------- 15
     e = spl[spl.eval_eligible]
     sp = pd.crosstab(e.split_chrono, e.season).reindex(index=["train", "val", "test", "ext"], columns=SEASONS)
-    fig, ax = plt.subplots(figsize=(9, 4.3))
-    x = np.arange(4)
-    w = 0.2
-    for i, s in enumerate(SEASONS):
-        b = ax.bar(x + (i - 1.5) * w, sp[s], width=w - 0.02, color=CAT[i], label=SEASON_LABEL[s])
-    ax.set_xticks(x, [f"{k}\n({v:,} rows)" for k, v in sp.sum(axis=1).items()])
-    ax.set_yscale("log")
-    ax.set_ylabel("Eval-eligible readings (log scale)")
-    ax.set_title("Evaluation-eligible readings per split and season")
-    ax.legend(fontsize=8, ncol=2)
+    from matplotlib.colors import LogNorm
+    fig, ax = plt.subplots(figsize=(9, 3.8))
+    mat = sp.to_numpy(float)
+    im = ax.imshow(mat, cmap=SEQ_CMAP, norm=LogNorm(vmin=max(mat.min(), 1), vmax=mat.max()), aspect="auto")
+    for i in range(mat.shape[0]):
+        for j in range(mat.shape[1]):
+            ax.text(j, i, f"{int(mat[i, j]):,}", ha="center", va="center", fontsize=10,
+                    color="white" if mat[i, j] > np.sqrt(max(mat.min(), 1) * mat.max()) else INK)
+    ax.set_xticks(range(4), [SEASON_LABEL[s].replace(" (", "\n(") for s in SEASONS], fontsize=8.5)
+    ax.set_yticks(range(4), [f"{k} ({v:,} rows)" for k, v in sp.sum(axis=1).items()])
+    ax.grid(False)
+    ax.set_xlabel("Season of the round")
+    ax.set_ylabel("Split")
+    ax.set_title("Evaluation-eligible readings per split and season (colour = log count)")
+    fig.colorbar(im, ax=ax, label="readings (log scale)")
     f15 = save(fig, "fig15_split_summary.png")
     table(sp.assign(total=sp.sum(axis=1)), "table15_split_summary")
     reasons = spl.exclusion_reason.value_counts()
@@ -557,8 +597,9 @@ def main() -> None:
         .apply(lambda s: 100 * s.notna().mean()).reset_index().sort_values(["year", "month"])
     fig, ax = plt.subplots(figsize=(11, 4))
     colors = [CAT[0] if y <= 2022 else CAT[1] for y in cov.year]
-    b = ax.bar(cov.period_label, cov.gwl_m_bgl, color=colors)
-    ax.bar_label(b, labels=[f"{v:.0f}" for v in cov.gwl_m_bgl], fontsize=7.5)
+    ax.plot(cov.period_label, cov.gwl_m_bgl, color=MUTED, lw=1, zorder=1)
+    ax.scatter(cov.period_label, cov.gwl_m_bgl, c=colors, s=45, zorder=3)
+    ax.set_xlabel("Round (month-year)")
     m18 = 100 * main_t[main_t.year >= 2018].gwl_m_bgl.notna().mean()
     ax.axhline(m18, color=CAT[0], ls="--", lw=1)
     ax.axhline(m_ext, color=CAT[1], ls="--", lw=1)
@@ -567,7 +608,8 @@ def main() -> None:
     ax.set_ylabel("% of 2,759 wells with a reading")
     ax.set_title("Coverage per round: main table 2018-2022 vs extension 2023-2024")
     ax.tick_params(axis="x", rotation=90)
-    ax.legend(handles=[Patch(color=CAT[0], label="main table"), Patch(color=CAT[1], label="extension holdout")],
+    ax.legend(handles=[Line2D([], [], marker="o", ls="", color=CAT[0], label="main table"),
+                       Line2D([], [], marker="o", ls="", color=CAT[1], label="extension holdout")],
               loc="upper right", fontsize=8.5)
     f16 = save(fig, "fig16_extension_coverage.png")
     table(cov.rename(columns={"gwl_m_bgl": "coverage_pct"}).round(1), "table16_coverage_2018_2024", index=False)

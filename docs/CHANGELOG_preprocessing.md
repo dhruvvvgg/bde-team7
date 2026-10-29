@@ -451,3 +451,47 @@ approval" first.
 
 - `docs/review_checklist.md` maps review items 1–12 to the files that deliver them. Items 2, 6, 7
   and 8 are owned by the modeling teammate; items 9 and 11 are manual.
+
+### Error scores before vs after cleaning (new report only)
+
+- **What:** `scripts/15_error_scores.py` writes `reports/preprocessing_error_scores.md` and
+  `reports/tables/table17_error_scores.{csv,md}`. It is added to `run_all.sh`.
+- **Method:** two fixed, past-only forecasting rules ("same season last year" and "seasonal mean of
+  earlier years") are applied identically before and after cleaning and scored on the 2018–2022
+  readings. Metrics: RMSE, MAE, R², median absolute error, bias and sMAPE. These are data-quality
+  scores, not model results.
+- **Result on the same 2,759 wells (raw vs cleaned):** for "same season last year", RMSE goes from
+  2.684 to 2.554 m (−4.8%), MAE from 1.542 to 1.491 m and R² from 0.689 to 0.712. The only
+  difference is the 1,217 readings the dataset authors blanked; our pipeline changes no values.
+- **Before/after:** no data changes.
+
+### Error-metric notebooks before vs after preprocessing (new files only)
+
+- **What:**
+  - `notebooks/error_metrics_before.ipynb` and `notebooks/error_metrics_after.ipynb`, executed, with tables and graphs.
+  - `src/gwstress/error_metrics.py` (RMSE, MSE, MAE, MAPE, R², NRMSE, MedAE, Bias, plus sMAPE and NRMSE relative to the mean) and
+    `tests/test_error_metrics.py` (hand-computed values and a check that no prediction uses a later round).
+  - `scripts/16_make_error_notebooks.py` generates both notebooks.
+  - Saved results: `reports/tables/error_metrics_{before,after,comparison}.csv` and `error_metrics_{before,after}_by_season.csv`.
+- **Method:** the same three past-only forecasting rules are scored on the 2018–2022 readings, on the raw table, on the raw values of
+  the same 2,759 wells, and on the cleaned table. MAPE is computed only where |actual| ≥ 1 m (the count is reported).
+- **Results (same 2,759 wells, rule "same season last year"):** all eight metrics improve after cleaning. RMSE 2.684 → 2.554 m (−4.8%),
+  MAE 1.542 → 1.491 m, R² 0.689 → 0.712. Across the whole raw table, 93.5% of the RMSE reduction comes from which wells the authors
+  kept and 6.5% from blanking outlier readings. This corrects an earlier statement that the gain came from removing wells with
+  impossible values.
+- **Before/after:** no pipeline data changes.
+
+- **Chart styles (follow-up):** the bar charts in both notebooks were replaced: dot plots for the per-rule metric panels, a
+  Cleveland dot plot for RMSE by state, line plots for season breakdowns and processing stages, and dumbbell (before→after) plots for the
+  comparison panels. Every graph now has both an x-axis and a y-axis label. Numbers are unchanged; only the figures were redrawn.
+
+- **Consolidation and chart styles (second follow-up):**
+  - The two separate error-metric notebooks were removed. Their cells are now sections 14 (before) and 15 (after + comparison) of
+    `notebooks/preprocessing_colab_executed.ipynb` (and its source `preprocessing_colab.ipynb`), next to a new section 13 that shows all
+    17 report figures. `scripts/16_make_error_notebooks.py` is now a cell library imported by `scripts/14_make_colab_notebook.py`.
+  - The report figures from `scripts/12_figures.py` were redrawn in other styles where bars were used: dot plots (fig02, fig04, fig09a, fig10),
+    heatmaps (fig08, fig15), line/marker plots (fig11, fig16) and an area chart (fig12b rainfall). `save()` now audits every panel and
+    prints a warning if an x or y axis label is missing; the five panels that lacked one were labelled. No table or caption number changed.
+  - The notebook run reproduced `processed/gw_features_by_state` exactly (253,828 rows, frames equal); the regenerated parquet files were discarded.
+  - `tests/test_data_contract.py::test_every_committed_file_under_50mb` now exempts `bigquery/exports/` (the data-warehouse backup export,
+    50.7 MB, outside the pipeline); all other files still must be under 50 MB. All 71 tests pass.

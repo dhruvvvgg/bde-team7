@@ -1,0 +1,49 @@
+metric,before,after,change,improvement,better when,verdict,comparison,rule
+RMSE (m),2.6838174576095035,2.5544238861449817,-0.1293935714645218,4.82,lower,better,"A: same 2,759 wells",same season last year
+MSE (m²),7.2028761457695385,6.525081390108031,-0.6777947556615072,9.41,lower,better,"A: same 2,759 wells",same season last year
+MAE (m),1.5419856799419587,1.490762336364848,-0.05122334357711078,3.32,lower,better,"A: same 2,759 wells",same season last year
+MAPE (%),37.77865451195012,36.84262509383454,-0.9360294181155808,2.48,lower,better,"A: same 2,759 wells",same season last year
+R2,0.6894608762842169,0.7122582073644443,0.022797331080227412,0.02,higher,better,"A: same 2,759 wells",same season last year
+NRMSE (fraction of range),0.04011685287906582,0.038182718776457125,-0.0019341341026086964,4.82,lower,better,"A: same 2,759 wells",same season last year
+MedAE (m),0.8499999039999999,0.8300000000000001,-0.019999903999999846,2.35,lower,better,"A: same 2,759 wells",same season last year
+Bias (m),0.2101605735124009,0.20904759506133308,-0.0011129784510678087,0.53,closer to 0,better,"A: same 2,759 wells",same season last year
+RMSE (m),2.5345670079291365,2.44858462662019,-0.08598238130894664,3.39,lower,better,"A: same 2,759 wells",seasonal mean of earlier years
+MSE (m²),6.424029917682855,5.9955666737207345,-0.42846324396212054,6.67,lower,better,"A: same 2,759 wells",seasonal mean of earlier years
+MAE (m),1.595480575891688,1.5525834925043225,-0.04289708338736542,2.69,lower,better,"A: same 2,759 wells",seasonal mean of earlier years
+MAPE (%),39.73906785221575,38.85807619219412,-0.8809916600216283,2.22,lower,better,"A: same 2,759 wells",seasonal mean of earlier years
+R2,0.7272653249190006,0.7407945770606621,0.013529252141661452,0.01,higher,better,"A: same 2,759 wells",seasonal mean of earlier years
+NRMSE (fraction of range),0.03788590445335032,0.036600667064576826,-0.0012852373887734941,3.39,lower,better,"A: same 2,759 wells",seasonal mean of earlier years
+MedAE (m),0.9889473684210528,0.9642104093684205,-0.02473695905263229,2.5,lower,better,"A: same 2,759 wells",seasonal mean of earlier years
+Bias (m),0.3504080656181746,0.34552059774019783,-0.004887467877976781,1.39,closer to 0,better,"A: same 2,759 wells",seasonal mean of earlier years
+RMSE (m),3.2090708096315197,3.0813852356276543,-0.12768557400386538,3.98,lower,better,"A: same 2,759 wells",previous round
+MSE (m²),10.298135461229096,9.494934970344094,-0.8032004908850023,7.8,lower,better,"A: same 2,759 wells",previous round
+MAE (m),2.0528086053237646,1.9963681970359601,-0.0564404082878045,2.75,lower,better,"A: same 2,759 wells",previous round
+MAPE (%),50.850154344160636,49.783791041990646,-1.0663633021699894,2.1,lower,better,"A: same 2,759 wells",previous round
+R2,0.571658965202248,0.5960039881824866,0.02434502298023855,0.02,higher,better,"A: same 2,759 wells",previous round
+NRMSE (fraction of range),0.04796817353709296,0.04605957003927734,-0.0019086034978156238,3.98,lower,better,"A: same 2,759 wells",previous round
+MedAE (m),1.2599992749999993,1.2400002480000003,-0.019999026999999003,1.59,lower,better,"A: same 2,759 wells",previous round
+Bias (m),-0.17897443894255843,-0.17840716327750716,0.00056727566505127,0.32,closer to 0,better,"A: same 2,759 wells",previous round
+RMSE (m),4.555378643661775,2.5544238861449817,-2.000954757516793,43.93,lower,better,B: all raw wells,same season last year
+MSE (m²),20.751474587129792,6.525081390108031,-14.22639319702176,68.56,lower,better,B: all raw wells,same season last year
+MAE (m),1.9754941670334196,1.490762336364848,-0.48473183066857173,24.54,lower,better,B: all raw wells,same season last year
+MAPE (%),37.82306378789547,36.84262509383454,-0.9804386940609291,2.59,lower,better,B: all raw wells,same season last year
+R2,0.845912229460088,0.7122582073644443,-0.1336540220956437,-0.13,higher,worse,B: all raw wells,same season last year
+NRMSE (fraction of range),0.015109050227733912,0.038182718776457125,0.02307366854872321,-152.71,lower,worse,B: all raw wells,same season last year
+MedAE (m),0.9200000760000003,0.8300000000000001,-0.09000007600000026,9.78,lower,better,B: all raw wells,same season last year
+Bias (m),0.19268337871173258,0.20904759506133308,0.016364216349600502,-8.49,closer to 0,worse,B: all raw wells,same season last year
+RMSE (m),5.055861438022411,2.44858462662019,-2.6072768114022216,51.57,lower,better,B: all raw wells,seasonal mean of earlier years
+MSE (m²),25.56173488048205,5.9955666737207345,-19.566168206761315,76.54,lower,better,B: all raw wells,seasonal mean of earlier years
+MAE (m),2.3564588445195014,1.5525834925043225,-0.8038753520151789,34.11,lower,better,B: all raw wells,seasonal mean of earlier years
+MAPE (%),42.15504380536295,38.85807619219412,-3.2969676131688317,7.82,lower,better,B: all raw wells,seasonal mean of earlier years
+R2,0.7840779653576531,0.7407945770606621,-0.043283388296990966,-0.04,higher,worse,B: all raw wells,seasonal mean of earlier years
+NRMSE (fraction of range),0.01676902632843254,0.036600667064576826,0.019831640736144285,-118.26,lower,worse,B: all raw wells,seasonal mean of earlier years
+MedAE (m),1.1791609970454542,0.9642104093684205,-0.21495058767703368,18.23,lower,better,B: all raw wells,seasonal mean of earlier years
+Bias (m),0.21443293083613515,0.34552059774019783,0.13108766690406268,-61.13,closer to 0,worse,B: all raw wells,seasonal mean of earlier years
+RMSE (m),4.113783238008967,3.0813852356276543,-1.0323980023813126,25.1,lower,better,B: all raw wells,previous round
+MSE (m²),16.923212529323543,9.494934970344094,-7.428277558979449,43.89,lower,better,B: all raw wells,previous round
+MAE (m),2.1974177375485318,1.9963681970359601,-0.20104954051257162,9.15,lower,better,B: all raw wells,previous round
+MAPE (%),46.876881983412765,49.783791041990646,2.906909058577881,-6.2,lower,worse,B: all raw wells,previous round
+R2,0.8511408950380986,0.5960039881824866,-0.2551369068556121,-0.26,higher,worse,B: all raw wells,previous round
+NRMSE (fraction of range),0.02012614108851269,0.04605957003927734,0.02593342895076465,-128.85,lower,worse,B: all raw wells,previous round
+MedAE (m),1.2200000290000002,1.2400002480000003,0.020000219000000152,-1.64,lower,worse,B: all raw wells,previous round
+Bias (m),-0.17774871983904056,-0.17840716327750716,-0.0006584434384666049,-0.37,closer to 0,worse,B: all raw wells,previous round

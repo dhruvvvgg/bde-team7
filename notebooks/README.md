@@ -50,3 +50,11 @@ Results:
 - **CHIRPS download.** If you turn it on, it streams about 13 GB from `data.chc.ucsb.edu` and takes
   more than an hour. Colab's network and runtime limits may interrupt it, but the download is
   resumable: rerun the cell to continue.
+
+## Error metrics (before vs after preprocessing)
+
+These are now sections 14 (before) and 15 (after + comparison) of `preprocessing_colab_executed.ipynb`; there are no separate
+error-metric notebooks. All eight metrics (RMSE, MSE, MAE, MAPE, R², NRMSE, MedAE, Bias) are computed with
+`src/gwstress/error_metrics.py` (tested in `tests/test_error_metrics.py`); the cells come from
+`scripts/16_make_error_notebooks.py` (a cell library, embedded by `scripts/14_make_colab_notebook.py`).
+Results are also saved to `reports/tables/error_metrics_*.csv`.

@@ -1,0 +1,9 @@
+comparison,rule,data,n,RMSE_m,MAE_m,R2,MedAE_m,Bias_m,sMAPE_pct
+"A: same 2,759 wells",same season last year,before (raw values),39110,2.684,1.542,0.689,0.85,0.21,34.446
+"A: same 2,759 wells",seasonal mean of earlier years,before (raw values),44379,2.535,1.595,0.727,0.989,0.35,34.439
+"A: same 2,759 wells",same season last year,after (cleaned),38723,2.554,1.491,0.712,0.83,0.209,33.882
+"A: same 2,759 wells",seasonal mean of earlier years,after (cleaned),44133,2.449,1.553,0.741,0.964,0.346,33.868
+B: all raw wells vs cleaned,same season last year,"before (raw, 32,299 rows)",218554,4.555,1.975,0.846,0.92,0.193,34.495
+B: all raw wells vs cleaned,seasonal mean of earlier years,"before (raw, 32,299 rows)",214872,5.056,2.356,0.784,1.179,0.214,38.023
+B: all raw wells vs cleaned,same season last year,"after (cleaned, 2,759 wells)",38723,2.554,1.491,0.712,0.83,0.209,33.882
+B: all raw wells vs cleaned,seasonal mean of earlier years,"after (cleaned, 2,759 wells)",44133,2.449,1.553,0.741,0.964,0.346,33.868
