@@ -1,0 +1,26 @@
+{
+  "main": {
+    "unexpected_differences": {},
+    "documented_extrema_corrections": {
+      "gw_max_to_date_m": 34194,
+      "gw_min_to_date_m": 34194
+    },
+    "rows": 253828,
+    "columns": 84
+  },
+  "extension": {
+    "unexpected_differences": {},
+    "documented_extrema_corrections": {
+      "gw_max_to_date_m": 12946,
+      "gw_min_to_date_m": 12946
+    },
+    "rows": 22072,
+    "columns": 84
+  },
+  "splits": {
+    "unexpected_differences": {},
+    "documented_extrema_corrections": {},
+    "rows": 275900,
+    "columns": 12
+  }
+}

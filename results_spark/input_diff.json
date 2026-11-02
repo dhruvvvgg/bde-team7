@@ -1,0 +1,13 @@
+{
+ "differing_input_columns": {
+  "gw_max_to_date_m": 20849,
+  "gw_min_to_date_m": 20849,
+  "gw_max_to_date_m_rz": 20849,
+  "gw_min_to_date_m_rz": 20849
+ },
+ "sequence_cells": 0,
+ "target": 0,
+ "labels": 0,
+ "splits": 0,
+ "rows": 160580
+}

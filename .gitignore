@@ -22,3 +22,8 @@ results/*.sh
 results_quick/
 *.log
 .ipynb_checkpoints/
+
+# Spark retrain: regenerated outputs (reproduce with scripts/run_spark.py and modeling/run_retrain.py)
+processed/spark/
+results_spark/**/*.npy
+results_spark/_scratch/
