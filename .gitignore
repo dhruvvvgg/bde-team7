@@ -27,3 +27,4 @@ results_quick/
 processed/spark/
 results_spark/**/*.npy
 results_spark/_scratch/
+results_control/

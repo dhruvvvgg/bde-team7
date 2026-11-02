@@ -1,0 +1,84 @@
+input table: /home/user/bde-team7/processed/spark
+results:     /home/user/bde-team7/results_spark
+=== chrono === (0s elapsed)
+[chrono] 6 learners, 1 thread each
+   0 of 6 already complete, 6 to run
+  run_chrono.py ANN  [89s] ok
+  run_chrono.py XGBoost  [305s] ok
+  run_chrono.py CNN1D  [366s] ok
+  run_chrono.py SVR  [535s] ok
+  run_chrono.py LSTM  [445s] ok
+  run_chrono.py RF  [2453s] ok
+[chrono] TGT-M tuning (3 configs x 2 variants, seed 0)
+   0 of 6 already complete, 6 to run
+  tgtm_job.py A 0 0  [102s] ok
+  tgtm_job.py B 0 0  [127s] ok
+  tgtm_job.py A 1 0  [127s] ok
+  tgtm_job.py A 2 0  [140s] ok
+  tgtm_job.py B 1 0  [147s] ok
+  tgtm_job.py B 2 0  [217s] ok
+[chrono] TGT-M refit, best configs {'A': 0, 'B': 1}
+   0 of 4 already complete, 4 to run
+  tgtm_job.py A 0 2  [68s] ok
+  tgtm_job.py A 0 1  [116s] ok
+  tgtm_job.py B 1 1  [127s] ok
+  tgtm_job.py B 1 2  [161s] ok
+A best cfg 0 [0.8137, 0.8189, 0.8212]
+B best cfg 1 [0.7705, 0.7685, 0.7782]
+  tgtm_merge.py  [0s] ok
+=== geo === (2957s elapsed)
+[geo] 8 jobs
+   0 of 8 already complete, 8 to run
+  run_geo.py ANN g5  [86s] ok
+  run_geo.py XGBoost g5  [185s] ok
+  run_geo.py CNN1D g5  [310s] ok
+  run_geo.py SVR g5  [401s] ok
+  run_geo.py LSTM g5  [491s] ok
+  run_geo.py XGBoost loso  [720s] ok
+  run_geo.py RF g5  [1574s] ok
+  run_geo.py SVR loso  [1242s] ok
+[geo] TGT-M grouped 5-fold fold jobs
+   0 of 10 already complete, 10 to run
+  run_geo.py TGT-M g5 A 1  [61s] ok
+  run_geo.py TGT-M g5 A 2  [63s] ok
+  run_geo.py TGT-M g5 A 0  [76s] ok
+  run_geo.py TGT-M g5 A 3  [77s] ok
+  run_geo.py TGT-M g5 A 4  [58s] ok
+  run_geo.py TGT-M g5 B 2  [84s] ok
+  run_geo.py TGT-M g5 B 0  [99s] ok
+  run_geo.py TGT-M g5 B 3  [83s] ok
+  run_geo.py TGT-M g5 B 1  [138s] ok
+  run_geo.py TGT-M g5 B 4  [114s] ok
+  run_geo.py TGT-M g5 merge  [9s] ok
+=== robust === (4885s elapsed)
+[robust] 21 retrain+mask jobs
+   0 of 21 already complete, 21 to run
+  robust_job.py LSTM 0  [68s] ok
+  robust_job.py TGT-M 1  [129s] ok
+  robust_job.py TGT-M 0  [143s] ok
+  robust_job.py LSTM 1  [76s] ok
+  robust_job.py TGT-M 2  [151s] ok
+  robust_job.py CNN1D 1  [35s] ok
+  robust_job.py CNN1D 0  [43s] ok
+  robust_job.py CNN1D 2  [65s] ok
+  robust_job.py LSTM 2  [89s] ok
+  robust_job.py ANN 0  [21s] ok
+  robust_job.py ANN 1  [24s] ok
+  robust_job.py ANN 2  [26s] ok
+  robust_job.py XGBoost 0  [40s] ok
+  robust_job.py XGBoost 1  [34s] ok
+  robust_job.py XGBoost 2  [35s] ok
+  robust_job.py RF 0  [272s] ok
+  robust_job.py SVR 0  [59s] ok
+  robust_job.py RF 1  [273s] ok
+  robust_job.py RF 2  [284s] ok
+  robust_job.py SVR 1  [58s] ok
+  robust_job.py SVR 2  [68s] ok
+=== evaluate === (5410s elapsed)
+  aggregate.py  [50s] ok
+  metrics_full.py  [32s] ok
+  robust_eval.py  [7s] ok
+  interval_eval.py  [63s] ok
+  gap_test.py  [6s] ok
+  export_powerbi.py  [8s] ok
+retrain finished in 5575s
