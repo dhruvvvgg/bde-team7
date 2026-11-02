@@ -21,6 +21,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from gwstress import contract  # noqa: E402
+from paths import PROCESSED  # noqa: E402
 
 L = 12  # history rounds in the sequence window (3 years of rounds)
 SD_FLOOR = 0.10
@@ -34,8 +35,8 @@ CLASSES = ["Normal", "Watch", "Moderate Stress", "High Stress"]
 
 
 def load_table() -> pd.DataFrame:
-    m = pd.read_parquet(ROOT / "processed/gw_features_by_state")
-    s = pd.read_parquet(ROOT / "processed/splits.parquet")
+    m = pd.read_parquet(PROCESSED / "gw_features_by_state")
+    s = pd.read_parquet(PROCESSED / "splits.parquet")
     d = m.merge(s[["well_id", "period_label", "state_fold", "split_chrono", "eval_eligible",
                    "no_may_state"]], on=["well_id", "period_label"])
     d["state"] = d["state"].astype(str)

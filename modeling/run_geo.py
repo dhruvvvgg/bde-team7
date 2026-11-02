@@ -14,6 +14,8 @@ import sys
 import time
 from pathlib import Path
 
+from paths import RESULTS
+
 import numpy as np
 import pandas as pd
 
@@ -23,7 +25,7 @@ import lib as Lb
 kind, scheme = sys.argv[1], sys.argv[2]
 mode = sys.argv[3] if len(sys.argv) > 3 else "all"
 DEEP = kind in ("ANN", "CNN1D", "LSTM", "TGT-M")
-root = Path(__file__).resolve().parents[1] / "results"
+root = RESULTS
 out = root / "geo"
 out.mkdir(parents=True, exist_ok=True)
 chrono = Lb.load_chrono(root, kind)

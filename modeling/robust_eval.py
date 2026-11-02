@@ -2,9 +2,11 @@
 import torch  # noqa: F401
 import numpy as np, pandas as pd
 from pathlib import Path
+
+from paths import RESULTS
 import data as D
 
-ROOT = Path(__file__).resolve().parents[1] / "results"
+ROOT = RESULTS
 b = D.build(); m = b["meta"]
 te = (m.split_chrono == "test").to_numpy()
 mt = m[te].reset_index(drop=True)

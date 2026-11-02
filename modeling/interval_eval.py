@@ -2,11 +2,13 @@
 import torch  # noqa: F401
 import numpy as np, pandas as pd
 from pathlib import Path
+
+from paths import RESULTS
 import xgboost as xgb
 import data as D
 import lib as Lb
 
-ROOT = Path(__file__).resolve().parents[1] / "results"
+ROOT = RESULTS
 b = D.build(); m = b["meta"]
 tr = (m.split_chrono == "train").to_numpy(); va = (m.split_chrono == "val").to_numpy(); te = (m.split_chrono == "test").to_numpy()
 y_all = m["anomaly_z_capped"].to_numpy()

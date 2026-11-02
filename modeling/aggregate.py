@@ -5,13 +5,15 @@ import torch  # noqa: F401
 import json
 from pathlib import Path
 
+from paths import RESULTS
+
 import numpy as np
 import pandas as pd
 
 import data as D
 import lib as Lb
 
-ROOT = Path(__file__).resolve().parents[1] / "results"
+ROOT = RESULTS
 TAB = ROOT / "tables"
 TAB.mkdir(exist_ok=True, parents=True)
 ORDER = ["Prev. round", "Same season LY", "Seasonal baseline", "SVR", "RF", "ANN", "XGBoost", "CNN1D", "LSTM", "TGT-M"]

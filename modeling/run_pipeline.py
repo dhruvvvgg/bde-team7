@@ -16,7 +16,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MOD = ROOT / "modeling"
-LOGS = ROOT / "results" / "logs"
+sys.path.insert(0, str(MOD))
+from paths import RESULTS  # noqa: E402
+
+LOGS = RESULTS / "logs"
 NCPU = os.cpu_count() or 4
 TABULAR = ["XGBoost", "RF", "SVR"]
 DEEP = ["ANN", "CNN1D", "LSTM"]
@@ -55,7 +58,7 @@ def step_chrono():
     import json
     best = {}
     for v in "AB":
-        t = [json.loads((ROOT / "results" / "chrono" / "jobs" / f"TGT-M_{v}_c{c}_s0.json").read_text())["val_anom_MAE"] for c in range(3)]
+        t = [json.loads((RESULTS / "chrono" / "jobs" / f"TGT-M_{v}_c{c}_s0.json").read_text())["val_anom_MAE"] for c in range(3)]
         best[v] = t.index(min(t))
     pool([(["tgtm_job.py", v, str(best[v]), str(s)], {"BDE_THREADS": 1}, LOGS / f"tgtm_{v}_c{best[v]}_s{s}.log") for v in "AB" for s in (1, 2)], 4)
     run(["tgtm_merge.py"])

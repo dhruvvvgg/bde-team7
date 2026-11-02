@@ -6,6 +6,8 @@ import sys
 import time
 from pathlib import Path
 
+from paths import RESULTS
+
 import numpy as np
 
 import data as D
@@ -13,7 +15,7 @@ import lib as Lb
 
 variant, ci_, seed = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 kind = "TGT-M"
-out = Path(__file__).resolve().parents[1] / "results" / "chrono" / "jobs"
+out = RESULTS / "chrono" / "jobs"
 out.mkdir(parents=True, exist_ok=True)
 b = D.build()
 m = b["meta"]

@@ -11,6 +11,8 @@ import sys
 import time
 from pathlib import Path
 
+from paths import RESULTS
+
 import numpy as np
 
 import data as D
@@ -19,7 +21,7 @@ import lib as Lb
 kind = sys.argv[1]
 ONLY = sys.argv[2] if len(sys.argv) > 2 else None  # run a single variant (A or B), written to <model>__<variant>.json
 SEEDS = [int(x) for x in os.environ.get("BDE_SEEDS", "0,1,2").split(",")]   # quick mode: BDE_SEEDS=0
-out = Path(os.environ.get("BDE_RESULTS", Path(__file__).resolve().parents[1] / "results")) / "chrono"   # quick mode writes elsewhere
+out = RESULTS / "chrono"   # quick mode writes elsewhere
 out.mkdir(parents=True, exist_ok=True)
 DEEP = kind in ("ANN", "CNN1D", "LSTM", "TGT-M")
 

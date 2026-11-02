@@ -3,13 +3,15 @@ import torch  # noqa: F401
 import json
 from pathlib import Path
 
+from paths import RESULTS
+
 import numpy as np
 import pandas as pd
 
 import data as D
 import lib as Lb
 
-ROOT = Path(__file__).resolve().parents[1] / "results"
+ROOT = RESULTS
 TAB, OUT = ROOT / "tables", ROOT / "powerbi"
 OUT.mkdir(exist_ok=True, parents=True)
 

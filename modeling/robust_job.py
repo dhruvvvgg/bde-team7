@@ -5,13 +5,15 @@ import sys
 import time
 from pathlib import Path
 
+from paths import RESULTS
+
 import numpy as np
 
 import data as D
 import lib as Lb
 
 kind, seed = sys.argv[1], int(sys.argv[2])
-root = Path(__file__).resolve().parents[1] / "results"
+root = RESULTS
 out = root / "robust"
 out.mkdir(parents=True, exist_ok=True)
 DEEP = kind in ("ANN", "CNN1D", "LSTM", "TGT-M")

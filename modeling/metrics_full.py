@@ -10,6 +10,8 @@ Definitions match src/gwstress/error_metrics.py (e = prediction - actual; MAPE o
 import torch  # noqa: F401
 from pathlib import Path
 
+from paths import RESULTS
+
 import numpy as np
 import pandas as pd
 from sklearn.metrics import (balanced_accuracy_score, cohen_kappa_score, confusion_matrix, matthews_corrcoef, roc_auc_score)
@@ -17,7 +19,7 @@ from sklearn.metrics import (balanced_accuracy_score, cohen_kappa_score, confusi
 import data as D
 import lib as Lb
 
-ROOT = Path(__file__).resolve().parents[1] / "results"
+ROOT = RESULTS
 TAB = ROOT / "tables"
 ORDER = ["Prev. round", "Same season LY", "Seasonal baseline", "SVR", "RF", "ANN", "XGBoost", "CNN1D", "LSTM", "TGT-M"]
 MAPE_MIN = 1.0

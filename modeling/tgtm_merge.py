@@ -3,7 +3,9 @@ import json
 import shutil
 from pathlib import Path
 
-root = Path(__file__).resolve().parents[1] / "results" / "chrono"
+from paths import RESULTS
+
+root = RESULTS / "chrono"
 jobs = root / "jobs"
 for v in ("A", "B"):
     tune = [json.loads((jobs / f"TGT-M_{v}_c{i}_s0.json").read_text()) for i in range(3)]
